@@ -10,6 +10,7 @@ namespace shoe_erp.Controllers
     {
         public ActionResult Index()
         {
+            Console.WriteLine("pjt");
             return View();
         }
 
