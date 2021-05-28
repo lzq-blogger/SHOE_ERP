@@ -9,8 +9,8 @@ namespace shoe_erp.Controllers
     public class loginController : Controller
     {
         // GET: login
-        public ActionResult Index()
-        {
+        public ActionResult login()
+        { 
             return View();
         }
     }

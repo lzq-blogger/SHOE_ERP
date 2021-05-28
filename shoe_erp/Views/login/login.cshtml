@@ -1,15 +1,25 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>登录</title>
     <link rel="stylesheet" type="text/css" href="/Content/login/css/index.css" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script>
+        ////调用接口实现登录操作
+        //function btn() {
+        //    $.ajax({
+        //        type: 'Get',
+        //        url: '/shoe_api/Values',
+        //        success: function () {
+
+        //        }
+        //    })
+        //}
+    </script>
 </head>
 <body style="background:#fff">
     <div class="nav_top">
@@ -31,7 +41,7 @@
                 <input class="use_name" type="text" placeholder="11位手机号码" />
                 <span>登录密码：<a href="index.html">忘记登录密码？</a></span>
                 <input class="use_password" type="password" placeholder="登录密码" />
-                <button type="button">登&nbsp;&nbsp;录</button>
+                <button type="button" onclick="btn()">登&nbsp;&nbsp;录</button>
             </div>
         </div>
     </div> 
