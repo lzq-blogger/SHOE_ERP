@@ -121,6 +121,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\buy_MaterialController.cs" />
+    <Compile Include="Controllers\indexController.cs" />
     <Compile Include="Controllers\loginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -132,16 +133,34 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\login\css\login2.css" />
-    <Content Include="Content\login\images\1.jpg" />
-    <Content Include="Content\login\images\login.js" />
-    <Content Include="Content\login\js\jquery-1.9.0.min.js" />
+    <Content Include="Content\login\css\Iframe.css" />
+    <Content Include="Content\login\css\index.css" />
+    <Content Include="Content\login\images\bi.png" />
+    <Content Include="Content\login\images\downbq.png" />
+    <Content Include="Content\login\images\ewm.png" />
+    <Content Include="Content\login\images\logo.png" />
+    <Content Include="Content\login\images\logobei.png" />
+    <Content Include="Content\login\images\menu.png" />
+    <Content Include="Content\login\images\right_menu.png" />
+    <Content Include="Content\login\images\scimg.png" />
+    <Content Include="Content\login\images\set.png" />
+    <Content Include="Content\login\images\w_cloud.png" />
+    <Content Include="Content\login\js\bootstrap.min.css" />
+    <Content Include="Content\login\js\common.js" />
+    <Content Include="Content\login\js\jquery.min.js" />
+    <Content Include="Content\login\js\tendina.min.js" />
+    <Content Include="Content\login\utilLib\bootstrap.min.css" />
+    <Content Include="Content\login\utilLib\fonts\font_awesome\fontawesome-webfont.svg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\login\utilLib\fonts\font_awesome\fontawesome-webfontd41d.eot" />
+    <Content Include="Content\login\utilLib\fonts\font_awesome\fontawesome-webfontf77b.eot" />
+    <Content Include="Content\login\utilLib\fonts\font_awesome\fontawesome-webfontf77b.ttf" />
+    <Content Include="Content\login\utilLib\fonts\font_awesome\fontawesome-webfontf77b.woff" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -165,6 +184,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\buy_Material\Index.cshtml" />
     <Content Include="Views\login\Index.cshtml" />
+    <Content Include="Views\index\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
