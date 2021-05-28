@@ -9,7 +9,7 @@ namespace shoe_erp.Controllers
     public class buy_MaterialController : Controller
     {
         // GET: buy_Material
-        public ActionResult Index()
+        public ActionResult buy_Material()
         {
             return View();
         }
