@@ -6,11 +6,11 @@ using System.Web.Mvc;
 
 namespace shoe_erp.Controllers
 {
-    public class loginController : Controller
+    public class indexmaxController : Controller
     {
-        // GET: login
-        public ActionResult login()
-        { 
+        // GET: indexmax
+        public ActionResult Index()
+        {
             return View();
         }
     }
