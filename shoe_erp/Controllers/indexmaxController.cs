@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace shoe_erp.Controllers
 {
-    public class buy_MaterialController : Controller
+    public class indexmaxController : Controller
     {
-        // GET: buy_Material
-        public ActionResult buy_Material()
+        // GET: indexmax
+        public ActionResult Index()
         {
             return View();
         }
