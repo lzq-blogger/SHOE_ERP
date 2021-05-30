@@ -1,51 +1,43 @@
 ﻿@{
     Layout = null;
 }
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>登录</title>
-    <link rel="stylesheet" type="text/css" href="/Content/login/css/index.css" />
-    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    <script>
-        ////调用接口实现登录操作
-        //function btn() {
-        //    $.ajax({
-        //        type: 'Get',
-        //        url: '/shoe_api/Values',
-        //        success: function () {
-
-        //        }
-        //    })
-        //}
-    </script>
+    <title></title>
+    <link href="/Content/login/css/style.css" rel="stylesheet" type="text/css" />
 </head>
-<body style="background:#fff">
-    <div class="nav_top">
-        <div class="nav_tcon">
-            <div class="logoimg"><img src="/Content/login/images/logo.png" /></div>
-            <div class="logotitle">
-                <span>鞋业生产</span>
-                <p>Shoe Product</p>
+<body class="login">
+
+    <div class="login_m">
+        <div class="login_logo"><img src="/Content/login/images/logo.png" width="196" height="46" /></div>
+        <div class="login_boder">
+            <div class="login_padding">
+                <h2>用户名</h2>
+                <label>
+                    <input type="text" id="username" class="txt_input txt_input2" onfocus="if (value ==&#39;Your name&#39;){value =&#39;&#39;}" onblur="if (value ==&#39;&#39;){value=&#39;Your name&#39;}" value="Your name" />
+                </label>
+                <h2>密码</h2>
+                <label>
+                    <input type="password" name="textfield2" id="userpwd" class="txt_input" onfocus="if (value ==&#39;******&#39;){value =&#39;&#39;}" onblur="if (value ==&#39;&#39;){value=&#39;******&#39;}" value="******" />
+                </label>
+                <p class="forgot"><a href="javascript:void(0);">忘记密码?</a></p>
+                <div class="rem_sub">
+                    <div class="rem_sub_l">
+                        <input type="checkbox" name="checkbox" id="save_me" />
+                        <label for="checkbox">记住</label>
+                    </div>
+                    <label>
+                        <input type="submit" class="sub_button" name="button" id="button" value="登录" style="opacity: 0.7;" />
+                    </label>
+                </div>
             </div>
-            <div class="logoname">账号登录</div>
-        </div>
-    </div>
-    <div class="logo_content">
-        <div class="logo_ccon">
-            <img class="logobei" src="/Content/login/images/logobei.png" />
-            <div class="logo_enter">
-                <span style="border-bottom:solid 1px #cfcfcf">请使用管理员账号进行登陆</span>
-                <span>登录名：</span>
-                <input class="use_name" type="text" placeholder="11位手机号码" />
-                <span>登录密码：<a href="index.html">忘记登录密码？</a></span>
-                <input class="use_password" type="password" placeholder="登录密码" />
-                <button type="button" onclick="btn()">登&nbsp;&nbsp;录</button>
-            </div>
-        </div>
-    </div>
+        </div><!--login_boder end-->
+    </div><!--login_m end-->
+    <br />
+    <br />
 </body>
 </html>
-
 

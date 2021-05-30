@@ -1,0 +1,10 @@
+*{
+    margin:0;
+    padding:0;
+}
+#selectshop {
+    width: 95%;
+    height: 500px;
+    margin:0 auto;
+    margin-top:10px;
+}

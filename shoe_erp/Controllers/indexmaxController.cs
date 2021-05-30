@@ -13,5 +13,10 @@ namespace shoe_erp.Controllers
         {
             return View();
         }
+        //首页
+        public ActionResult Home()
+        {
+            return View();
+        }
     }
 }
