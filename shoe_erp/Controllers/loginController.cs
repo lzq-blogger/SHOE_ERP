@@ -11,7 +11,7 @@ namespace shoe_erp.Controllers
         // GET: login
         public ActionResult login()
         { 
-            //古定照
+            //古定照fefe
             return View();
         }
     }
