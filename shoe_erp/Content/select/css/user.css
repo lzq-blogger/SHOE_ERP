@@ -1,0 +1,16 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+#users {
+    width: 95%;
+    height: 500px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+#jiefeng, #fengjing {
+    width: 60px;
+    height: 40px;
+    background-color: rgb(7,129,216);
+}
