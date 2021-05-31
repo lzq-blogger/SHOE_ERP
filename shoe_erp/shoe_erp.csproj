@@ -133,6 +133,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\buy_ManageController.cs" />
+    <Compile Include="Controllers\customerController.cs" />
     <Compile Include="Controllers\indexmaxController.cs" />
     <Compile Include="Controllers\loginController.cs" />
     <Compile Include="Global.asax.cs">
@@ -450,6 +451,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\customer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
