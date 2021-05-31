@@ -431,11 +431,17 @@
     <Content Include="Views\buy_Manage\select_plan.cshtml" />
     <Content Include="Views\buy_Manage\Home.cshtml" />
     <Content Include="Views\buy_Manage\select_order.cshtml" />
+    <Content Include="Views\customer\customerInfo.cshtml" />
+    <Content Include="Views\customer\select_customerInfo.cshtml" />
+    <Content Include="Views\customer\add_customerInfo.cshtml" />
+    <Content Include="Views\customer\customerOrder.cshtml" />
+    <Content Include="Views\customer\select_customerOrder.cshtml" />
+    <Content Include="Views\customer\add_customerOrder.cshtml" />
+    <Content Include="Views\customer\customerOrder_statistical.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\customer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
