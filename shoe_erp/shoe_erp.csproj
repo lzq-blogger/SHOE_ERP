@@ -431,6 +431,7 @@
     <Content Include="Views\buy_Manage\select_plan.cshtml" />
     <Content Include="Views\buy_Manage\Home.cshtml" />
     <Content Include="Views\buy_Manage\select_order.cshtml" />
+    <Content Include="Views\buy_Manage\add_plan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

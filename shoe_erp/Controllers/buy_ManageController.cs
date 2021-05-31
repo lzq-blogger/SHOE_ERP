@@ -35,7 +35,7 @@ namespace shoe_erp.Controllers
         {
             return View();
         }
-        //查询1_1
+        //新增采购
         public ActionResult add_plan()
         {
             return View();
