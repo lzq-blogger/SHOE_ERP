@@ -1,43 +1,45 @@
-﻿@{
+﻿
+@{
     Layout = null;
 }
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title></title>
-    <link href="/Content/login/css/style.css" rel="stylesheet" type="text/css" />
+    <meta name="viewport" content="width=device-width" />
+    <title>智联鞋业后台登录系统</title>
+    <link href="~/Content/login/css/style.css" rel="stylesheet" />
 </head>
-<body class="login">
-
-    <div class="login_m">
-        <div class="login_logo"><img src="/Content/login/images/logo.png" width="196" height="46" /></div>
-        <div class="login_boder">
-            <div class="login_padding">
-                <h2>用户名</h2>
-                <label>
-                    <input type="text" id="username" class="txt_input txt_input2" onfocus="if (value ==&#39;Your name&#39;){value =&#39;&#39;}" onblur="if (value ==&#39;&#39;){value=&#39;Your name&#39;}" value="Your name" />
-                </label>
-                <h2>密码</h2>
-                <label>
-                    <input type="password" name="textfield2" id="userpwd" class="txt_input" onfocus="if (value ==&#39;******&#39;){value =&#39;&#39;}" onblur="if (value ==&#39;&#39;){value=&#39;******&#39;}" value="******" />
-                </label>
-                <p class="forgot"><a href="javascript:void(0);">忘记密码?</a></p>
-                <div class="rem_sub">
-                    <div class="rem_sub_l">
-                        <input type="checkbox" name="checkbox" id="save_me" />
-                        <label for="checkbox">记住</label>
-                    </div>
-                    <label>
-                        <a href="/indexmax/Index"><input type="submit" class="sub_button" name="button" id="button" value="登录" style="opacity: 0.7;" /></a>
-                    </label>
-                </div>
+<body>
+    <h1>智联鞋业后台登录系统</h1>
+    <div class="container w3">
+        <h2>现在登录</h2>
+        <form action="#" method="post">
+            <div class="username">
+                <span class="username" style="height:19px">用户:</span>
+                <input type="text" name="name" class="name" placeholder="" required=required />
+                <div class="clear"></div>
             </div>
-        </div><!--login_boder end-->
-    </div><!--login_m end-->
-    <br />
-    <br />
+            <div class="password-agileits">
+                <span class="username" style="height:19px">密码:</span>
+                <input type="password" name="password" class="password" placeholder="" required=required />
+                <div class="clear"></div>
+            </div>
+            <div class="rem-for-agile">
+                <input type="checkbox" name="remember" class="remember" />记得我
+                <br />
+                @*<a href="#">忘记了密码</a><br />*@
+            </div>
+            <div class="login-w3">
+                <input type="submit" class="login" value="登录" />
+            </div>
+            <div class="clear"></div>
+        </form>
+    </div>
+    <div class="footer-w3l">
+        <p> 智联鞋业后台登录系统</p>
+    </div>
 </body>
-</html>
 
+</html>
