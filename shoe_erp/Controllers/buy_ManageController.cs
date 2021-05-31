@@ -8,11 +8,16 @@ namespace shoe_erp.Controllers
 {
     public class buy_ManageController : Controller
     {
+        //首页
+        public ActionResult Home()
+        {
+            return View();
+        }
         // GET: buy_Material
         //购买原料界面1
         public ActionResult buy_plan()
         {
-            return PartialView();
+            return View();
         }
         //购买原料订单2
         public ActionResult buy_order()
@@ -26,6 +31,11 @@ namespace shoe_erp.Controllers
         }
         //查询1_1
         public ActionResult select_plan()
+        {
+            return View();
+        }
+        //查询2_1
+        public ActionResult select_order()
         {
             return View();
         }

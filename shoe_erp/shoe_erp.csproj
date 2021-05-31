@@ -443,8 +443,9 @@
     <Content Include="Views\buy_Manage\buy_statistical.cshtml" />
     <Content Include="Views\indexmax\Index.cshtml" />
     <Content Include="Scripts\Lightweight-Chart\README.md" />
-    <Content Include="Views\indexmax\Home.cshtml" />
     <Content Include="Views\buy_Manage\select_plan.cshtml" />
+    <Content Include="Views\buy_Manage\Home.cshtml" />
+    <Content Include="Views\buy_Manage\select_order.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
