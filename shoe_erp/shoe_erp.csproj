@@ -133,6 +133,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\buy_ManageController.cs" />
+    <Compile Include="Controllers\customerController.cs" />
     <Compile Include="Controllers\indexmaxController.cs" />
     <Compile Include="Controllers\loginController.cs" />
     <Compile Include="Global.asax.cs">
@@ -150,23 +151,8 @@
     <Content Include="Content\custom-styles.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\image\大于号.png" />
-    <Content Include="Content\login\css\Iframe.css" />
-    <Content Include="Content\login\css\index.css" />
     <Content Include="Content\login\css\style.css" />
-    <Content Include="Content\login\images\asd2345634.jpg" />
-    <Content Include="Content\login\images\bi.png" />
-    <Content Include="Content\login\images\downbq.png" />
-    <Content Include="Content\login\images\ewm.png" />
-    <Content Include="Content\login\images\login_bgx.gif" />
-    <Content Include="Content\login\images\login_m_bg.png" />
-    <Content Include="Content\login\images\logo.png" />
-    <Content Include="Content\login\images\logobei.png" />
-    <Content Include="Content\login\images\menu.png" />
-    <Content Include="Content\login\images\right_menu.png" />
-    <Content Include="Content\login\images\scimg.png" />
-    <Content Include="Content\login\images\set.png" />
-    <Content Include="Content\login\images\site_bg.png" />
-    <Content Include="Content\login\images\w_cloud.png" />
+    <Content Include="Content\login\images\login_bg.jpeg" />
     <Content Include="Content\master\assets\css\bootstrap.css" />
     <Content Include="Content\master\assets\css\style-responsive.css" />
     <Content Include="Content\master\assets\css\style.css" />
@@ -391,7 +377,6 @@
     <Content Include="Content\master\assets\lineicons\fonts\linecons.ttf" />
     <Content Include="Content\master\assets\lineicons\fonts\linecons.woff" />
     <Content Include="Content\master\img\Thumbs.db" />
-    <Content Include="Content\login\images\Thumbs.db" />
     <Content Include="Content\public\font-awesome\fonts\fontawesome-webfontba72.eot" />
     <Content Include="Content\public\font-awesome\fonts\fontawesome-webfontba72.ttf" />
     <Content Include="Content\public\font-awesome\fonts\fontawesome-webfontba72.woff" />
@@ -450,6 +435,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\customer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

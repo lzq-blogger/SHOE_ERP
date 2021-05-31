@@ -6,12 +6,11 @@ using System.Web.Mvc;
 
 namespace shoe_erp.Controllers
 {
-    public class loginController : Controller
+    public class customerController : Controller
     {
-        // GET: login
-        public ActionResult login()
-        { 
-            //登录
+        // GET: customer
+        public ActionResult Index()
+        {
             return View();
         }
     }
