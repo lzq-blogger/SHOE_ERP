@@ -29,8 +29,14 @@ namespace shoe_erp.Controllers
         {
             return View();
         }
+        //=============================================================二级
         //查询1_1
         public ActionResult select_plan()
+        {
+            return View();
+        }
+        //查询1_1
+        public ActionResult add_plan()
         {
             return View();
         }
