@@ -11,7 +11,7 @@ namespace shoe_erp.Controllers
         // GET: login
         public ActionResult login()
         { 
-            //彭金涛
+            //登录
             return View();
         }
     }
