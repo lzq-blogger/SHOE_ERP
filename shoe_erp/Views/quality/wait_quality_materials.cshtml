@@ -3,11 +3,6 @@
     Layout = null;
 }
 
-
-@{
-    Layout = null;
-}
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -28,25 +23,22 @@
     <link rel="stylesheet" href="/Content/public/js/Lightweight-Chart/cssCharts.css">
     <link rel="stylesheet" type="text/css" href="/Content/public/css/shop_management.css" />
 </head>
-
-<body  style="background-color: rgb(237,237,237);">
+<body style="background-color: rgb(237,237,237);">
     <div class="header">
         <div style="display:flex;padding:15px;">
-            <p style="font-size: 25px;">采购管理 &nbsp;/ &nbsp;</p>
-            <p style="font-size: 18px;">采购订单</p>
+            <p style="font-size: 25px;">质检管理 &nbsp;/ &nbsp;</p>
+            <p style="font-size: 18px;">原料质检</p>
         </div>
         <ol class="breadcrumb">
-            <li><a style="color:gray" href="/buy_Manage/select_order" target="iframs">返回&nbsp;&nbsp;/&nbsp;</li>
-            <li><a style="color:gray" href="/buy_Manage/select_order" target="iframs">采购订单&nbsp;&nbsp;/&nbsp;</li>
-            <li><a style="color:gray" href="/buy_Manage/select_order" target="iframs">订单跟踪&nbsp;&nbsp;/&nbsp;</li>
+            <li><a style="color:gray" href="/quality/select_product_materials" target="infram">返回&nbsp;&nbsp;/&nbsp;</li>
+            <li><a style="color:gray" href="/quality/select_product_materials" target="infram">原料入库订单&nbsp;&nbsp;/&nbsp;</li>
+            <li><a style="color:gray" href="/quality/select_wait_quality_materials" target="infram">原料质检单</li>
         </ol>
     </div>
     <!--商品管理-->
     <div class="shop_management">
         <div class="shop_management_max">
-            <iframe name="iframs" src="/buy_Manage/select_order" style="width: 100%; height: 600px; border: 0px solid red;
-        background-color: white;">
-            </iframe>
+            <iframe name="infram" src="/product/select_product_plan" style="width:100%;height:750px;border:0px solid red;background-color:white;"></iframe>
         </div>
     </div>
     <script src="/Content/public/js/jquery-1.10.2.js"></script>
@@ -61,4 +53,3 @@
 </body>
 
 </html>
-
