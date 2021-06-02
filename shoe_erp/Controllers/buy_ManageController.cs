@@ -45,5 +45,15 @@ namespace shoe_erp.Controllers
         {
             return View();
         }
+        //新增采购订单
+        public ActionResult add_order()
+        {
+            return View();
+        }
+        //订单跟踪，样式不是表格，自由发挥，需要有查询，根据订单号
+        public ActionResult order_tail()
+        {
+            return View();
+        }
     }
 }

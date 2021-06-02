@@ -26,19 +26,18 @@
 <body style="background-color: rgb(237,237,237);">
     <div class="header">
         <div style="display:flex;padding:15px;">
-            <p style="font-size: 25px;">采购管理 &nbsp;/ &nbsp;</p>
-            <p style="font-size: 18px;">采购计划</p>
+            <p style="font-size: 25px;">生产管理 &nbsp;/ &nbsp;</p>
+            <p style="font-size: 18px;">领料管理</p>
         </div>
         <ol class="breadcrumb">
-            <li><a style="color:gray" href="/buy_Manage/add_plan" target="infram">新增采购计划&nbsp;&nbsp;/&nbsp;</li>
-            <li><a style="color:gray" href="/buy_Manage/select_plan" target="infram">采购计划信息&nbsp;&nbsp;/&nbsp;</li>
-            <li><a style="color:gray" href="/buy_Manage/select_plan" target="infram">原料信息</li>
+            <li><a style="color:gray" href="/product/select_product_plan" target="infram">待生产产品&nbsp;&nbsp;/&nbsp;</li>
+            <li><a style="color:gray" href="/product/select_get_materials_order" target="infram">领料单&nbsp;&nbsp;/&nbsp;</li>
+            <li><a style="color:gray" href="/product/add_get_materials_order" target="infram">新增领料单&nbsp;&nbsp;/&nbsp;</li>
         </ol>
     </div>
-    <!--商品管理-->
     <div class="shop_management">
         <div class="shop_management_max">
-            <iframe name="infram" src="/buy_Manage/select_plan" style="width:100%;height:650px;border:0px solid red;"></iframe>
+            <iframe name="infram" src="/product/select_product_plan" style="width:100%;height:750px;border:0px solid red;background-color:white;"></iframe>
         </div>
     </div>
     <script src="/Content/public/js/jquery-1.10.2.js"></script>

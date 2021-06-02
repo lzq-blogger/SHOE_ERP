@@ -215,7 +215,7 @@
                         </a>
                         <ul class="sub">
                             <li><a href="/customer/customerInfo" target="iframs">客户信息</a></li>
-                            <li><a href="/customer/customerOrder" target="iframs">客户订单详情</a></li>
+                            <li><a href="/customer/customerOrder" target="iframs">客户订单管理</a></li>
                             <li><a href="/customer/customerOrder_statistical" target="iframs">客户订单统计</a></li>
                         </ul>
                     </li>
@@ -226,20 +226,22 @@
                             <i style="float:right;"><img style="width:10px;height:10px;" src="~/Content/image/大于号.png" alt="Alternate Text" /></i>
                         </a>
                         <ul class="sub">
-                            <li><a href="calendar.html">生产计划</a></li>
-                            <li><a href="gallery.html">产品生产</a></li>
-                            <li><a href="todo_list.html">取料管理</a></li>
+                            <li><a href="/product/product_plan" target="iframs">生产计划</a></li>
+                            <li><a href="/product/get_materials" target="iframs">领料管理</a></li>
+                            <li><a href="/product/product_product" target="iframs">产品生产</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
                             <span>销售管理</span>
-                            <i style="float:right;"><img style="width:10px;height:10px;" src="~/Content/image/大于号.png" alt="Alternate Text" /></i>
+                            <i style="float:right;"><img style="width:10px;height:10px;" src="~/Content/image/大于号.png" 
+                             alt="Alternate Text" /></i>
                         </a>
                         <ul class="sub">
-                            <li><a href="blank.html">客户信息管理</a></li>
-                            <li><a href="login.html">客户订单分析</a></li>
+                            <li><a href="/sale/customer_order" target="iframs">客户订单管理</a></li>
+                            <li><a href="/sale/sale_order" target="iframs">销售订单</a></li>
+                            <li><a href="/sale/sale_statistics" target="iframs">销售统计</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu">
@@ -249,9 +251,10 @@
                             <i style="float:right;"><img style="width:10px;height:10px;" src="~/Content/image/大于号.png" alt="Alternate Text" /></i>
                         </a>
                         <ul class="sub">
-                            <li><a href="form_component.html">材料入库详情</a></li>
-                            <li><a href="form_component.html">材料出库详情</a></li>
-                            <li><a href="form_component.html">入库出库统计</a></li>
+                            <li><a href="/materialr_repertory/materialr_repertory" target="iframs">原料库存</a></li>
+                            <li><a href="/materialr_repertory/in_repertory" target="iframs">材料入库详情</a></li>
+                            <li><a href="/materialr_repertory/out_repertory" target="iframs">材料出库详情</a></li>
+                            <li><a href="/materialr_repertory/in_out_statistics" target="iframs">入库出库统计</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu">
@@ -261,9 +264,10 @@
                             <i style="float:right;"><img style="width:10px;height:10px;" src="~/Content/image/大于号.png" alt="Alternate Text" /></i>
                         </a>
                         <ul class="sub">
-                            <li><a href="basic_table.html">产品入库</a></li>
-                            <li><a href="responsive_table.html">产品出库</a></li>
-                            <li><a href="responsive_table.html">产品出库入库统计</a></li>
+                            <li><a href="/product_repertory/product_repertory" target="iframs">产品库存</a></li>
+                            <li><a href="/product_repertory/in_repertory" target="iframs">产品入库管理</a></li>
+                            <li><a href="/product_repertory/out_repertory" target="iframs">产品出库详情</a></li>
+                            <li><a href="/product_repertory/in_out_statistics" target="iframs">产品出库入库统计</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu">
@@ -273,9 +277,8 @@
                             <i style="float:right;"><img style="width:10px;height:10px;" src="~/Content/image/大于号.png" alt="Alternate Text" /></i>
                         </a>
                         <ul class="sub">
-                            <li><a href="morris.html">待检产品</a></li>
-                            <li><a href="chartjs.html">待检原料</a></li>
-                            <li><a href="morris.html">质检单</a></li>
+                            <li><a href="/quality/wait_quality_product" target="iframs">待检产品</a></li>
+                            <li><a href="/quality/wait_quality_materials" target="iframs">待检原料</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu">
@@ -285,18 +288,17 @@
                             <i style="float:right;"><img style="width:10px;height:10px;" src="~/Content/image/大于号.png" alt="Alternate Text" /></i>
                         </a>
                         <ul class="sub">
-                            <li><a href="morris.html">资金管理</a></li>
-                            <li><a href="chartjs.html">支出、收入</a></li>
-                            <li><a href="chartjs.html">财务统计</a></li>
+                            <li><a href="/money/money_detail" target="iframs">财务详情</a></li>
+                            <li><a href="/money/money_statistics" target="iframs">财务统计</a></li>
                         </ul>
                     </li>
                 </ul>
                 <!-- sidebar menu end-->
             </div>
         </aside>
-        <section id="main-content" style="padding-top:60px;height:750px;">
+        <section id="main-content" style="padding-top:60px;height:700px;">
             <iframe name="iframs" src="/buy_Manage/buy_plan" style="width: 100%;
-            height: 750px;">
+             height: 650px;">
 
             </iframe>
         </section>

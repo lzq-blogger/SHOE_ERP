@@ -136,7 +136,12 @@
     <Compile Include="Controllers\customerController.cs" />
     <Compile Include="Controllers\indexmaxController.cs" />
     <Compile Include="Controllers\loginController.cs" />
+    <Compile Include="Controllers\materialr_repertoryController.cs" />
+    <Compile Include="Controllers\moneyController.cs" />
     <Compile Include="Controllers\productController.cs" />
+    <Compile Include="Controllers\product_repertoryController.cs" />
+    <Compile Include="Controllers\qualityController.cs" />
+    <Compile Include="Controllers\saleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -442,6 +447,45 @@
     <Content Include="Views\product\product_plan.cshtml" />
     <Content Include="Views\product\select_product_plan.cshtml" />
     <Content Include="Views\product\add_product_plan.cshtml" />
+    <Content Include="Views\product\product_product.cshtml" />
+    <Content Include="Views\product\get_materials.cshtml" />
+    <Content Include="Views\product\add_product_product.cshtml" />
+    <Content Include="Views\product\select_product_product.cshtml" />
+    <Content Include="Views\product\add_get_materials_order.cshtml" />
+    <Content Include="Views\product\select_get_materials_order.cshtml" />
+    <Content Include="Views\quality\wait_quality_product.cshtml" />
+    <Content Include="Views\quality\select_wait_quality_product.cshtml" />
+    <Content Include="Views\quality\select_product_product.cshtml" />
+    <Content Include="Views\quality\wait_quality_materials.cshtml" />
+    <Content Include="Views\quality\select_wait_quality_materials.cshtml" />
+    <Content Include="Views\quality\select_product_materials.cshtml" />
+    <Content Include="Views\product_repertory\in_repertory.cshtml" />
+    <Content Include="Views\product_repertory\out_repertory.cshtml" />
+    <Content Include="Views\product_repertory\in_out_statistics.cshtml" />
+    <Content Include="Views\product_repertory\add_in_product.cshtml" />
+    <Content Include="Views\product_repertory\select_in_product_order.cshtml" />
+    <Content Include="Views\product_repertory\select_out_product_order.cshtml" />
+    <Content Include="Views\product_repertory\product_repertory.cshtml" />
+    <Content Include="Views\product_repertory\product_repertory_num.cshtml" />
+    <Content Include="Views\materialr_repertory\materialr_repertory.cshtml" />
+    <Content Include="Views\materialr_repertory\select_materialr.cshtml" />
+    <Content Include="Views\materialr_repertory\in_repertory.cshtml" />
+    <Content Include="Views\materialr_repertory\select_materialr_in.cshtml" />
+    <Content Include="Views\materialr_repertory\out_repertory.cshtml" />
+    <Content Include="Views\materialr_repertory\select_materialr_out.cshtml" />
+    <Content Include="Views\materialr_repertory\in_out_statistics.cshtml" />
+    <Content Include="Views\sale\customer_order.cshtml" />
+    <Content Include="Views\sale\select_customer_order.cshtml" />
+    <Content Include="Views\sale\select_sale_order.cshtml" />
+    <Content Include="Views\sale\sale_order.cshtml" />
+    <Content Include="Views\buy_Manage\add_plan.cshtml" />
+    <Content Include="Views\money\money_statistics.cshtml" />
+    <Content Include="Views\money\money_detail.cshtml" />
+    <Content Include="Views\money\money_detail_in.cshtml" />
+    <Content Include="Views\money\money_detail_out.cshtml" />
+    <Content Include="Views\sale\sale_statistics.cshtml" />
+    <Content Include="Views\buy_Manage\add_order.cshtml" />
+    <Content Include="Views\buy_Manage\order_tail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
