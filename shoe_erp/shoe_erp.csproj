@@ -484,6 +484,8 @@
     <Content Include="Views\money\money_detail_in.cshtml" />
     <Content Include="Views\money\money_detail_out.cshtml" />
     <Content Include="Views\sale\sale_statistics.cshtml" />
+    <Content Include="Views\buy_Manage\add_order.cshtml" />
+    <Content Include="Views\buy_Manage\order_tail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
