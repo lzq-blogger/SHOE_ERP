@@ -1138,7 +1138,6 @@
     <Content Include="Content\index\js\dropzone\css\stylus\basic.styl" />
     <Content Include="Content\index\js\dropzone\css\stylus\dropzone.styl" />
     <Content Include="Content\index\js\flot-chart\API.md" />
-    <Content Include="Content\index\js\flot-chart\build.log" />
     <Content Include="Content\index\js\flot-chart\CONTRIBUTING.md" />
     <Content Include="Content\index\js\flot-chart\FAQ.md" />
     <Content Include="Content\index\js\flot-chart\Makefile" />
