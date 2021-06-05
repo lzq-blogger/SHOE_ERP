@@ -11,8 +11,22 @@
     <title>智联鞋业后台登录系统</title>
     <link href="~/Content/login/css/style.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script>
+        $(function () {
+            $.ajax({
+                url: '',
+                data: '',
+                success: function (data) {
+                
+                }
+            })
+        })
+    </script>
 </head>
 <body>
+    <script>
+        
+    </script>
     <h1>智联鞋业后台登录系统</h1>
     <div class="container w3">
         <h2>现在登录</h2>
@@ -33,7 +47,7 @@
                 @*<a href="#">忘记了密码</a><br />*@
             </div>
             <div class="login-w3">
-                <input type="submit" class="login" value="登录" onclick="Loging()" />
+                <input type="button" class="login" onclick="login()" value="登录" />
             </div>
             <div class="clear"></div>
         </div>

@@ -16,7 +16,7 @@ namespace shoe_erp
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "login", action = "login", id = UrlParameter.Optional }
+                defaults: new { controller = "index", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

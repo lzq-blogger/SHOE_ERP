@@ -26,16 +26,32 @@ namespace shoe_erp.Controllers
         }
         //购买原料统计3
         public ActionResult buy_statistical()
-        {
+        {   
             return View();
         }
-        //查询1_1
+        //=============================================================二级
+        //查询计划1_1
         public ActionResult select_plan()
         {
             return View();
         }
-        //查询2_1
+        //新增采购计划1_1
+        public ActionResult add_plan()
+        {
+            return View();
+        }
+        //查询采购订单2_1
         public ActionResult select_order()
+        {
+            return View();
+        }
+        //新增采购订单
+        public ActionResult add_order()
+        {
+            return View();
+        }
+        //订单跟踪，样式不是表格，自由发挥，需要有查询，根据订单号
+        public ActionResult order_tail()
         {
             return View();
         }

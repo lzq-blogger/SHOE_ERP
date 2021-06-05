@@ -1,0 +1,369 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="keywords" content="admin, dashboard, bootstrap, template, flat, modern, theme, responsive, fluid, retina, backend, html5, css, css3">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="#" type="/Content/index/image/png">
+    <title>AdminX</title>
+    <!--icheck-->
+    <link href="/Content/index/js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+    <link href="/Content/index/js/iCheck/skins/square/square.css" rel="stylesheet">
+    <link href="/Content/index/js/iCheck/skins/square/red.css" rel="stylesheet">
+    <link href="/Content/index/js/iCheck/skins/square/blue.css" rel="stylesheet">
+    <!--dashboard calendar-->
+    <link href="/Content/index/css/clndr.css" rel="stylesheet">
+    <!--Morris Chart CSS -->
+    <link rel="stylesheet" href="/Content/index/js/morris-chart/morris.css">
+    <!--common-->
+    <link href="/Content/index/css/style.css" rel="stylesheet">
+    <link href="/Content/index/css/style-responsive.css" rel="stylesheet">
+    <![endif]-->
+</head>
+<body class="sticky-header">
+    <section>
+        <!-- 左边都-->
+        <div class="left-side sticky-left-side">
+            <!--logo and iconic logo start-->
+            <div class="logo">
+                <a href="index.html"><img src="/Content/index/images/logo.png" alt=""></a>
+            </div>
+            <div class="logo-icon text-center">
+                <a href="index.html"><img src="/Content/index/images/logo_icon.png" alt=""></a>
+            </div>
+            <!--logo and iconic logo end-->
+            <div class="left-side-inner">
+                <!--没用-->
+                @*<div class="visible-xs hidden-sm hidden-md hidden-lg">
+                    <div class="media logged-user">
+                        <img alt="" src="/Content/index/images/photos/user-avatar.png" class="media-object">
+                        <div class="media-body">
+                            <h4><a href="#">John Doe</a></h4>
+                            <span>"Hello There..."</span>
+                        </div>
+                    </div>
+
+                    <h5 class="left-nav-title">Account Information</h5>
+                    <ul class="nav nav-pills nav-stacked custom-nav">
+                        <li><a href="#"><i class="fa fa-user"></i> <span>Profile</span></a></li>
+                        <li><a href="#"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
+                        <li><a href="#"><i class="fa fa-sign-out"></i> <span>Sign Out</span></a></li>
+                    </ul>
+                </div>*@
+                <!--列表-->
+                <ul class="nav nav-pills nav-stacked custom-nav">
+                    <li class="active"><a href="/buy_Manage/Home" target="iframs"><i class="fa fa-home"></i> <span>主页</span></a></li>
+                    <li class="menu-list">
+                        <a href=""><i class="fa fa-laptop"></i> <span>采购管理</span></a>
+                        <ul class="sub-menu-list">
+                            <li><a href="/buy_Manage/buy_plan" target="iframs">采购计划</a></li>
+                            <li><a href="/buy_Manage/buy_order" target="iframs">采购订单</a></li>
+                            <li><a href="/buy_Manage/buy_statistical" target="iframs">采购统计</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-list">
+                        <a href=""><i class="fa fa-book"></i> <span>客户管理</span></a>
+                        <ul class="sub-menu-list">
+                            <li><a href="/customer/customerInfo" target="iframs">客户信息</a></li>
+                            <li><a href="/customer/customerOrder" target="iframs">客户订单管理</a></li>
+                            <li><a href="/customer/customerOrder_statistical" target="iframs">客户订单统计</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-list">
+                        <a href=""><i class="fa fa-cogs"></i> <span>生产管理</span></a>
+                        <ul class="sub-menu-list">
+                            <li><a href="/product/product_plan" target="iframs">生产计划</a></li>
+                            <li><a href="/product/get_materials" target="iframs">领料管理</a></li>
+                            <li><a href="/product/product_product" target="iframs">产品生产</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-list">
+                        <a href=""><i class="fa fa-envelope"></i> <span>销售管理</span></a>
+                        <ul class="sub-menu-list">
+                            <li><a href="/sale/customer_order" target="iframs">客户订单管理</a></li>
+                            <li><a href="/sale/sale_order" target="iframs">销售订单</a></li>
+                            <li><a href="/sale/sale_statistics" target="iframs">销售统计</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-list">
+                        <a href=""><i class="fa fa-tasks"></i> <span>材料商品库存管理</span></a>
+                        <ul class="sub-menu-list">
+                            <li><a href="/materialr_repertory/materialr_repertory" target="iframs">原料库存</a></li>
+                            <li><a href="/materialr_repertory/in_repertory" target="iframs">材料入库详情</a></li>
+                            <li><a href="/materialr_repertory/out_repertory" target="iframs">材料出库详情</a></li>
+                            <li><a href="/materialr_repertory/in_out_statistics" target="iframs">入库出库统计</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-list">
+                        <a href=""><i class="fa fa-bar-chart-o"></i> <span>产品库存管理</span></a>
+                        <ul class="sub-menu-list">
+                            <li><a href="/product_repertory/product_repertory" target="iframs">产品库存</a></li>
+                            <li><a href="/product_repertory/in_repertory" target="iframs">产品入库管理</a></li>
+                            <li><a href="/product_repertory/out_repertory" target="iframs">产品出库详情</a></li>
+                            <li><a href="/product_repertory/in_out_statistics" target="iframs">产品出库入库统计</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-list">
+                        <a href="#"><i class="fa fa-th-list"></i> <span>质检管理</span></a>
+                        <ul class="sub-menu-list">
+                            <li><a href="/quality/wait_quality_product" target="iframs">待检产品</a></li>
+                            <li><a href="/quality/wait_quality_materials" target="iframs">待检原料</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-list">
+                        <a href="#"><i class="fa fa-map-marker"></i> <span>财务管理</span></a>
+                        <ul class="sub-menu-list">
+                            <li><a href="/money/money_detail" target="iframs">财务详情</a></li>
+                            <li><a href="/money/money_statistics" target="iframs">财务统计</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+                <!--sidebar nav end-->
+            </div>
+        </div>
+        <div class="main-content">
+            <!--没用-->
+            <div class="header-section">
+                <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+                <div class="menu-right">
+                    <ul class="notification-menu">
+                        <li>
+                            <a href="#" class="btn btn-default dropdown-toggle info-number" data-toggle="dropdown">
+                                <i class="fa fa-tasks"></i>
+                                <span class="badge">8</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-head pull-right">
+                                <h5 class="title">You have 8 pending task</h5>
+                                <ul class="dropdown-list user-list">
+                                    <li class="new">
+                                        <a href="#">
+                                            <div class="task-info">
+                                                <div>Database update</div>
+                                            </div>
+                                            <div class="progress progress-striped">
+                                                <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-warning">
+                                                    <span class="">40%</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="new">
+                                        <a href="#">
+                                            <div class="task-info">
+                                                <div>Dashboard done</div>
+                                            </div>
+                                            <div class="progress progress-striped">
+                                                <div style="width: 90%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="90" role="progressbar" class="progress-bar progress-bar-success">
+                                                    <span class="">90%</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="task-info">
+                                                <div>Web Development</div>
+                                            </div>
+                                            <div class="progress progress-striped">
+                                                <div style="width: 66%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="66" role="progressbar" class="progress-bar progress-bar-info">
+                                                    <span class="">66% </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="task-info">
+                                                <div>Mobile App</div>
+                                            </div>
+                                            <div class="progress progress-striped">
+                                                <div style="width: 33%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="33" role="progressbar" class="progress-bar progress-bar-danger">
+                                                    <span class="">33% </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="task-info">
+                                                <div>Issues fixed</div>
+                                            </div>
+                                            <div class="progress progress-striped">
+                                                <div style="width: 80%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="80" role="progressbar" class="progress-bar">
+                                                    <span class="">80% </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="new"><a href="">See All Pending Task</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#" class="btn btn-default dropdown-toggle info-number" data-toggle="dropdown">
+                                <i class="fa fa-envelope-o"></i>
+                                <span class="badge">5</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-head pull-right">
+                                <h5 class="title">You have 5 Mails </h5>
+                                <ul class="dropdown-list normal-list">
+                                    <li class="new">
+                                        <a href="">
+                                            <span class="thumb"><img src="/Content/index/images/photos/user1.png" alt="" /></span>
+                                            <span class="desc">
+                                                <span class="name">John Doe <span class="badge badge-success">new</span></span>
+                                                <span class="msg">Lorem ipsum dolor sit amet...</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <span class="thumb"><img src="/Content/index/images/photos/user2.png" alt="" /></span>
+                                            <span class="desc">
+                                                <span class="name">Jonathan Smith</span>
+                                                <span class="msg">Lorem ipsum dolor sit amet...</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <span class="thumb"><img src="/Content/index/images/photos/user3.png" alt="" /></span>
+                                            <span class="desc">
+                                                <span class="name">Jane Doe</span>
+                                                <span class="msg">Lorem ipsum dolor sit amet...</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <span class="thumb"><img src="/Content/index/images/photos/user4.png" alt="" /></span>
+                                            <span class="desc">
+                                                <span class="name">Mark Henry</span>
+                                                <span class="msg">Lorem ipsum dolor sit amet...</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <span class="thumb"><img src="/Content/index/images/photos/user5.png" alt="" /></span>
+                                            <span class="desc">
+                                                <span class="name">Jim Doe</span>
+                                                <span class="msg">Lorem ipsum dolor sit amet...</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="new"><a href="">Read All Mails</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#" class="btn btn-default dropdown-toggle info-number" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                                <span class="badge">4</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-head pull-right">
+                                <h5 class="title">Notifications</h5>
+                                <ul class="dropdown-list normal-list">
+                                    <li class="new">
+                                        <a href="">
+                                            <span class="label label-danger"><i class="fa fa-bolt"></i></span>
+                                            <span class="name">Server #1 overloaded.  </span>
+                                            <em class="small">34 mins</em>
+                                        </a>
+                                    </li>
+                                    <li class="new">
+                                        <a href="">
+                                            <span class="label label-danger"><i class="fa fa-bolt"></i></span>
+                                            <span class="name">Server #3 overloaded.  </span>
+                                            <em class="small">1 hrs</em>
+                                        </a>
+                                    </li>
+                                    <li class="new">
+                                        <a href="">
+                                            <span class="label label-danger"><i class="fa fa-bolt"></i></span>
+                                            <span class="name">Server #5 overloaded.  </span>
+                                            <em class="small">4 hrs</em>
+                                        </a>
+                                    </li>
+                                    <li class="new">
+                                        <a href="">
+                                            <span class="label label-danger"><i class="fa fa-bolt"></i></span>
+                                            <span class="name">Server #31 overloaded.  </span>
+                                            <em class="small">4 hrs</em>
+                                        </a>
+                                    </li>
+                                    <li class="new"><a href="">See All Notifications</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <img src="/Content/index/images/photos/user-avatar.png" alt="" />
+                                John Doe
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                                <li><a href="#"><i class="fa fa-sign-out"></i> 退出登录</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="wrapper" style="width:100%;height:700px;">
+                <iframe name="iframs" src="/buy_Manage/Home" style="width: 100%;
+                 height: 700px;border:0px solid red;">
+                </iframe>
+            </div>
+        </div>
+        <!-- main content end-->
+    </section>
+    <!-- Placed js at the end of the document so the pages load faster -->
+    <script src="/Content/index/js/jquery-1.10.2.min.js"></script>
+    <script src="/Content/index/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="/Content/index/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/Content/index/js/bootstrap.min.js"></script>
+    <script src="/Content/index/js/modernizr.min.js"></script>
+    <script src="/Content/index/js/jquery.nicescroll.js"></script>
+    <!--easy pie chart-->
+    <script src="/Content/index/js/easypiechart/jquery.easypiechart.js"></script>
+    <script src="/Content/index/js/easypiechart/easypiechart-init.js"></script>
+    <!--Sparkline Chart-->
+    <script src="/Content/index/js/sparkline/jquery.sparkline.js"></script>
+    <script src="/Content/index/js/sparkline/sparkline-init.js"></script>
+    <!--icheck -->
+    <script src="/Content/index/js/iCheck/jquery.icheck.js"></script>
+    <script src="/Content/index/js/icheck-init.js"></script>
+    <!-- jQuery Flot Chart-->
+    <script src="/Content/index/js/flot-chart/jquery.flot.js"></script>
+    <script src="/Content/index/js/flot-chart/jquery.flot.tooltip.js"></script>
+    <script src="/Content/index/js/flot-chart/jquery.flot.resize.js"></script>
+    <!--Morris Chart-->
+    <script src="/Content/index/js/morris-chart/morris.js"></script>
+    <script src="/Content/index/js/morris-chart/raphael-min.js"></script>
+
+    <!--Calendar-->
+    <script src="/Content/index/js/calendar/clndr.js"></script>
+    <script src="/Content/index/js/calendar/evnt.calendar.init.js"></script>
+    <script src="/Content/index/js/calendar/moment-2.2.1.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+
+    <!--common scripts for all pages-->
+    <script src="/Content/index/js/scripts.js"></script>
+
+    <!--Dashboard Charts-->
+    <script src="/Content/index/js/dashboard-chart-init.js"></script>
+
+
+</body>
+</html>
+
