@@ -4,15 +4,70 @@
 }
 
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>add_product_plan</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <link rel="stylesheet" href="~/Content/bootstrap.css">
+    <style>
+        .form-control {
+            width: 250px;
+        }
+    </style>
 </head>
 <body>
-    <div>
-        增加生产计划
+    <div style="width:600px;margin: 0 auto;padding-top:20px;">
+        <table>
+            <tr>
+                <td>
+                    <div class="form-group col-md-6">
+                        <label for="inputState">订单ID</label>
+                        <select id="inputState" class="form-control">
+                            <option selected>Choose...</option>
+                            <option>...</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">计划生产数</label>
+                            <input type="number" class="form-control" id="inputCity">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">操作人</label>
+                            <input type="text" class="form-control" id="inputCity">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">计划开始时间</label>
+                        <input type="date" class="form-control" id="inputPassword4">
+                    </div>
+                </td>
+                <td>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">计划结束时间</label>
+                            <input type="date" class="form-control" id="inputCity">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>
