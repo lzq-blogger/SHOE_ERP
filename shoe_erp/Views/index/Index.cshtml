@@ -28,7 +28,7 @@
     <link href="/Content/index/css/style-responsive.css" rel="stylesheet">
     <![endif]-->
 </head>
-<body class="sticky-header" style="height:100%;">
+<body class="sticky-header">
     <section>
         <!-- 左边都-->
         <div class="left-side sticky-left-side">
@@ -43,21 +43,21 @@
             <div class="left-side-inner">
                 <!--没用-->
                 @*<div class="visible-xs hidden-sm hidden-md hidden-lg">
-                    <div class="media logged-user">
-                        <img alt="" src="/Content/index/images/photos/user-avatar.png" class="media-object">
-                        <div class="media-body">
-                            <h4><a href="#">John Doe</a></h4>
-                            <span>"Hello There..."</span>
+                        <div class="media logged-user">
+                            <img alt="" src="/Content/index/images/photos/user-avatar.png" class="media-object">
+                            <div class="media-body">
+                                <h4><a href="#">John Doe</a></h4>
+                                <span>"Hello There..."</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <h5 class="left-nav-title">Account Information</h5>
-                    <ul class="nav nav-pills nav-stacked custom-nav">
-                        <li><a href="#"><i class="fa fa-user"></i> <span>Profile</span></a></li>
-                        <li><a href="#"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
-                        <li><a href="#"><i class="fa fa-sign-out"></i> <span>Sign Out</span></a></li>
-                    </ul>
-                </div>*@
+                        <h5 class="left-nav-title">Account Information</h5>
+                        <ul class="nav nav-pills nav-stacked custom-nav">
+                            <li><a href="#"><i class="fa fa-user"></i> <span>Profile</span></a></li>
+                            <li><a href="#"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
+                            <li><a href="#"><i class="fa fa-sign-out"></i> <span>Sign Out</span></a></li>
+                        </ul>
+                    </div>*@
                 <!--列表-->
                 <ul class="nav nav-pills nav-stacked custom-nav">
                     <li class="active"><a href="/buy_Manage/Home" target="iframs"><i class="fa fa-home"></i> <span>主页</span></a></li>
@@ -129,7 +129,7 @@
                 <!--sidebar nav end-->
             </div>
         </div>
-        <div style="height:800px;margin-left:240px;padding-top:60px;background-color:rgb(239,240,244)">
+        <div class="main-content" style="height:800px;padding-top:60px;background-color:rgb(239,240,244)">
             <!--没用-->
             <div class="header-section">
                 <a class="toggle-btn"><i class="fa fa-bars"></i></a>
@@ -140,7 +140,6 @@
                                 <i class="fa fa-tasks"></i>
                                 <span class="badge">8</span>
                             </a>
-                            @*头标一*@
                             <div class="dropdown-menu dropdown-menu-head pull-right">
                                 <h5 class="title">You have 8 pending task</h5>
                                 <ul class="dropdown-list user-list">
@@ -213,7 +212,6 @@
                                 <i class="fa fa-envelope-o"></i>
                                 <span class="badge">5</span>
                             </a>
-                            @*头标二*@
                             <div class="dropdown-menu dropdown-menu-head pull-right">
                                 <h5 class="title">You have 5 Mails </h5>
                                 <ul class="dropdown-list normal-list">
@@ -271,7 +269,6 @@
                                 <i class="fa fa-bell-o"></i>
                                 <span class="badge">4</span>
                             </a>
-                            @*头标三*@
                             <div class="dropdown-menu dropdown-menu-head pull-right">
                                 <h5 class="title">Notifications</h5>
                                 <ul class="dropdown-list normal-list">
@@ -308,14 +305,13 @@
                             </div>
                         </li>
                         <li>
-                            @*名字*@
                             <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 <img src="/Content/index/images/photos/user-avatar.png" alt="" />
                                 John Doe
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
-                                <li><a href="/login/login"><i class="fa fa-sign-out"></i> 退出登录</a></li>
+                                <li><a href="#"><i class="fa fa-sign-out"></i> 退出登录</a></li>
                             </ul>
                         </li>
 
