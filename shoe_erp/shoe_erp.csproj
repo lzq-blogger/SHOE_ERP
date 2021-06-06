@@ -852,7 +852,7 @@
     <Content Include="Content\index\js\tree-init.js" />
     <Content Include="Content\index\js\validation-init.js" />
     <Content Include="Content\login\css\style.css" />
-    <Content Include="Content\login\images\login_bg.jpeg" />
+    <Content Include="Content\login\images\login_bg.png" />
     <Content Include="Content\master\assets\css\bootstrap.css" />
     <Content Include="Content\master\assets\css\style-responsive.css" />
     <Content Include="Content\master\assets\css\style.css" />
@@ -1138,7 +1138,6 @@
     <Content Include="Content\index\js\dropzone\css\stylus\basic.styl" />
     <Content Include="Content\index\js\dropzone\css\stylus\dropzone.styl" />
     <Content Include="Content\index\js\flot-chart\API.md" />
-    <Content Include="Content\index\js\flot-chart\build.log" />
     <Content Include="Content\index\js\flot-chart\CONTRIBUTING.md" />
     <Content Include="Content\index\js\flot-chart\FAQ.md" />
     <Content Include="Content\index\js\flot-chart\Makefile" />

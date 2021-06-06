@@ -17,7 +17,7 @@
                 url: '',
                 data: '',
                 success: function (data) {
-
+                
                 }
             })
         })
@@ -30,15 +30,15 @@
     <h1>智联鞋业后台登录系统</h1>
     <div class="container w3">
         <h2>现在登录</h2>
-        <form action="#" method="post">
+        <div class="divss">
             <div class="username">
                 <span class="username" style="height:19px">用户:</span>
-                <input type="text" name="name" class="name" placeholder="" required=required />
+                <input type="text" id="adminName" class="name" placeholder="" required=required />
                 <div class="clear"></div>
             </div>
             <div class="password-agileits">
                 <span class="username" style="height:19px">密码:</span>
-                <input type="password" name="password" class="password" placeholder="" required=required />
+                <input type="password" id="adminPwd" class="password" placeholder="" required=required />
                 <div class="clear"></div>
             </div>
             <div class="rem-for-agile">
@@ -47,14 +47,35 @@
                 @*<a href="#">忘记了密码</a><br />*@
             </div>
             <div class="login-w3">
-                <input type="button" class="login" onclick="login()" value="登录" />
+                <input type="submit" class="login" onclick="Loging()" value="登录" />
             </div>
             <div class="clear"></div>
-        </form>
+        </div>
     </div>
     <div class="footer-w3l">
         <p> 智联鞋业后台登录系统</p>
     </div>
+    <script>
+        function Loging() {
+            var xlh = JSON.stringify({ name: $("#adminName").val(), pwd: $("#adminPwd").val() });
+            $.ajax({
+                type: "POST",
+                url: "https://localhost:44360/api/Login/LoginUp",
+                //contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                //contentType: 'application/x-www-form-urlencoded',
+                //data: { adminName: $("#adminName").val(), adminPwd: $("#adminPwd").val() },
+                data: xlh,
+                contentType: "application/json",
+                //dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (e) {
+                    console.log(e);
+                }  
+            });
+        }
+    </script>
 </body>
 
 </html>
