@@ -1158,6 +1158,7 @@
     <Content Include="Scripts\custom-scripts.js" />
     <Content Include="Scripts\easypiechart-data.js" />
     <Content Include="Scripts\easypiechart.js" />
+    <Content Include="Scripts\echarts.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1179,6 +1180,8 @@
     <Content Include="Scripts\morris\morris-0.4.3.min.css" />
     <Content Include="Scripts\morris\morris.js" />
     <Content Include="Scripts\morris\raphael-2.1.0.min.js" />
+    <Content Include="Scripts\public_class.js" />
+    <Content Include="Scripts\vue.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
