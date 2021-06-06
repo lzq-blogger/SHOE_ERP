@@ -182,7 +182,7 @@ img {
 }
 
 body {
-	background: url('../images/login_bg.jpeg') no-repeat 0px 0px;
+	background: url('../images/login_bg.png') no-repeat 0px 0px;
 	background-size: cover;
 	font-family: 'Open Sans', sans-serif;
 	background-attachment: fixed;

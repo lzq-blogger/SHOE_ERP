@@ -47,7 +47,7 @@
                 @*<a href="#">忘记了密码</a><br />*@
             </div>
             <div class="login-w3">
-                <input type="button" class="login" onclick="login()" value="登录" />
+                <input type="submit" class="login" onclick="Loging()" value="登录" />
             </div>
             <div class="clear"></div>
         </div>
@@ -57,13 +57,15 @@
     </div>
     <script>
         function Loging() {
+            var xlh = JSON.stringify({ name: $("#adminName").val(), pwd: $("#adminPwd").val() });
             $.ajax({
                 type: "POST",
-                url: "https://localhost:44304/api/Login/LoginUp",
+                url: "https://localhost:44360/api/Login/LoginUp",
                 //contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                 //contentType: 'application/x-www-form-urlencoded',
                 //data: { adminName: $("#adminName").val(), adminPwd: $("#adminPwd").val() },
-                data: { name: $("#adminName").val(), pwd: $("#adminPwd").val() },
+                data: xlh,
+                contentType: "application/json",
                 //dataType: "json",
                 success: function (data) {
                     console.log(data);
