@@ -30,32 +30,32 @@
                             <table class="table table-striped table-bordered table-hover dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th scope="col">商品ID</th>
-                                        <th scope="col">商品名</th>
-                                        <th scope="col">商品品牌</th>
-                                        <th scope="col">商品价格</th>
-                                        <th scope="col">商品库存</th>
-                                        <th scope="col">商品售出</th>
-                                        <th scope="col">机身储存</th>
-                                        <th scope="col">运行内存</th>
-                                        <th scope="col">机身CPU</th>
-                                        <th scope="col">商品上架时间</th>
+                                        <th scope="col">客户ID</th>
+                                        <th scope="col">用户名称</th>
+                                        <th scope="col">用户电话号码</th>
+                                        <th scope="col">联系人</th>
+                                        <th scope="col">用户邮箱</th>
+                                        <th scope="col">客户地址</th>
+                                        <th scope="col">客户传真</th>
+                                        <th scope="col">邮政编码</th>
+                                        <th scope="col">开户银行</th>
+                                        <th scope="col">银行账户</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <asp:Repeater ID="shoprepeater" runat="server">
                                         <ItemTemplate>
-                                            <tr>
-                                                <td class="table_td" id="shopid">1</td>
-                                                <td class="table_td" style="width:300px;" id="shopname">1</td>
-                                                <td class="table_td" id="shoptype">1</td>
-                                                <td class="table_td" id="shopprice">1</td>
-                                                <td class="table_td" id="shopnum">1</td>
-                                                <td class="table_td" id="shopsalesnum">1</td>
-                                                <td class="table_td" id="shopram">1</td>
-                                                <td class="table_td" id="shoprom">1</td>
-                                                <td class="table_td" id="shopcpu">1</td>
-                                                <td class="table_td" id="shopcpu">1</td>
+                                            <tr v-for="item in info" :key="item.customer_id">
+                                                <td class="table_td" id="shopid">{{item.customer_id}}</td>
+                                                <td class="table_td" style="width:300px;" id="shopname">{{item.customer_name}}</td>
+                                                <td class="table_td" id="shoptype">{{item.customer_phone}}</td>
+                                                <td class="table_td" id="shopprice">{{item.customer_linkman}}</td>
+                                                <td class="table_td" id="shopnum">{{item.customer_email}}</td>
+                                                <td class="table_td" id="shopsalesnum">{{item.customer_address}}</td>
+                                                <td class="table_td" id="shopram">{{item.customer_fax}}</td>
+                                                <td class="table_td" id="shoprom">{{item.customer_postcode}}</td>
+                                                <td class="table_td" id="shopcpu">{{item.bank}}</td>
+                                                <td class="table_td" id="shopcpu">{{item.bank_account}}</td>
                                             </tr>
                                         </ItemTemplate>
                                     </asp:Repeater>
@@ -77,7 +77,21 @@
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- Page-Level Scripts -->
+    <script src="~/Scripts/vue.min.js"></script>
     <script>
+        $.ajax({
+            Type: "get",
+            url: "https://localhost:44360/api/customer/cut",
+            dataType: "json",
+            success: function (data) {
+                var vm = new Vue({
+                    el: "#selectshop",
+                    data: {
+                        info: eval(data)
+                    }
+                });
+            }
+        });
         $(document).ready(function () {
             $('.dataTables-example').dataTable();
             /*  */
