@@ -34,12 +34,12 @@
                                         <th scope="col">姓名</th>
                                         <th scope="col">账号</th>
                                         <th scope="col">密码</th>
-                                        @*<th scope="col">商品库存</th>
-                                        <th scope="col">商品售出</th>
-                                        <th scope="col">机身储存</th>
-                                        <th scope="col">运行内存</th>
-                                        <th scope="col">机身CPU</th>
-                                        <th scope="col">商品上架时间</th>*@
+                                        <th scope="col">操作</th>
+                                        @*<th scope="col">商品售出</th>
+                                            <th scope="col">机身储存</th>
+                                            <th scope="col">运行内存</th>
+                                            <th scope="col">机身CPU</th>
+                                            <th scope="col">商品上架时间</th>*@
                                     </tr>
                                 </thead>
                                 <!--<tbody>
@@ -48,13 +48,13 @@
                                         <td class="table_td" style="width:300px;" id="Name">1</td>
                                         <td class="table_td" id="Account">1</td>
                                         <td class="table_td" id="Pwd">1</td>-->
-                                        @*<td class="table_td" id="shopnum">1</td>
-                                        <td class="table_td" id="shopsalesnum">1</td>
-                                        <td class="table_td" id="shopram">1</td>
-                                        <td class="table_td" id="shoprom">1</td>
-                                        <td class="table_td" id="shopcpu">1</td>
-                                        <td class="table_td" id="shopcpu">1</td>*@
-                                    <!--</tr>
+                                @*<td class="table_td" id="shopnum">1</td>
+                                    <td class="table_td" id="shopsalesnum">1</td>
+                                    <td class="table_td" id="shopram">1</td>
+                                    <td class="table_td" id="shoprom">1</td>
+                                    <td class="table_td" id="shopcpu">1</td>
+                                    <td class="table_td" id="shopcpu">1</td>*@
+                                <!--</tr>
                                 </tbody>-->
                             </table>
                         </div>
@@ -83,19 +83,19 @@
                     type: "POST",
                     url: "https://localhost:44360/UserTypeGet/GetAllData",
                     "dataType": "json",
-                    //"dataSrc": "data"                    
+                    //"dataSrc": "data"
                 },
                 //columns是绑定表格数据源
                 columns: [
-                    { data:"ID"},
-                    { data:"name"},
-                    { data:"account"},
-                    { data:"pwd"},
+                    { data: "ID" },
+                    { data: "name" },
+                    { data: "account" },
+                    { data: "pwd" },
                     //{data:"starDate"},
                     //{data:"salary"},
                 ]
             });
-        });       
+        });
     </script>
 
 </body>

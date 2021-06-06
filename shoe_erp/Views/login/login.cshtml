@@ -11,21 +11,10 @@
     <title>智联鞋业后台登录系统</title>
     <link href="~/Content/login/css/style.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    <script>
-        $(function () {
-            $.ajax({
-                url: '',
-                data: '',
-                success: function (data) {
-                
-                }
-            })
-        })
-    </script>
 </head>
 <body>
     <script>
-        
+
     </script>
     <h1>智联鞋业后台登录系统</h1>
     <div class="container w3">
@@ -33,7 +22,7 @@
         <div class="divss">
             <div class="username">
                 <span class="username" style="height:19px">用户:</span>
-                <input type="text" id="adminName" class="name" placeholder="" required=required />
+                <input type="text" id="adminAccount" class="name" placeholder="" required=required />
                 <div class="clear"></div>
             </div>
             <div class="password-agileits">
@@ -42,7 +31,7 @@
                 <div class="clear"></div>
             </div>
             <div class="rem-for-agile">
-                <input type="checkbox" name="remember" class="remember" />记得我
+                <input type="checkbox" name="remember" class="remember" onclick="checkAll('#selectManyProject')" />记得我
                 <br />
                 @*<a href="#">忘记了密码</a><br />*@
             </div>
@@ -57,23 +46,61 @@
     </div>
     <script>
         function Loging() {
-            var xlh = JSON.stringify({ name: $("#adminName").val(), pwd: $("#adminPwd").val() });
-            $.ajax({
-                type: "POST",
-                url: "https://localhost:44360/api/Login/LoginUp",
-                //contentType: 'application/x-www-form-urlencoded;charset=utf-8',
-                //contentType: 'application/x-www-form-urlencoded',
-                //data: { adminName: $("#adminName").val(), adminPwd: $("#adminPwd").val() },
-                data: xlh,
-                contentType: "application/json",
-                //dataType: "json",
-                success: function (data) {
-                    console.log(data);
-                },
-                error: function (e) {
-                    console.log(e);
-                }  
-            });
+            var account = $("#adminAccount").val();
+            var pwd = $("#adminPwd").val();
+            if (account != "" && pwd != "") {
+                var xlh = JSON.stringify({ account: account, pwd: pwd });
+                $.ajax({
+                    type: "POST",
+                    url: "https://localhost:44360/api/Login/LoginUp",
+                    //contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                    //contentType: 'application/x-www-form-urlencoded',
+                    //data: { adminName: $("#adminName").val(), adminPwd: $("#adminPwd").val() },
+                    data: xlh,
+                    contentType: "application/json",
+                    //dataType: "json",
+                    success: function (data) {
+                        console.log(data.message);
+
+                        var obj1 = eval("(" + data + ")");
+                        if (obj1.message == "true") {
+                            //返回结果正确
+                            //判断是否选中记得我，是就写入cookie
+                            if ($("input[type='checkbox']").is(':checked')) {
+                                checkAll(obj1)
+                                alert(true + "1")
+                            } 
+                            window.location.href = "@Url.Action("Index", "Index")";//可以跳转
+                        } else {
+                            alert(obj1.message);
+                        }
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                });
+            }
+            else {
+                alert("账号密码不能为空！")
+            }
+        }
+
+        //写数据到cookies
+        function checkAll(obj1) {
+            var account = obj1.data[0].account
+            var pwd = obj1.data[0].pwd
+            var name = obj1.data[0].name
+            setCookie("account", account);
+            setCookie("pwd", pwd);
+            setCookie("name", name);
+        }
+
+        //写cookies
+        function setCookie(name, value) {
+            var Days = 30;
+            var exp = new Date();
+            exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+            document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
         }
     </script>
 </body>
