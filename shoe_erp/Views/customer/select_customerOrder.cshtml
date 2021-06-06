@@ -31,35 +31,15 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">订单编号</th>
-                                        <th scope="col">用户 ID</th>
+                                        <th scope="col">用户名</th>
                                         <th scope="col">下单时间</th>
                                         <th scope="col">交付时间</th>
-                                        <th scope="col">经手人</th>
                                         <th scope="col">操作人</th>
                                         <th scope="col">已付金额</th>
                                         <th scope="col">未付金额</th>
                                         <th scope="col">订单状态</th>
-                                        <th scope="col">交货方式</th>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <asp:Repeater ID="shoprepeater" runat="server">
-                                        <ItemTemplate>
-                                            <tr>
-                                                <td class="table_td" id="shopid">1</td>
-                                                <td class="table_td" style="width:300px;" id="shopname">1</td>
-                                                <td class="table_td" id="shoptype">1</td>
-                                                <td class="table_td" id="shopprice">1</td>
-                                                <td class="table_td" id="shopnum">1</td>
-                                                <td class="table_td" id="shopsalesnum">1</td>
-                                                <td class="table_td" id="shopram">1</td>
-                                                <td class="table_td" id="shoprom">1</td>
-                                                <td class="table_td" id="shopcpu">1</td>
-                                                <td class="table_td" id="shopcpu">1</td>
-                                            </tr>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                </tbody>
+                                </thead>    
                             </table>
                         </div>
                     </div>
@@ -78,35 +58,59 @@
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- Page-Level Scripts -->
     <script>
+        //$(document).ready(function () {
+        //    $('.dataTables-example').dataTable();
+        //    /*  */
+        //    var oTable = $('#editable').dataTable();
+        //    /*  */
+        //    oTable.$('td').editable('../example_ajax.php', {
+        //        "callback": function (sValue, y) {
+        //            var aPos = oTable.fnGetPosition(this);
+        //            oTable.fnUpdate(sValue, aPos[0], aPos[1]);
+        //        },
+        //        "submitdata": function (value, settings) {
+        //            return {
+        //                "row_id": this.parentNode.getAttribute('id'),
+        //                "column": oTable.fnGetPosition(this)[2]
+        //            };
+        //        },
+        //        "width": "90%",
+        //        "height": "100%"
+        //    });
+        //});
+        //function fnClickAddRow() {
+        //    $('#editable').dataTable().fnAddData([
+        //        "Custom row",
+        //        "New row",
+        //        "New row",
+        //        "New row",
+        //        "New row"]);
+
+        //}
         $(document).ready(function () {
-            $('.dataTables-example').dataTable();
-            /*  */
-            var oTable = $('#editable').dataTable();
-            /*  */
-            oTable.$('td').editable('../example_ajax.php', {
-                "callback": function (sValue, y) {
-                    var aPos = oTable.fnGetPosition(this);
-                    oTable.fnUpdate(sValue, aPos[0], aPos[1]);
+            //$('.dataTables-example').dataTable();
+            $('.dataTables-example').dataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    type: "POST",
+                    url: "https://localhost:44360/api/customer/Ord",
+                    "dataType": "json",
+                    //"dataSrc": "data"                    
                 },
-                "submitdata": function (value, settings) {
-                    return {
-                        "row_id": this.parentNode.getAttribute('id'),
-                        "column": oTable.fnGetPosition(this)[2]
-                    };
-                },
-                "width": "90%",
-                "height": "100%"
+                //columns是绑定表格数据源
+                columns: [
+                    { data: "orderr_id" },
+                    { data: "customer_name" },
+                    { data: "order_starttime" },
+                    { data: "order_endtime" },
+                    { data: "operator_per" },
+                    { data: "order_paid" },
+                    { data: "order_unpaid" },
+                    { data: "order_status" }
+                ]
             });
         });
-        function fnClickAddRow() {
-            $('#editable').dataTable().fnAddData([
-                "Custom row",
-                "New row",
-                "New row",
-                "New row",
-                "New row"]);
-
-        }
     </script>
 
 </body>

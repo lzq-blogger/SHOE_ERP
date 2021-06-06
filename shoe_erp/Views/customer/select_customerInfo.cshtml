@@ -42,7 +42,7 @@
                                         <th scope="col">银行账户</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                @*<tbody>
                                     <asp:Repeater ID="shoprepeater" runat="server">
                                         <ItemTemplate>
                                             <tr v-for="item in info" :key="item.customer_id">
@@ -59,7 +59,7 @@
                                             </tr>
                                         </ItemTemplate>
                                     </asp:Repeater>
-                                </tbody>
+                                </tbody>*@
                             </table>
                         </div>
                     </div>
@@ -77,50 +77,47 @@
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- Page-Level Scripts -->
-    <script src="~/Scripts/vue.min.js"></script>
+    @*<script src="~/Scripts/vue.min.js"></script>*@
     <script>
-        $.ajax({
-            Type: "get",
-            url: "https://localhost:44360/api/customer/cut",
-            dataType: "json",
-            success: function (data) {
-                var vm = new Vue({
-                    el: "#selectshop",
-                    data: {
-                        info: eval(data)
-                    }
-                });
-            }
-        });
+        //$.ajax({
+        //    Type: "get",
+        //    url: "https://localhost:44360/api/customer/cut",
+        //    dataType: "json",
+        //    success: function (data) {
+        //        var vm = new Vue({
+        //            el: "#selectshop",
+        //            data: {
+        //                info: eval(data)
+        //            }
+        //        });
+        //    }
+        //});
         $(document).ready(function () {
-            $('.dataTables-example').dataTable();
-            /*  */
-            var oTable = $('#editable').dataTable();
-            /*  */
-            oTable.$('td').editable('../example_ajax.php', {
-                "callback": function (sValue, y) {
-                    var aPos = oTable.fnGetPosition(this);
-                    oTable.fnUpdate(sValue, aPos[0], aPos[1]);
+            //$('.dataTables-example').dataTable();
+            $('.dataTables-example').dataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    type: "POST",
+                    url: "https://localhost:44360/api/customer/Cut",
+                    "dataType": "json",
+                    //"dataSrc": "data"                    
                 },
-                "submitdata": function (value, settings) {
-                    return {
-                        "row_id": this.parentNode.getAttribute('id'),
-                        "column": oTable.fnGetPosition(this)[2]
-                    };
-                },
-                "width": "90%",
-                "height": "100%"
+                //columns是绑定表格数据源
+                columns: [
+                    { data: "customer_id" },
+                    { data: "customer_name" },
+                    { data: "customer_phone" },
+                    { data: "customer_linkman" },
+                    { data: "customer_email" },
+                    { data: "customer_address" },
+                    { data: "customer_fax" },
+                    { data:"customer_postcode"},
+                    { data: "bank" },
+                    { data: "bank_account" }
+                ]
             });
-        });
-        function fnClickAddRow() {
-            $('#editable').dataTable().fnAddData([
-                "Custom row",
-                "New row",
-                "New row",
-                "New row",
-                "New row"]);
-
-        }
+        });       
     </script>
 
 </body>
