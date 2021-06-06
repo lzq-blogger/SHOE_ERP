@@ -1178,6 +1178,7 @@
     <Content Include="Scripts\morris\morris-0.4.3.min.css" />
     <Content Include="Scripts\morris\morris.js" />
     <Content Include="Scripts\morris\raphael-2.1.0.min.js" />
+    <Content Include="Scripts\vue.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
