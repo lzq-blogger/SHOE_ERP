@@ -1239,8 +1239,6 @@
     <Content Include="Views\materialr_repertory\in_out_statistics.cshtml" />
     <Content Include="Views\sale\customer_order.cshtml" />
     <Content Include="Views\sale\select_customer_order.cshtml" />
-    <Content Include="Views\sale\select_sale_order.cshtml" />
-    <Content Include="Views\sale\sale_order.cshtml" />
     <Content Include="Views\buy_Manage\add_plan.cshtml" />
     <Content Include="Views\money\money_statistics.cshtml" />
     <Content Include="Views\money\money_detail.cshtml" />

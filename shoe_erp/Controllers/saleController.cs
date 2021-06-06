@@ -14,11 +14,6 @@ namespace shoe_erp.Controllers
         {
             return View();
         }
-        //销售订单详情
-        public ActionResult sale_order()
-        {
-            return View();
-        }
         //销售统计
         public ActionResult sale_statistics()
         {
@@ -27,11 +22,6 @@ namespace shoe_erp.Controllers
         //二级页面====================================================
         //查询客户订单  （这里面有出货功能)
         public ActionResult select_customer_order()
-        {
-            return View();
-        }
-        //查询销售订单详情 
-        public ActionResult select_sale_order()
         {
             return View();
         }
