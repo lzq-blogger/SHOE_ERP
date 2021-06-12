@@ -2,7 +2,9 @@
 @{
     Layout = null;
 }
-
+@Scripts.Render("~/bundles/vue")
+@Scripts.Render("~/bundles/element")
+@Styles.Render("~/Content/elementcss")
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -19,8 +21,61 @@
     <link href="/Content/select/css/animate.css" rel="stylesheet" />
     <link href="/Content/select/css/style.css?v=4.1.0" rel="stylesheet" />
     <script src="/Content/select/js/bootstrap.min.js"></script>
+    @*elementui*@
+    <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
+    <style>
+        .table1{
+            width:680px;
+        }
+        .table1 tr {
+            height: 60px;
+        }
+        .table1 tr td {
+            margin-left: 10px;
+        }
+        .dialog1{
+            width:100%;
+        }
+    </style>
 </head>
 <body>
+    @*<div id="app" style="padding:15px;width:1100px;">
+        <el-button type="primary" v-on:click="visible = true" plain icon="el-icon-plus">新增</el-button>
+        <el-button type="primary" icon="el-icon-delete">删除</el-button>
+        <el-dialog :visible.sync="visible" title="新增生产计划" class="dialog1">
+            <table class="table1">
+                <tr>
+                    <td>请选择商品订单号：</td>
+                    <td>
+                        <el-select v-model="value" placeholder="请选择">
+                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>预产数量：</td>
+                    <td>
+                        <el-input-number v-model="num" v-on:change="handleChange" :min="1" :max="200" label="描述文字"></el-input-number>
+                    </td>
+                    <td>操作人：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="input" clearable></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>预计生产时间：</td>
+                    <td>
+                        <el-date-picker v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
+                    </td>
+                    <td>预计结束时间</td>
+                    <td>
+                        <el-date-picker v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
+                    </td>
+                </tr>
+            </table>
+        </el-dialog>
+    </div>*@
     <div id="selectshop">
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
@@ -75,11 +130,40 @@
                     { data: "operator_per" },
                     { data: "product_time" },
                     { data: "product_end_time" },
-                    { data:"status"}
+                    { data: "status" }
                 ]
             });
         });
     </script>
-
+    @*js*@
+    @*<script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/ElementUI/element-ui.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    visible: false,
+                    input: "",
+                    num: '',
+                    options: [{
+                        value: '选项1',
+                        label: '黄金糕'
+                    }, {
+                        value: '选项2',
+                        label: '双皮奶'
+                    }],
+                    value: '',  
+                    value1: '',
+                    value2: '',
+                }
+            },
+            methods: {
+                handleChange(value) {
+                    console.log(value);
+                }
+            }
+        });
+    </script>*@
 </body>
 </html>

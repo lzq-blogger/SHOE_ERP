@@ -22,6 +22,47 @@
     <link href='http://fonts.useso.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="/Content/public/js/Lightweight-Chart/cssCharts.css">
     <link rel="stylesheet" type="text/css" href="/Content/public/css/shop_management.css" />
+    <style>
+        .div1 {
+            width: 220px;
+            height: 120px;
+            background-color: rgba(250,250,250,0.8);
+            box-shadow: 0px 1px 10px 3px rgb(228,228,229);
+        }
+
+        .div2 {
+            width: 400px;
+            height: 120px;
+            background-color: rgba(250,250,250,0.8);
+            box-shadow: 0px 1px 10px 3px rgb(228,228,229);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .div2_1 {
+            width: 50%;
+            height: 100%;
+        }
+
+        .gong {
+            width: 100%;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            font-size: 18px;
+            border-bottom: 1px solid rgb(255,217,102);
+        }
+
+        .shuju {
+            text-align: center;
+            line-height: 80px;
+            font-size: 28px;
+            color:rgb(1, 181, 115);
+            font-family: 'Microsoft YaHei'
+        }
+    </style>
+
+    <link href="~/Content/ElementUI/element-ui.css" rel="stylesheet" />
 </head>
 <body style="background-color: rgb(239,240,244)">
     <div style="height:60px;">
@@ -35,31 +76,89 @@
         </div>
     </div>
     <!--商品管理-->
-    <div style="height:600px;padding:20px;">
+    <div style="height:1000px;padding:20px;">
         @*//头部*@
         <div style="width:100%;height:120px;display:flex;
          justify-content:space-between;">
-            <div style="width:220px;height:120px;background-color:rgba(250,250,250,0.8);
-box-shadow:0px 1px 1px 2px rgb(228,228,229);">
-
+            <div class="div1">
+                <div class="gong">
+                    <i class="el-icon-shopping-cart-2"></i>
+                    总销售量
+                </div>
+                <div class="shuju">
+                   
+                    2000
+                </div>
             </div>
-            <div style="width:220px;height:120px;background-color:rgba(250,250,250,0.8);
-        box-shadow:0px 1px 1px 2px rgb(228,228,229);">
-
+            <div class="div1">
+                <div class="gong">
+                    <i class="el-icon-shopping-cart-2"></i>
+                    今年销量
+                </div>
+                <div class="shuju">
+                   
+                    156
+                </div>
             </div>
-            <div style="width:400px;height:120px;background-color:rgba(250,250,250,0.8);
-        box-shadow:0px 1px 1px 2px rgb(228,228,229);">
-
+            <div class="div2">
+                <div class="div2_1">
+                    <div class="gong">
+                        <i class="el-icon-sold-out"></i>
+                        总支出
+                    </div>
+                    <div class="shuju">
+                     
+                        1,000 万元
+                    </div>
+                </div>
+                <div class="div2_1">
+                    <div class="gong">
+                        <i class="el-icon-sell"></i>
+                        总收入
+                    </div>
+                    <div class="shuju">
+                  
+                        2,000 万元
+                    </div>
+                </div>
             </div>
-            <div style="width:400px;height:120px;background-color:rgba(250,250,250,0.8);
-        box-shadow:0px 1px 1px 2px rgb(228,228,229);">
-
+            <div class="div2">
+                <div class="div2_1">
+                    <div class="gong">
+                        <i class="el-icon-sold-out"></i>
+                        今年支出
+                    </div>
+                    <div class="shuju">
+                     
+                        100 万元
+                    </div>
+                </div>
+                <div class="div2_1">
+                    <div class="gong">
+                        <i class="el-icon-sell"></i>
+                        今年收入
+                    </div>
+                    <div class="shuju">
+                       
+                        200 万元
+                    </div>
+                </div>
             </div>
         </div>
-        <div style="width:100%;height:100%;background-color:rgba(250,250,250,0.8);padding:20px 0 20px 0;
-        margin-top:10px;">
-            <div id="app" style="width:80%;height:400px;margin:0 auto;">
+        <div style="width:100%;height:100%;background-color:rgba(250,250,250,0.8);padding:20px;
+        margin-top:10px; box-shadow: 0px 1px 10px 3px rgb(228,228,229);">
+            <p style="font-size:20px;">销量统计</p>
+            <div id="app" style="width:100%;height:400px;margin:0 auto;">
 
+            </div>
+            <div style="width:100%;height:1px;border-bottom:1px solid rgb(228,228,229)"></div>
+            <p style="font-size:20px;">财务统计</p>
+            <div style="width:100%;height:400px;display:flex;justify-content:space-between;">
+                <div id="app2" style="width:50%;height:400px;">
+                </div>
+                <div style="width:1px;height:100%;border-left:1px solid rgb(228,228,229)"></div>
+                <div id="app3" style="width:50%;height:400px;">
+                </div>
             </div>
         </div>
     </div>
@@ -73,6 +172,7 @@ box-shadow:0px 1px 1px 2px rgb(228,228,229);">
     <script src="/Content/public/js/Lightweight-Chart/jquery.chart.js"></script>
     <script src="/Content/public/js/custom-scripts.js"></script>
     <script src="~/Scripts/echarts.js"></script>
+    <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
         //$.ajax({
         //    url: 'https://localhost:44368/api/Default/ss',
@@ -82,6 +182,7 @@ box-shadow:0px 1px 1px 2px rgb(228,228,229);">
         //        console.log(data);
         //    }
         //});
+        //订单数
         var myChart = echarts.init(document.getElementById('app'));
         var option = {
             tooltip: {
@@ -102,7 +203,7 @@ box-shadow:0px 1px 1px 2px rgb(228,228,229);">
                 }
             },
             legend: {
-                data: ['蒸发量', '降水量', '平均温度']
+                data: ['篮球鞋', '帆布鞋', '皮鞋', '订单数']
             },
             xAxis: [
                 {
@@ -116,45 +217,219 @@ box-shadow:0px 1px 1px 2px rgb(228,228,229);">
             yAxis: [
                 {
                     type: 'value',
-                    name: '水量',
+                    name: '数量/双',
                     min: 0,
                     max: 250,
                     interval: 50,
                     axisLabel: {
-                        formatter: '{value} ml'
+                        formatter: '{value}'
                     }
                 },
                 {
                     type: 'value',
-                    name: '温度',
+                    name: '订单数',
                     min: 0,
                     max: 25,
                     interval: 5,
                     axisLabel: {
-                        formatter: '{value} °C'
+                        formatter: '{value}'
                     }
                 }
             ],
             series: [
                 {
-                    name: '蒸发量',
+                    name: '篮球鞋',
                     type: 'bar',
-                    data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+                    data: [100, 49, 70, 230, 250, 70, 130, 160, 32, 200, 60, 30],
+                    color: '#6ce26c'
                 },
                 {
-                    name: '降水量',
+                    name: '帆布鞋',
                     type: 'bar',
-                    data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                    data: [20, 50, 90, 26, 200, 70, 170, 180, 40, 180, 60, 230],
+                    color: '#6d9eeb'
                 },
                 {
-                    name: '平均温度',
+                    name: '皮鞋',
+                    type: 'bar',
+                    data: [120, 50, 90, 26, 20, 170, 170, 18, 40, 80, 60, 30],
+                    color: '#ffd966'
+                },
+                {
+                    name: '订单数',
                     type: 'line',
                     yAxisIndex: 1,
-                    data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+                    data: [2, 2, 13, 5, 16, 11, 12, 23, 12, 16, 12, 16],
+                    color: '#3d85c6'
                 }
             ]
         };
         myChart.setOption(option);
+
+        //财务收入
+        var myChart2 = echarts.init(document.getElementById('app2'));
+        var i = 12;
+        var j = 23;
+        var z = 45;
+        var option2 = {
+            title: {
+                text: '收入统计',
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b}: {c} ({d}%)'
+            },
+            legend: {
+                data: ['篮球鞋', '帆布鞋', '皮鞋']
+            },
+            series: [
+                {
+                    name: '收入来源',
+                    type: 'pie',
+                    selectedMode: 'single',
+                    radius: [0, '30%'],
+                    label: {
+                        position: 'inner',
+                        fontSize: 14,
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                },
+                {
+                    name: '收入来源',
+                    type: 'pie',
+                    radius: ['35%', '60%'],
+                    labelLine: {
+                        length: 30,
+                    },
+                    label: {
+                        formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                        backgroundColor: '#F6F8FC',
+                        borderColor: '#8C8D8E',
+                        borderWidth: 1,
+                        borderRadius: 4,
+
+                        rich: {
+                            a: {
+                                color: '#6E7079',
+                                lineHeight: 22,
+                                align: 'center'
+                            },
+                            hr: {
+                                borderColor: '#8C8D8E',
+                                width: '100%',
+                                borderWidth: 1,
+                                height: 0
+                            },
+                            b: {
+                                color: '#4C5058',
+                                fontSize: 14,
+                                fontWeight: 'bold',
+                                lineHeight: 33
+                            },
+                            per: {
+                                color: '#fff',
+                                backgroundColor: '#4C5058',
+                                padding: [3, 4],
+                                borderRadius: 4
+                            }
+                        }
+                    },
+                    data: [
+                        { value: i, name: '篮球鞋', itemStyle: { color: '#ff9900' } },
+                        { value: j, name: '帆布鞋', itemStyle: { color: '#674ea7' } },
+                        { value: z, name: '皮鞋', itemStyle: { color: '#6fa8dc' } },
+
+                    ],
+
+                }
+            ]
+        };
+        myChart2.setOption(option2);
+
+        //财务支出
+        var myChart3 = echarts.init(document.getElementById('app3'));
+        var i = 12;
+        var j = 23;
+        var z = 45;
+        var option3 = {
+            title: {
+                text: '支出统计',
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b}: {c} ({d}%)'
+            },
+            legend: {
+                data: ['篮球鞋原料', '帆布鞋原料', '皮鞋原料']
+            },
+            series: [
+                {
+                    name: '支出去向',
+                    type: 'pie',
+                    selectedMode: 'single',
+                    radius: [0, '30%'],
+                    label: {
+                        position: 'inner',
+                        fontSize: 14,
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                },
+                {
+                    name: '支出去向',
+                    type: 'pie',
+                    radius: ['35%', '60%'],
+                    labelLine: {
+                        length: 30,
+                    },
+                    label: {
+                        formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                        backgroundColor: '#F6F8FC',
+                        borderColor: '#8C8D8E',
+                        borderWidth: 1,
+                        borderRadius: 4,
+
+                        rich: {
+                            a: {
+                                color: '#6E7079',
+                                lineHeight: 22,
+                                align: 'center'
+                            },
+                            hr: {
+                                borderColor: '#8C8D8E',
+                                width: '100%',
+                                borderWidth: 1,
+                                height: 0
+                            },
+                            b: {
+                                color: '#4C5058',
+                                fontSize: 14,
+                                fontWeight: 'bold',
+                                lineHeight: 33
+                            },
+                            per: {
+                                color: '#fff',
+                                backgroundColor: '#4C5058',
+                                padding: [3, 4],
+                                borderRadius: 4
+                            }
+                        }
+                    },
+                    data: [
+                        { value: i, name: '篮球鞋原料', itemStyle: { color: '#ffd966' } },
+                        { value: j, name: '帆布鞋原料', itemStyle: { color: '#6d9eeb' } },
+                        { value: z, name: '皮鞋原料', itemStyle: { color: '#e6b8af' } },
+                    ],
+
+                }
+            ]
+        };
+        myChart3.setOption(option3);
+
+
     </script>
 </body>
 
