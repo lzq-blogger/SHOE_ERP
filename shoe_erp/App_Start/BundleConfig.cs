@@ -25,6 +25,14 @@ namespace shoe_erp
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            //element ui
+            bundles.Add(new ScriptBundle("~/bundles/vue").Include(
+                "~/Scripts/vue.js"));
+            bundles.Add(new ScriptBundle("~/bundles/element").Include(
+                            "~/Scripts/ElementUI/element-ui.js"));
+            bundles.Add(new StyleBundle("~/Content/elementcss").Include(
+                                  "~/Content/ElementUI/element-ui.css"));
         }
     }
 }
