@@ -17,7 +17,6 @@
     <!-- Data Tables -->
     <link href="/Content/select/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
     <link href="/Content/select/css/animate.css" rel="stylesheet" />
-    <link href="/Content/select/css/style.css?v=4.1.0" rel="stylesheet" />
     <script src="/Content/select/js/bootstrap.min.js"></script>
 </head>
 <body>
@@ -30,31 +29,15 @@
                             <table class="table table-striped table-bordered table-hover dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th scope="col">用户ID</th>
-                                        <th scope="col">姓名</th>
-                                        <th scope="col">账号</th>
-                                        <th scope="col">密码</th>
+                                        <th scope="col">原料采购计划ID</th>
+                                        <th scope="col">材料名称</th>
+                                        <th scope="col">材料价格(单位：人民币)</th>
+                                        <th scope="col">预计采购数量(单位：个)</th>
+                                        <th scope="col">是否处理状态</th>
                                         <th scope="col">操作</th>
-                                        @*<th scope="col">商品售出</th>
-                                            <th scope="col">机身储存</th>
-                                            <th scope="col">运行内存</th>
-                                            <th scope="col">机身CPU</th>
-                                            <th scope="col">商品上架时间</th>*@
                                     </tr>
                                 </thead>
                                 <!--<tbody>
-                                    <tr>
-                                        <td class="table_td" id="Id">1</td>
-                                        <td class="table_td" style="width:300px;" id="Name">1</td>
-                                        <td class="table_td" id="Account">1</td>
-                                        <td class="table_td" id="Pwd">1</td>-->
-                                @*<td class="table_td" id="shopnum">1</td>
-                                    <td class="table_td" id="shopsalesnum">1</td>
-                                    <td class="table_td" id="shopram">1</td>
-                                    <td class="table_td" id="shoprom">1</td>
-                                    <td class="table_td" id="shopcpu">1</td>
-                                    <td class="table_td" id="shopcpu">1</td>*@
-                                <!--</tr>
                                 </tbody>-->
                             </table>
                         </div>
@@ -63,6 +46,7 @@
             </div>
         </div>
     </div>
+    
     <!-- 全局js -->
     <script src="/Content/select/js/jquery.min.js?v=2.1.4"></script>
     <script src="/Content/select/js/bootstrap.min.js?v=3.3.6"></script>
@@ -74,29 +58,91 @@
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- 分页 Scripts -->
     <script>
+
+        var se_url = "https://localhost:44360/"
         $(document).ready(function () {
-            //$('.dataTables-example').dataTable();
             $('.dataTables-example').dataTable({
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/UserTypeGet/GetAllData",
+                    url: se_url + "Buy_Manage/PostAllData_jihua",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
                 //columns是绑定表格数据源
-                columns: [
-                    { data: "ID" },
-                    { data: "name" },
-                    { data: "account" },
-                    { data: "pwd" },
-                    //{data:"starDate"},
-                    //{data:"salary"},
-                ]
+                "columns": [
+                    { data: "materialr_plan_id" },
+                    { data: "materialr_details_name" },
+                    { data: "materialr_details_price" },
+                    { data: "materialr_details_num" },
+                    { data: "status" },
+                    { data: null },
+                ],
+                "aoColumnDefs": [{
+                    "targets": -1, //操作按钮目标列
+                    //"orderable": false,
+                    //"data": null,
+                    "render": function (data, type, row) {
+                        var id = row.materialr_plan_id;
+                        var html = "<div class='btn-group'>";
+                        html += "<button class='btn btn-primary btn-xs' onclick='btn_row_seach(" + id + ")'><span class='glyphicon glyphicon-search'></span> 查看</button>";
+                        html += "<button class='btn btn-warning btn-xs' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon-edit'></span> 编辑</button>";
+                        html += "<button class='btn btn-danger btn-xs' onclick='btn_row_del(" + id + ")'><span class='glyphicon glyphicon-trash'></span> 删除</button>";
+                        html += "</div>";
+                        return html;
+                    }
+                }]
             });
-        });
-    </script>
 
+            var buttonHtml = " &nbsp;&nbsp;<button id='btn_add' class='btn btn-info btn-sm' onclick='btn_row_add()'><span class='glyphicon glyphicon-plus'></span> 新增</button> &nbsp;&nbsp;";
+            //buttonHtml += "<button class='btn btn-primary btn-sm' id='btnAll'><i class='fa fa-trash'></i> 批量删除</button> &nbsp;&nbsp;";
+            $("div.col-sm-6").eq(0).append(buttonHtml); //追加到length后面
+        });
+
+        //新增
+        function btn_row_add() {
+            $("#hf_editid").val("");
+            $("#cname").val("");
+            $("#cphone").val("");
+            $("#cemail").val("");
+            $("#csex").val("");
+            $("#cbirthday").val("");
+            $("#ccomment").val("");
+            $("#myModal").modal('show');
+        };
+        //行查看按钮
+        function btn_row_seach(id) {
+            $.get(urlS, {
+                "id": id
+            }, function (data, status) {
+                $("#cname").val(data.User_Name);
+                $("#cphone").val(data.Phone);
+                $("#cemail").val(data.Email);
+                $("#csex").val(data.Sex);
+                $("#cbirthday").val(data.BirthDay.replace("T", " "));
+                $("#ccomment").val(data.Comments);
+                $("#btn_save").hide();
+                $("#myModal").modal('show');
+            });
+        }
+        //行编辑按钮
+        function btn_row_edit(id) {
+            $("#hf_editid").val(id);
+
+            $.get(urlS, {
+                "id": id
+            }, function (data, status) {
+                $("#cname").val(data.User_Name);
+                $("#cphone").val(data.Phone);
+                $("#cemail").val(data.Email);
+                $("#csex").val(data.Sex);
+                $("#cbirthday").val(data.BirthDay.replace("T", " "));
+                $("#ccomment").val(data.Comments);
+                $("#btn_save").show();
+                $("#myModal").modal('show');
+            });
+        }
+    </script>
 </body>
 </html>
