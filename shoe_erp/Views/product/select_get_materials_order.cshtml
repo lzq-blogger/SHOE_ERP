@@ -36,6 +36,7 @@
                                         <th scope="col">操作人</th>
                                         <th scope="col">提货状态</th>
                                         <th scope="col">领取日期</th>
+                                        <th scope="col">操作</th>
                                     </tr>
                                 </thead>   
                             </table>
@@ -74,9 +75,26 @@
                     { data: "get_department" },
                     { data: "operator_per" },
                     { data: "status" },
-                    { data: "get_time" }
-                ]
+                    { data: "get_time" },
+                    {data:null}
+                ],
+                "aoColumnDefs": [{
+                    "targets": -1, //操作按钮目标列
+                    //"orderable": false,
+                    //"data": null,
+                    "render": function (data, type, row) {
+                        var id = row.materialr_plan_id;
+                        var html = "<div class='btn-group'>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon - edit'></span> 详情<tton>";
+                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon-edit'></span> 编辑<tton>";
+                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'><span class='glyphicon glyphicon-trash'></span> 删除<tton>";
+                        html += "</div>";
+                        return html;
+                    }
+                }]
             });
+            var buttonHtml = " &nbsp;&nbsp;<button id='btn_add' class='btn btn-info btn-sm' onclick='btn_row_add()'><span class='glyphicon glyphicon-plus'></span> 新增<tton> &nbsp;&nbsp;";
+            $("div.col-sm-6").eq(0).append(buttonHtml); //追加到length后面
         });
     </script>
 
