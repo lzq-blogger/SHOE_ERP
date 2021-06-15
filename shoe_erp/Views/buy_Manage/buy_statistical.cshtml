@@ -43,8 +43,8 @@
 
     </div>
     <!--统计-->
-    <div  style="height:600px;background-color:white;">
-        统计表
+    <div id="app"  style="height:600px;background-color:white;padding:20px;">
+        
     </div>
     <script src="/Content/public/js/jquery-1.10.2.js"></script>
     <script src="/Content/public/js/bootstrap.min.js"></script>
@@ -55,7 +55,94 @@
     <script src="/Content/public/js/easypiechart-data.js"></script>
     <script src="/Content/public/js/Lightweight-Chart/jquery.chart.js"></script>
     <script src="/Content/public/js/custom-scripts.js"></script>
+    <script src="~/Scripts/echarts.js"></script>
+    <script>
+        var myChart = echarts.init(document.getElementById('app'));
+        var option = {
+            color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00', '#ea9999', '#3cffc0'],
+            title: {
+                text: '折线图堆叠'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            toolbox: {
+                feature: {
+                    dataView: { show: true, readOnly: false },
+                    magicType: { show: true, type: ['line', 'bar'] },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            legend: {
+                data: ['篮球鞋鞋底', '篮球鞋鞋面', '篮球鞋鞋舌', '帆布鞋鞋面', '帆布鞋鞋底', '皮鞋鞋面', '皮鞋鞋帮']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: '篮球鞋鞋底',
+                    type: 'line',
+                    stack: '总量',
+                    data: [120, 132, 101, 134, 90, 230, 210, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name: '篮球鞋鞋面',
+                    type: 'line',
+                    stack: '总量',
+                    data: [220, 182, 191, 234, 290, 330, 310, 182, 191, 234, 290, 330, 310]
+                },
+                {
+                    name: '篮球鞋鞋舌',
+                    type: 'line',
+                    stack: '总量',
+                    data: [150, 232, 201, 154, 190, 330, 410, 232, 201, 154, 190, 330, 410]
+                },
+                {
+                    name: '帆布鞋鞋面',
+                    type: 'line',
+                    stack: '总量',
+                    data: [320, 332, 301, 334, 390, 330, 320, 332, 301, 334, 390, 330, 320]
+                },
+                {
+                    name: '帆布鞋鞋底',
+                    type: 'line',
+                    stack: '总量',
+                    data: [820, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320]
+                },
+                {
+                    name: '皮鞋鞋面',
+                    type: 'line',
+                    stack: '总量',
+                    data: [820, 932, 901, 934, 1290, 1330, 1320,820, 932, 901, 934, 1290, 1330, 1320]
+                },
+                {
+                    name: '皮鞋鞋帮',
+                    type: 'line',
+                    stack: '总量',
+                    data: [820, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320]
+                }
+            ]
+        };
+        myChart.setOption(option);
+    </script>
 </body>
-
 </html>
 

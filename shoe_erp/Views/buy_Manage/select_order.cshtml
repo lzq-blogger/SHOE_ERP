@@ -20,7 +20,7 @@
     <link href="/Content/select/css/style.css?v=4.1.0" rel="stylesheet" />
     <script src="/Content/select/js/bootstrap.min.js"></script>
 </head>
-<body  style="background-color:white">
+<body style="background-color:white">
     <div id="selectshop">
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
@@ -30,36 +30,13 @@
                             <table class="table table-striped table-bordered table-hover dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th scope="col">商品ID</th>
-                                        <th scope="col">商品名</th>
-                                        <th scope="col">商品品牌</th>
-                                        <th scope="col">商品价格</th>
-                                        <th scope="col">商品库存</th>
-                                        <th scope="col">商品售出</th>
-                                        <th scope="col">机身储存</th>
-                                        <th scope="col">运行内存</th>
-                                        <th scope="col">机身CPU</th>
-                                        <th scope="col">商品上架时间</th>
+                                        <th scope="col">原料采购计划ID</th>
+                                        <th scope="col">原料信息</th>
+                                        <th scope="col">预计采购数量</th>
+                                        <th scope="col">是否处理状态</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <asp:Repeater ID="shoprepeater" runat="server">
-                                        <ItemTemplate>
-                                            <tr>
-                                                <td class="table_td" id="shopid">1</td>
-                                                <td class="table_td" style="width:300px;" id="shopname">1</td>
-                                                <td class="table_td" id="shoptype">1</td>
-                                                <td class="table_td" id="shopprice">1</td>
-                                                <td class="table_td" id="shopnum">1</td>
-                                                <td class="table_td" id="shopsalesnum">1</td>
-                                                <td class="table_td" id="shopram">1</td>
-                                                <td class="table_td" id="shoprom">1</td>
-                                                <td class="table_td" id="shopcpu">1</td>
-                                                <td class="table_td" id="shopcpu">1</td>
-                                            </tr>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                </tbody>
+                                
                             </table>
                         </div>
                     </div>
@@ -76,37 +53,29 @@
     <script src="/Content/select/js/plugins/dataTables/dataTables.bootstrap.js"></script>
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
-    <!-- Page-Level Scripts -->
+    <!-- 分页 Scripts -->
     <script>
         $(document).ready(function () {
-            $('.dataTables-example').dataTable();
-            /*  */
-            var oTable = $('#editable').dataTable();
-            /*  */
-            oTable.$('td').editable('../example_ajax.php', {
-                "callback": function (sValue, y) {
-                    var aPos = oTable.fnGetPosition(this);
-                    oTable.fnUpdate(sValue, aPos[0], aPos[1]);
+            $('.dataTables-example').dataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    type: "POST",
+                    url: "https://localhost:44360/Materials_plan/POSTAllData",
+                    "dataType": "json",
+                    //"dataSrc": "data"
                 },
-                "submitdata": function (value, settings) {
-                    return {
-                        "row_id": this.parentNode.getAttribute('id'),
-                        "column": oTable.fnGetPosition(this)[2]
-                    };
-                },
-                "width": "90%",
-                "height": "100%"
+                //columns是绑定表格数据源
+                columns: [
+                    { data: "materialr_plan_id" },
+                    { data: "materialr_details_id" },
+                    { data: "materialr_num" },
+                    { data: "status" },
+                    //{data:"starDate"},
+                    //{data:"salary"},
+                ]
             });
         });
-        function fnClickAddRow() {
-            $('#editable').dataTable().fnAddData([
-                "Custom row",
-                "New row",
-                "New row",
-                "New row",
-                "New row"]);
-
-        }
     </script>
 
 </body>

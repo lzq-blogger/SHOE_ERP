@@ -4,70 +4,97 @@
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
-    <link rel="stylesheet" href="~/Content/bootstrap.css">
+    <!-- import CSS -->
+
+    <link href="~/Content/ElementUI/element-ui.css" rel="stylesheet" />
     <style>
-        .form-control {
-            width: 250px;
+        html body {
+            height: 100%;
+        }
+
+        table tr {
+            height: 80px;
         }
     </style>
 </head>
 <body>
-    <div style="width:600px;margin: 0 auto;padding-top:20px;">
-        <table>
+    <div id="app" style="">
+        <table style="margin:0 auto;margin-top:100px;">
             <tr>
+                <td>请选择商品订单号：</td>
                 <td>
-                    <div class="form-group col-md-6">
-                        <label for="inputState">订单ID</label>
-                        <select id="inputState" class="form-control">
-                            <option selected>Choose...</option>
-                            <option>...</option>
-                        </select>
-                    </div>
+                    <el-select v-model="value" placeholder="请选择">
+                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
                 </td>
             </tr>
             <tr>
+                <td>预产数量：</td>
                 <td>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputCity">计划生产数</label>
-                            <input type="number" class="form-control" id="inputCity">
-                        </div>
-                    </div>
+                    <el-input-number v-model="num" v-on:change="handleChange" :min="1" :max="200" label="描述文字"></el-input-number>
                 </td>
+                <td>操作人：</td>
                 <td>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputCity">操作人</label>
-                            <input type="text" class="form-control" id="inputCity">
-                        </div>
-                    </div>
+                    <el-input placeholder="请输入内容" v-model="input" clearable></el-input>
                 </td>
             </tr>
             <tr>
+                <td>预计生产时间：</td>
                 <td>
-                    <div class="form-group col-md-6">
-                        <label for="inputPassword4">计划开始时间</label>
-                        <input type="date" class="form-control" id="inputPassword4">
-                    </div>
+                    <el-date-picker v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
                 </td>
+                <td>预计结束时间</td>
                 <td>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputCity">计划结束时间</label>
-                            <input type="date" class="form-control" id="inputCity">
-                        </div>
-                    </div>
+                    <el-date-picker v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
                 </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center">   <el-button type="primary">新增</el-button></td>
+                <td colspan="2">   <el-button type="primary">取消</el-button></td>
             </tr>
         </table>
     </div>
+    <!-- import Vue before Element -->
+    <script src="~/Scripts/vue.js"></script>
+    <!-- import JavaScript -->
+    <script src="~/Scripts/ElementUI/element-ui.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    visible: true,
+                    input: "",
+                    num: '',
+                    options: [{
+                        value: '选项1',
+                        label: '黄金糕'
+                    }, {
+                        value: '选项2',
+                        label: '双皮奶'
+                    }],
+                    value: '',
+                    pickerOptions: {
+                        disabledDate(time) {
+                            return time.getTime() > Date.now();
+                        },
+                    },
+                    value1: '',
+                    value2: '',
+                }
+            },
+            methods: {
+                handleChange(value) {
+                    console.log(value);
+                }
+            }
+        });
+
+    </script>
 </body>
+
 </html>
