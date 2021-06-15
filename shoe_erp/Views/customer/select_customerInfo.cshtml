@@ -42,24 +42,6 @@
                                         <th scope="col">银行账户</th>
                                     </tr>
                                 </thead>
-                                @*<tbody>
-                                    <asp:Repeater ID="shoprepeater" runat="server">
-                                        <ItemTemplate>
-                                            <tr v-for="item in info" :key="item.customer_id">
-                                                <td class="table_td" id="shopid">{{item.customer_id}}</td>
-                                                <td class="table_td" style="width:300px;" id="shopname">{{item.customer_name}}</td>
-                                                <td class="table_td" id="shoptype">{{item.customer_phone}}</td>
-                                                <td class="table_td" id="shopprice">{{item.customer_linkman}}</td>
-                                                <td class="table_td" id="shopnum">{{item.customer_email}}</td>
-                                                <td class="table_td" id="shopsalesnum">{{item.customer_address}}</td>
-                                                <td class="table_td" id="shopram">{{item.customer_fax}}</td>
-                                                <td class="table_td" id="shoprom">{{item.customer_postcode}}</td>
-                                                <td class="table_td" id="shopcpu">{{item.bank}}</td>
-                                                <td class="table_td" id="shopcpu">{{item.bank_account}}</td>
-                                            </tr>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                </tbody>*@
                             </table>
                         </div>
                     </div>
@@ -77,21 +59,7 @@
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- Page-Level Scripts -->
-    @*<script src="~/Scripts/vue.min.js"></script>*@
     <script>
-        //$.ajax({
-        //    Type: "get",
-        //    url: "https://localhost:44360/api/customer/cut",
-        //    dataType: "json",
-        //    success: function (data) {
-        //        var vm = new Vue({
-        //            el: "#selectshop",
-        //            data: {
-        //                info: eval(data)
-        //            }
-        //        });
-        //    }
-        //});
         $(document).ready(function () {
             //$('.dataTables-example').dataTable();
             $('.dataTables-example').dataTable({
@@ -101,7 +69,7 @@
                     type: "POST",
                     url: "https://localhost:44360/api/customer/Cut",
                     "dataType": "json",
-                    //"dataSrc": "data"                    
+                    //"dataSrc": "data"                
                 },
                 //columns是绑定表格数据源
                 columns: [
@@ -119,6 +87,5 @@
             });
         });       
     </script>
-
 </body>
 </html>
