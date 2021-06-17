@@ -31,11 +31,11 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">生产单ID</th>
-                                        <th scope="col">生产计划单ID</th>
                                         <th scope="col">部门</th>
                                         <th scope="col">操作人</th>
                                         <th scope="col">生产时间</th>
                                         <th scope="col">质检状态</th>
+                                        <th scope="col">操作</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -70,15 +70,29 @@
                 //columns是绑定表格数据源
                 columns: [
                     { data: "pro_production_id" },
-                    { data: "product_plan_id" },
                     { data: "pro_production_dep" },
                     { data: "operator_per" },
                     { data: "product_time" },
-                    { data: "status" }
-                    //{data:"starDate"},
-                    //{data:"salary"},
-                ]
+                    { data: "status" },
+                    {data:null}
+                ],
+                "aoColumnDefs": [{
+                    "targets": -1, //操作按钮目标列
+                    //"orderable": false,
+                    //"data": null,
+                    "render": function (data, type, row) {
+                        var id = row.materialr_plan_id;
+                        var html = "<div class='btn-group'>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon - edit'></span> 详情<tton>";
+                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon-edit'></span> 编辑<tton>";
+                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'><span class='glyphicon glyphicon-trash'></span> 删除<tton>";
+                        html += "</div>";
+                        return html;
+                    }
+                }]
             });
+            var buttonHtml = " &nbsp;&nbsp;<button id='btn_add' class='btn btn-info btn-sm' onclick='btn_row_add()'><span class='glyphicon glyphicon-plus'></span> 新增<tton> &nbsp;&nbsp;";
+            $("div.col-sm-6").eq(0).append(buttonHtml); //追加到length后面
         });
     </script>
 
