@@ -1252,6 +1252,7 @@
     <Content Include="Views\buy_Manage\order_tail.cshtml" />
     <Content Include="Views\index\Index.cshtml" />
     <Content Include="Views\product\add_product_plan.cshtml" />
+    <Content Include="Views\buy_Manage\select_materialr.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

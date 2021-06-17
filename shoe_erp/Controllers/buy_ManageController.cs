@@ -40,6 +40,11 @@ namespace shoe_erp.Controllers
         {
             return View();
         }
+        //查看原料信息界面
+        public ActionResult select_materialr()
+        {
+            return View();
+        }
         //查询采购订单2_1
         public ActionResult select_order()
         {
