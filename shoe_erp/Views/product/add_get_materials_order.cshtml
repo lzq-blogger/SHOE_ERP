@@ -7,21 +7,62 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link href="/Content/select/css/selectshop.css" rel="stylesheet" />
+    <link href="/Content/select/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="/Content/select/css/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/select/css/bootstrap.min.css?v=3.3.6" rel="stylesheet" />
+    <link href="/Content/select/css/font-awesome.css?v=4.4.0" rel="stylesheet" />
+    <!-- Data Tables -->
+    <link href="/Content/select/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="/Content/select/css/animate.css" rel="stylesheet" />
+    <link href="/Content/select/css/style.css?v=4.1.0" rel="stylesheet" />
+    <script src="/Content/select/js/bootstrap.min.js"></script>
     <!-- import CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link href="~/Content/ElementUI/element-ui.css" rel="stylesheet" />
     <style>
         html body {
             height: 100%;
         }
 
-        table tr {
+        .table1 tr {
             height: 60px;
+        }
+
+        .table1 tr td {
+            padding-right: 10px;
+            text-align: right;
         }
     </style>
 </head>
 <body>
+    @*新增领料详情*@
+    <div id="addmate">
+        <el-dialog :visible.sync="visible" title="新增生产计划" width="35%">
+            <table class="table1">
+                <tr>
+                    <td>原料名称：</td>
+                    <td colspan="2">
+                        <el-select v-model="value" placeholder="请选择">
+                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>原料数量：</td>
+                    <td colspan="2">
+                        <el-input-number v-model="num" :min="1" :max="10" label="描述文字"></el-input-number>
+                    </td>
+                    <td>
+                        <el-button type="primary" style="margin-left:30px;">确定</el-button>
+                    </td>
+                </tr>
+            </table>
+        </el-dialog>
+    </div>
+    @*计划单*@
     <div id="app" style="border:1px solid rgb(228, 228, 228);">
-        <table style="margin:0 auto;margin-top:100px;">
+        <table style="margin:0 auto;margin-top:20px;" class="table1">
             <tr>
                 <td>请选择计划单号：</td>
                 <td>
@@ -30,7 +71,66 @@
                         </el-option>
                     </el-select>
                 </td>
+                <td>
+                    <el-button type="primary" icon="el-icon-plus" onclick="tanchu()">领料</el-button>
+                </td>
             </tr>
+        </table>
+    </div>
+    @*领料详情*@
+    <div id="app1" style="padding:20px 60px;">
+        <el-dialog :visible.sync="visible" title="新增生产计划" width="35%">
+            <table class="table1">
+                <tr>
+                    <td>原料数量：</td>
+                    <td colspan="2">
+                        <el-input-number v-model="num" :min="1" :max="100" label="描述文字"></el-input-number>
+                    </td>
+                    <td>
+                        <el-button type="primary" style="margin-left:30px;">确定</el-button>
+                    </td>
+                </tr>
+            </table>
+        </el-dialog>
+        <template>
+            <el-table border="1" :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+                        style="width: 100%;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                <el-table-column width="70px;">
+                    <el-checkbox></el-checkbox>
+                </el-table-column>
+                <el-table-column label="原料名"
+                                    prop="name">
+                </el-table-column>
+                <el-table-column label="原料数量"
+                                    prop="num">
+                </el-table-column>
+                <el-table-column label="原料单价"
+                                    prop="price">
+                </el-table-column>
+                <el-table-column label="原料类别"
+                                    prop="type">
+                </el-table-column>
+                <el-table-column label="原料供应商"
+                                    prop="supplier">
+                </el-table-column>
+                <el-table-column align="right">
+                    <template slot="header" slot-scope="scope">
+                        <el-input v-model="search" placeholder="输入关键字搜索"></el-input>
+                    </template>
+                    <template slot-scope="scope">
+                        <el-button size="mini"
+                                    v-on:click="visible = !visible">编辑</el-button>
+                        <el-button size="mini"
+                                    type="danger"
+                                    v-on:click="">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </template>
+    </div>
+    @*领料单*@
+    <div id="app2" style="border:1px solid rgb(228, 228, 228);">
+        <table style="margin:0 auto;margin-top:20px;" class="table1">
             <tr>
                 <td>领取部门：</td>
                 <td>
@@ -45,7 +145,7 @@
                 <td>提货状态：</td>
                 <td>
                     <el-select v-model="value" placeholder="请选择">
-                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                        <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
                         </el-option>
                     </el-select>
                 </td>
@@ -55,32 +155,113 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2" style="text-align:center">   <el-button type="primary">新增</el-button></td>
-                <td colspan="2">   <el-button type="primary">取消</el-button></td>
+                <td colspan="2" style="text-align:center"><el-button type="primary">确定</el-button></td>
+                <td colspan="2" style="text-align:center"><el-button type="danger">重置</el-button></td>
             </tr>
         </table>
     </div>
-
     <!-- import Vue before Element -->
+    <script src="/Content/select/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/Content/select/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/Content/select/js/plugins/jeditable/jquery.jeditable.js"></script>
+    <!-- Data Tables -->
+    <script src="/Content/select/js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="/Content/select/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <!-- 自定义js -->
+    <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <script src="~/Scripts/vue.js"></script>
     <!-- import JavaScript -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
+        function tanchu() {
+            vm2.visible = true;
+        }
+        //弹窗
+        var vm2 = new Vue({
+            el: '#addmate',
+            data: function () {
+                return {
+                    visible: false,
+                    value: "",
+                    num: 0,
+                    dialogwidth: '60%',
+                    options: [{
+                        value: '篮球鞋底',
+                        label: '篮球鞋底'
+                    }, {
+                        value: '皮鞋鞋底',
+                        label: '皮鞋鞋底'
+                    }],
+                }
+            },
+            methods: {
+                handleChange(value) {
+                    console.log(value);
+                }
+            }
+        });
+        //表单
         new Vue({
             el: '#app',
+            data: function () {
+                return {
+                    options: [{
+                        value: '123456789',
+                        label: '123456789'
+                    }, {
+                        value: '32efe#Ffe9',
+                        label: '32efe#Ffe9'
+                    }],
+                    value: ''
+                }
+            },
+            methods: {
+                handleChange(value) {
+                    console.log(value);
+                }
+            }
+        });
+        //表格
+        new Vue({
+            el: '#app1',
+            data() {
+                return {
+                    tableData: [{
+                        name: "李宁篮球鞋鞋垫",
+                        num: 20,
+                        price: 40,
+                        type: "篮球鞋",
+                        supplier: "李宁篮球鞋垫供应商"
+                    }],
+                    search: '',
+                    visible: false,
+                    num:1,
+                }
+            },
+            methods: {
+                handleEdit(index, row) {
+                    console.log(index, row);
+                },
+                handleDelete(index, row) {
+                    console.log(index, row);
+                }
+            },
+        });
+        //表单
+        new Vue({
+            el: '#app2',
             data: function () {
                 return {
                     visible: true,
                     input: "",
                     num: '',
-                    options: [{
-                        value: '选项1',
-                        label: '黄金糕'
+                    options2: [{
+                        value: '已提货',
+                        label: '已提货'
                     }, {
-                        value: '选项2',
-                        label: '双皮奶'
+                        value: '未提货',
+                        label: '未提货'
                     }],
-                    value: '',
                     pickerOptions: {
                         disabledDate(time) {
                             return time.getTime() > Date.now();
@@ -96,7 +277,6 @@
                 }
             }
         });
-
     </script>
 </body>
 

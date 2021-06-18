@@ -23,63 +23,17 @@
     <script src="/Content/select/js/bootstrap.min.js"></script>
     @*elementui*@
     <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
-    <style>
-        .table1 {
-            width: 680px;
-        }
-
-            .table1 tr {
-                height: 60px;
-            }
-
-                .table1 tr td {
-                    margin-left: 10px;
-                }
-
-        .dialog1 {
-            width: 100%;
-        }
-    </style>
 </head>
 <body>
-    @*<div id="app" style="padding:15px;width:1100px;">
-            <el-button type="primary" v-on:click="visible = true" plain icon="el-icon-plus">新增</el-button>
-            <el-button type="primary" icon="el-icon-delete">删除</el-button>
-            <el-dialog :visible.sync="visible" title="新增生产计划" class="dialog1">
-                <table class="table1">
-                    <tr>
-                        <td>请选择商品订单号：</td>
-                        <td>
-                            <el-select v-model="value" placeholder="请选择">
-                                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>预产数量：</td>
-                        <td>
-                            <el-input-number v-model="num" v-on:change="handleChange" :min="1" :max="200" label="描述文字"></el-input-number>
-                        </td>
-                        <td>操作人：</td>
-                        <td>
-                            <el-input placeholder="请输入内容" v-model="input" clearable></el-input>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>预计生产时间：</td>
-                        <td>
-                            <el-date-picker v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
-                        </td>
-                        <td>预计结束时间</td>
-                        <td>
-                            <el-date-picker v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
-                        </td>
-                    </tr>
-                </table>
-            </el-dialog>
-        </div>*@
     <div id="selectshop">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; padding-bottom: 20px;
+       border-bottom: 1px solid rgb(234 234 234)">
+            <h4>产品生产计划表</h4>
+            <div id="app">
+                <el-button type="primary" icon="el-icon-plus">添加</el-button>
+                <el-button type="danger" icon="el-icon-delete-solid">删除</el-button>
+            </div>
+        </div>
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-sm-12">
@@ -88,11 +42,16 @@
                             <table class="table table-striped table-bordered table-hover dataTables-example">
                                 <thead>
                                     <tr>
+                                        <th scope="col">
+                                            <input type="radio" name="xuan" value="Yxuan" />全选&nbsp;&nbsp;
+                                            <input type="radio" name="xuan" value="Nxuan" />全不选
+                                        </th>
                                         <th scope="col">生产计划ID</th>
                                         <th scope="col">操作人</th>
                                         <th scope="col">计划生产时间</th>
                                         <th scope="col">计划结束时间</th>
                                         <th scope="col">处理状态</th>
+                                        <th scope="col">操作</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -111,9 +70,9 @@
     <script src="/Content/select/js/plugins/dataTables/dataTables.bootstrap.js"></script>
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
-    <script src="~/Scripts/vue.js"></script>
-   <script src="~/Scripts/ElementUI/element-ui.js"></script> 
     <!-- Page-Level Scripts -->
+    <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
         $(document).ready(function () {
             //$('.dataTables-example').dataTable();
@@ -127,11 +86,13 @@
                 },
                 //columns是绑定表格数据源
                 columns: [
+                    { data: null },
                     { data: "product_plan_id" },
                     { data: "operator_per" },
                     { data: "product_time" },
                     { data: "product_end_time" },
-                    { data: "status" }
+                    { data: "status" },
+                    { data: null }
                 ],
                 "aoColumnDefs": [{
                     "targets": -1, //操作按钮目标列
@@ -139,49 +100,47 @@
                     //"data": null,
                     "render": function (data, type, row) {
                         var id = row.materialr_plan_id;
-                        var html = "<div class='btn-group'>";
+                        var html = "<div class='btn-group' id='app1'>";
                         html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon - edit'></span> 详情<tton>";
                         html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon-edit'></span> 编辑<tton>";
                         html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'><span class='glyphicon glyphicon-trash'></span> 删除<tton>";
                         html += "</div>";
                         return html;
                     }
+                }, {
+                    "targets": 0,
+                    "render": function () {
+                        var html = "<div class='btn-group' id='app1'>";
+                        html += "<input type='checkbox' value='' />";
+                        html += "</div>";
+                        return html;
+                    }
                 }]
             });
-
-            var buttonHtml = " &nbsp;&nbsp;<button id='btn_add' class='btn btn-info btn-sm' onclick='btn_row_add()'><span class='glyphicon glyphicon-plus'></span> 新增<tton> &nbsp;&nbsp;";
-            $("div.col-sm-6").eq(0).append(buttonHtml); //追加到length后面
         });
-    </script>
-    @*js*@
+        var vm1 = new Vue({
+            el: "#app1",
+            data: {
 
-    @*
-        <script>
-            new Vue({
-                el: '#app',
-                data: function () {
-                    return {
-                        visible: false,
-                        input: "",
-                        num: '',
-                        options: [{
-                            value: '选项1',
-                            label: '黄金糕'
-                        }, {
-                            value: '选项2',
-                            label: '双皮奶'
-                        }],
-                        value: '',
-                        value1: '',
-                        value2: '',
-                    }
+            },
+            methods: {
+                details_click: function (value) {
+                    console.log('点击了详情按钮');
                 },
-                methods: {
-                    handleChange(value) {
-                        console.log(value);
-                    }
+                delete_click: function (value) {
+                    console.log('点击了删除按钮');
+                },
+                edit_click: function (value) {
+                    console.log('点击了编辑按钮');
                 }
-            });
-        </script>*@
+            }
+        });
+        new Vue({
+            el: "#app",
+            data: {
+
+            }
+        })
+    </script>
 </body>
 </html>
