@@ -24,11 +24,10 @@
 </head>
 <body>
     <div id="selectshop">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; padding-bottom: 20px;
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px;
        border-bottom: 1px solid rgb(234 234 234)">
             <h4>领料单表</h4>
             <div id="app">
-                <el-button type="primary" icon="el-icon-plus">添加</el-button>
                 <el-button type="danger" icon="el-icon-delete-solid">删除</el-button>
             </div>
         </div>
@@ -119,8 +118,6 @@
                         }
                     }]
             });
-            //var buttonHtml = " &nbsp;&nbsp;<button id='btn_add' class='btn btn-info btn-sm' onclick='btn_row_add()'><span class='glyphicon glyphicon-plus'></span> 新增<tton> &nbsp;&nbsp;";
-            //$("div.col-sm-6").eq(0).append(buttonHtml); //追加到length后面
         });
         new Vue({
             el: "#app",

@@ -22,15 +22,31 @@
     <link href="/Content/select/css/style.css?v=4.1.0" rel="stylesheet" />
     <script src="/Content/select/js/bootstrap.min.js"></script>
     @*elementui*@
+    <style>
+        .table3 tr {
+            height: 60px;
+        }
+
+        .table3 tr .texttd {
+            padding: 0px 10px 0px 10px;
+            text-align: right;
+        }
+        .table3 tr .textinput {
+            padding: 0px 10px 0px 0px;
+            text-align: left;
+        }
+        .btn {
+            text-align: center;
+        }
+    </style>
     <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
 </head>
 <body>
     <div id="selectshop">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; padding-bottom: 20px;
-       border-bottom: 1px solid rgb(234 234 234)">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
             <h4>产品生产计划表</h4>
             <div id="app">
-                <el-button type="primary" icon="el-icon-plus">添加</el-button>
+                <el-button type="primary" icon="el-icon-plus" onclick="tanchu()">添加</el-button>
                 <el-button type="danger" icon="el-icon-delete-solid">删除</el-button>
             </div>
         </div>
@@ -61,6 +77,49 @@
             </div>
         </div>
     </div>
+    <div id="app1">
+        <el-dialog :visible.sync="visible" title="新增生产计划" width="60%">
+            <table class="table3">
+                <tr>
+                    <td class="texttd">请选择商品订单号：</td>
+                    <td class="textinput">
+                        <el-select v-model="value" placeholder="请选择">
+                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="texttd">预产数量：</td>
+                    <td class="textinput">
+                        <el-input-number v-model="num" :min="1" :max="200" label="描述文字"></el-input-number>
+                    </td>
+                    <td class="texttd">操作人：</td>
+                    <td class="textinput">
+                        <el-input placeholder="请输入内容" v-model="input" clearable></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="texttd">预计生产时间：</td>
+                    <td class="textinput">
+                        <el-date-picker v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
+                    </td>
+                    <td class="texttd">预计结束时间</td>
+                    <td class="textinput">
+                        <el-date-picker v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="btn">
+                        <el-button type="primary">确定</el-button>
+                    </td>
+                    <td colspan="2" class="btn">
+                        <el-button type="danger">重置</el-button>
+                    </td>
+                </tr>
+            </table>
+        </el-dialog>
+    </div>
     <!-- 全局js -->
     <script src="/Content/select/js/jquery.min.js?v=2.1.4"></script>
     <script src="/Content/select/js/bootstrap.min.js?v=3.3.6"></script>
@@ -74,6 +133,9 @@
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
+        function tanchu() {
+            vm2.visible = true;
+        }
         $(document).ready(function () {
             //$('.dataTables-example').dataTable();
             $('.dataTables-example').dataTable({
@@ -119,7 +181,7 @@
             });
         });
         var vm1 = new Vue({
-            el: "#app1",
+            el: "#app",
             data: {
 
             },
@@ -135,10 +197,10 @@
                 }
             }
         });
-        new Vue({
-            el: "#app",
+        var vm2 = new Vue({
+            el: "#app1",
             data: {
-
+                visible: false
             }
         })
     </script>
