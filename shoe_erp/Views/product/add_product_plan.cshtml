@@ -15,14 +15,21 @@
             height: 100%;
         }
 
-        table tr {
+       .table1 tr {
             height: 80px;
+        }
+        .table1 tr .td_text {
+            padding: 0px 10px 0px 10px;
+            text-align: right;
+        }
+        .btn{
+            text-align:center;
         }
     </style>
 </head>
 <body>
-    <div id="app" style="">
-        <table style="margin:0 auto;margin-top:100px;">
+    <div id="app" style="margin:0 auto;width:750px;padding-top:50px;">
+        <table class="table1">
             <tr>
                 <td>请选择商品订单号：</td>
                 <td>
@@ -35,7 +42,7 @@
             <tr>
                 <td>预产数量：</td>
                 <td>
-                    <el-input-number v-model="num" v-on:change="handleChange" :min="1" :max="200" label="描述文字"></el-input-number>
+                    <el-input-number v-model="num"  :min="1" :max="200" label="描述文字"></el-input-number>
                 </td>
                 <td>操作人：</td>
                 <td>
@@ -53,8 +60,12 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2" style="text-align:center">   <el-button type="primary">新增</el-button></td>
-                <td colspan="2">   <el-button type="primary">取消</el-button></td>
+                <td colspan="2" class="btn">
+                    <el-button type="primary">确定</el-button>
+                </td>
+                <td colspan="2" class="btn">
+                    <el-button type="danger">重置</el-button>
+                </td>
             </tr>
         </table>
     </div>
@@ -87,11 +98,6 @@
                     value2: '',
                 }
             },
-            methods: {
-                handleChange(value) {
-                    console.log(value);
-                }
-            }
         });
 
     </script>
