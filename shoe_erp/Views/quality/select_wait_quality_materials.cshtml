@@ -19,9 +19,17 @@
     <link href="/Content/select/css/animate.css" rel="stylesheet" />
     <link href="/Content/select/css/style.css?v=4.1.0" rel="stylesheet" />
     <script src="/Content/select/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
 </head>
 <body>
     <div id="selectshop">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
+            <h4>原料质检单表</h4>
+            <div id="app">
+                <el-button type="primary" icon="el-icon-plus" onclick="tanchu()">添加</el-button>
+                <el-button type="danger" icon="el-icon-delete-solid">删除</el-button>
+            </div>
+        </div>
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-sm-12">
@@ -30,6 +38,10 @@
                             <table class="table table-striped table-bordered table-hover dataTables-example">
                                 <thead>
                                     <tr>
+                                        <th scope="col">
+                                            <input type="radio" name="xuan" value="Yxuan" />全选&nbsp;&nbsp;
+                                            <input type="radio" name="xuan" value="Nxuan" />全不选
+                                        </th>
                                         <th scope="col">质检单ID</th>
                                         <th scope="col">材料入库订单</th>
                                         <th scope="col">质检时间</th>
@@ -55,6 +67,9 @@
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- Page-Level Scripts -->
+    <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/ElementUI/element-ui.js"></script>
+    <!-- Page-Level Scripts -->
     <script>
         $(document).ready(function () {
             //$('.dataTables-example').dataTable();
@@ -65,16 +80,17 @@
                     type: "POST",
                     url: "https://localhost:44360/api/quality/YlZj",
                     "dataType": "json",
-                    //"dataSrc": "data"                    
+                    //"dataSrc": "data"
                 },
                 //columns是绑定表格数据源
                 columns: [
+                    { data: null },
                     { data: "quality_testing_id" },
                     { data: "in_materialr_id" },
                     { data: "quality_testing_time" },
                     { data: "operator_per" },
                     { data: "result" },
-                    { data: null}
+                    { data: null }
                 ],
                 "aoColumnDefs": [{
                     "targets": -1, //操作按钮目标列
@@ -89,11 +105,23 @@
                         html += "</div>";
                         return html;
                     }
+                }, {
+                    "targets": 0,
+                    "render": function () {
+                        var html = "<div class='btn-group' id='app1'>";
+                        html += "<input type='checkbox' value='' />";
+                        html += "</div>";
+                        return html;
+                    }
                 }]
             });
-            var buttonHtml = " &nbsp;&nbsp;<button id='btn_add' class='btn btn-info btn-sm' onclick='btn_row_add()'><span class='glyphicon glyphicon-plus'></span> 新增<tton> &nbsp;&nbsp;";
-            $("div.col-sm-6").eq(0).append(buttonHtml); //追加到length后面
-        }); 
+        });
+        var vm1 = new Vue({
+            el: "#app",
+            data: {
+
+            }
+        });
     </script>
 
 </body>
