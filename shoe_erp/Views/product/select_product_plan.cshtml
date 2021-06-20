@@ -2,9 +2,7 @@
 @{
     Layout = null;
 }
-@Scripts.Render("~/bundles/vue")
-@Scripts.Render("~/bundles/element")
-@Styles.Render("~/Content/elementcss")
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -21,30 +19,65 @@
     <link href="/Content/select/css/animate.css" rel="stylesheet" />
     <link href="/Content/select/css/style.css?v=4.1.0" rel="stylesheet" />
     <script src="/Content/select/js/bootstrap.min.js"></script>
-    @*elementui*@
     <style>
-        .table3 tr {
-            height: 60px;
+        .table1 tr {
+            height: 65px;
         }
-
-        .table3 tr .texttd {
-            padding: 0px 10px 0px 10px;
-            text-align: right;
-        }
-        .table3 tr .textinput {
-            padding: 0px 10px 0px 0px;
-            text-align: left;
-        }
-        .btn {
-            text-align: center;
-        }
+            .table1 tr .tdtext{
+                padding-left:20px;
+            }
     </style>
+    @*elementui*@
     <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
+
 </head>
 <body>
+    <div id="app1">
+        <el-dialog :visible.sync="visible" title="新增生产计划">
+            <table class="table1">
+                <tr>
+                    <td>请选择商品订单号：</td>
+                    <td>
+                        <el-select v-model="value" placeholder="请选择">
+                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>预产数量：</td>
+                    <td>
+                        <el-input-number v-model="num" :min="1" :max="200" label="描述文字"></el-input-number>
+                    </td>
+                    <td class="tdtext">操作人：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="input" clearable></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>预计生产时间：</td>
+                    <td>
+                        <el-date-picker v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
+                    </td>
+                    <td class="tdtext">预计结束时间</td>
+                    <td>
+                        <el-date-picker v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <el-button type="primary">确定</el-button>
+                    </td>
+                    <td colspan="2">
+                        <el-button type="danger">重置</el-button>
+                    </td>
+                </tr>
+            </table>
+        </el-dialog>
+    </div>
     <div id="selectshop">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
-            <h4>产品生产计划表</h4>
+            <h4>产品登记表</h4>
             <div id="app">
                 <el-button type="primary" icon="el-icon-plus" onclick="tanchu()">添加</el-button>
                 <el-button type="danger" icon="el-icon-delete-solid">删除</el-button>
@@ -77,49 +110,6 @@
             </div>
         </div>
     </div>
-    <div id="app1">
-        <el-dialog :visible.sync="visible" title="新增生产计划" width="60%">
-            <table class="table3">
-                <tr>
-                    <td class="texttd">请选择商品订单号：</td>
-                    <td class="textinput">
-                        <el-select v-model="value" placeholder="请选择">
-                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="texttd">预产数量：</td>
-                    <td class="textinput">
-                        <el-input-number v-model="num" :min="1" :max="200" label="描述文字"></el-input-number>
-                    </td>
-                    <td class="texttd">操作人：</td>
-                    <td class="textinput">
-                        <el-input placeholder="请输入内容" v-model="input" clearable></el-input>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="texttd">预计生产时间：</td>
-                    <td class="textinput">
-                        <el-date-picker v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
-                    </td>
-                    <td class="texttd">预计结束时间</td>
-                    <td class="textinput">
-                        <el-date-picker v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="btn">
-                        <el-button type="primary">确定</el-button>
-                    </td>
-                    <td colspan="2" class="btn">
-                        <el-button type="danger">重置</el-button>
-                    </td>
-                </tr>
-            </table>
-        </el-dialog>
-    </div>
     <!-- 全局js -->
     <script src="/Content/select/js/jquery.min.js?v=2.1.4"></script>
     <script src="/Content/select/js/bootstrap.min.js?v=3.3.6"></script>
@@ -132,10 +122,8 @@
     <!-- Page-Level Scripts -->
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
+    <!-- Page-Level Scripts -->
     <script>
-        function tanchu() {
-            vm2.visible = true;
-        }
         $(document).ready(function () {
             //$('.dataTables-example').dataTable();
             $('.dataTables-example').dataTable({
@@ -162,7 +150,7 @@
                     //"data": null,
                     "render": function (data, type, row) {
                         var id = row.materialr_plan_id;
-                        var html = "<div class='btn-group' id='app1'>";
+                        var html = "<div class='btn-group'>";
                         html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon - edit'></span> 详情<tton>";
                         html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon-edit'></span> 编辑<tton>";
                         html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'><span class='glyphicon glyphicon-trash'></span> 删除<tton>";
@@ -184,25 +172,44 @@
             el: "#app",
             data: {
 
+            }
+        });
+
+        var vm = new Vue({
+            el: '#app1',
+            data: function () {
+                return {
+                    visible: false,
+                    input: "",
+                    num: '',
+                    options: [{
+                        value: '选项1',
+                        label: '黄金糕'
+                    }, {
+                        value: '选项2',
+                        label: '双皮奶'
+                    }],
+                    value: '',
+                    pickerOptions: {
+                        disabledDate(time) {
+                            return time.getTime() > Date.now();
+                        },
+                    },
+                    value1: '',
+                    value2: '',
+                }
             },
             methods: {
-                details_click: function (value) {
-                    console.log('点击了详情按钮');
-                },
-                delete_click: function (value) {
-                    console.log('点击了删除按钮');
-                },
-                edit_click: function (value) {
-                    console.log('点击了编辑按钮');
+                handleChange(value) {
+                    console.log(value);
                 }
             }
         });
-        var vm2 = new Vue({
-            el: "#app1",
-            data: {
-                visible: false
-            }
-        })
+
+        function tanchu() {
+            vm.visible = true;
+        }
     </script>
+
 </body>
 </html>

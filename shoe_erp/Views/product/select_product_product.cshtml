@@ -19,15 +19,65 @@
     <link href="/Content/select/css/animate.css" rel="stylesheet" />
     <link href="/Content/select/css/style.css?v=4.1.0" rel="stylesheet" />
     <script src="/Content/select/js/bootstrap.min.js"></script>
+    <style>
+        .table1 tr {
+            height: 65px;
+        }
+            .table1 tr .tdtext {
+                padding-left: 20px;
+            }
+    </style>
     @*elementui*@
     <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
+
 </head>
 <body>
+    <div id="app1">
+        <el-dialog :visible.sync="visible" title="新增生产计划" width="55%">
+            <table class="table1">
+                <tr>
+                    <td>生产计划详情单号：</td>
+                    <td>
+                        <el-select v-model="value" placeholder="请选择">
+                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>生产部门车间：</td>
+                    <td>
+                        <el-select v-model="value" placeholder="请选择">
+                            <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </td>
+                    <td class="tdtext">操作人：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="input" clearable></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>生产时间：</td>
+                    <td>
+                        <el-date-picker v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
+                    </td>
+                    <td class="tdtext">质检状态：</td>
+                    <td>
+                        <el-select v-model="value" placeholder="请选择">
+                            <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </td>
+                </tr>
+            </table>
+        </el-dialog>
+    </div>
     <div id="selectshop">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
             <h4>产品登记表</h4>
             <div id="app">
-                <el-button type="primary" icon="el-icon-plus">添加</el-button>
+                <el-button type="primary" icon="el-icon-plus" onclick="tanchu()">添加</el-button>
                 <el-button type="danger" icon="el-icon-delete-solid">删除</el-button>
             </div>
         </div>
@@ -100,29 +150,76 @@
                     "render": function (data, type, row) {
                         var id = row.materialr_plan_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon-edit'></span> 详情<tton>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon - edit'></span> 详情<tton>";
                         html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon-edit'></span> 编辑<tton>";
                         html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'><span class='glyphicon glyphicon-trash'></span> 删除<tton>";
                         html += "</div>";
                         return html;
                     }
                 }, {
-                        "targets": 0,
-                        "render": function () {
-                            var html = "<div class='btn-group' id='app1'>";
-                            html += "<input type='checkbox' value='' />";
-                            html += "</div>";
-                            return html;
-                        }
-                    }]
+                    "targets": 0,
+                    "render": function () {
+                        var html = "<div class='btn-group' id='app1'>";
+                        html += "<input type='checkbox' value='' />";
+                        html += "</div>";
+                        return html;
+                    }
+                }]
             });
         });
-        new Vue({
+        var vm1 = new Vue({
             el: "#app",
             data: {
 
             }
-        })
+        });
+
+        var vm = new Vue({
+            el: '#app1',
+            data: function () {
+                return {
+                    visible: false,
+                    input: "",
+                    num: '',
+                    dialogwidth: '60%',
+                    options: [{
+                        value: '1',
+                        label: '1'
+                    }, {
+                        value: '2',
+                        label: '2'
+                    }], options1: [{
+                        value: '第一生产车间',
+                        label: '第一生产车间'
+                    }, {
+                        value: '第二生产车间',
+                        label: '第二生产车间'
+                    }], options2: [{
+                        value: '未质检',
+                        label: '未质检'
+                    }, {
+                        value: '已质检',
+                        label: '已质检'
+                    }],
+                    value: '',
+                    pickerOptions: {
+                        disabledDate(time) {
+                            return time.getTime() > Date.now();
+                        },
+                    },
+                    value1: '',
+                    value2: '',
+                }
+            },
+            methods: {
+                handleChange(value) {
+                    console.log(value);
+                }
+            }
+        });
+        function tanchu() {
+            vm.visible = true;
+        }
     </script>
 
 </body>
