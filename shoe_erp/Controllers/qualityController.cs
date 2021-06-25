@@ -35,7 +35,7 @@ namespace shoe_erp.Controllers
         {
             return View();
         }
-        //查询原料入库订单（主要查没有质检的）
+        //查询采购订单表（主要查没有质检的）
         public ActionResult select_product_materials()
         {
             return View();
