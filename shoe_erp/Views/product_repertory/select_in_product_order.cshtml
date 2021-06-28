@@ -40,7 +40,6 @@
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
             <h4>产品入库登记表</h4>
             <div id="app">
-                <el-button type="primary" icon="el-icon-plus" onclick="tanchu()">添加</el-button>
                 <el-button type="danger" icon="el-icon-delete-solid">删除</el-button>
             </div>
         </div>
@@ -56,12 +55,11 @@
                                             <input type="radio" name="xuan" value="Yxuan" />全选&nbsp;&nbsp;
                                             <input type="radio" name="xuan" value="Nxuan" />全不选
                                         </th>
-                                        <th scope="col">产品名</th>
-                                        <th scope="col">质检单号</th>
+                                        <th scope="col">入库ID</th>
                                         <th scope="col">产品登记号</th>
-                                        <th scope="col">质检时间</th>
+                                        <th scope="col">经手人</th>
                                         <th scope="col">操作人</th>
-                                        <th scope="col">质检结果</th>
+                                        <th scope="col">入库时间</th>
                                         <th scope="col">操作</th>
                                     </tr>
                                 </thead>
@@ -92,19 +90,18 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/pro_repertory/select_in_product",
+                    url: "https://localhost:44360/api/pro_repertory/select_in_product_order",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
                 //columns是绑定表格数据源
                 columns: [
                     { data: null },
-                    { data: "product_name" },
-                    { data: "quality_testing_id" },
+                    { data: "in_repertory_id" },
                     { data: "pro_production_id" },
-                    { data: "quality_testing_time" },
+                    { data: "person_handling" },
                     { data: "operator_per" },
-                    { data: "result" },
+                    { data: "in_time" },
                     { data: null }
                 ],
                 "aoColumnDefs": [{
@@ -114,9 +111,8 @@
                     "render": function (data, type, row) {
                         var id = row.materialr_plan_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon - edit'></span> 详情<tton>";
-                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon-edit'></span> 编辑<tton>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'><span class='glyphicon glyphicon-trash'></span> 删除<tton>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'>详情<tton>";
+                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除<tton>";
                         html += "</div>";
                         return html;
                     }
