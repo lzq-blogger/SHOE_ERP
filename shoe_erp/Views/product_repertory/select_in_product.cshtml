@@ -38,7 +38,7 @@
 <body>
     <div id="selectshop">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
-            <h4>产品库存表</h4>
+            <h4>产品入库登记表</h4>
             <div id="app">
                 <el-button type="danger" icon="el-icon-delete-solid">删除</el-button>
             </div>
@@ -55,11 +55,12 @@
                                             <input type="radio" name="xuan" value="Yxuan" />全选&nbsp;&nbsp;
                                             <input type="radio" name="xuan" value="Nxuan" />全不选
                                         </th>
-                                        <th scope="col">商品库存ID</th>
-                                        <th scope="col">商品名</th>
-                                        <th scope="col">产品类型</th>
-                                        <th scope="col">产品价格</th>
-                                        <th scope="col">产品数量</th>
+                                        <th scope="col">产品名</th>
+                                        <th scope="col">质检单号</th>
+                                        <th scope="col">产品登记号</th>
+                                        <th scope="col">质检时间</th>
+                                        <th scope="col">操作人</th>
+                                        <th scope="col">质检结果</th>
                                         <th scope="col">操作</th>
                                     </tr>
                                 </thead>
@@ -79,9 +80,9 @@
     <script src="/Content/select/js/plugins/dataTables/dataTables.bootstrap.js"></script>
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
+    <!-- Page-Level Scripts -->
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
-    <!-- Page-Level Scripts -->
     <script>
         $(document).ready(function () {
             //$('.dataTables-example').dataTable();
@@ -90,18 +91,20 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/pro_repertory/select_product",
-                    "dataType": "json"
+                    url: "https://localhost:44360/api/pro_repertory/select_in_product",
+                    "dataType": "json",
+                    //"dataSrc": "data"
                 },
                 //columns是绑定表格数据源
                 columns: [
-                    {data:null},
-                    { data: "repertory_id" },
+                    { data: null },
                     { data: "product_name" },
-                    { data: "product_type" },
-                    { data: "product_price" },
-                    { data: "pro_repertory_num" },
-                    {data:null}
+                    { data: "quality_testing_id" },
+                    { data: "pro_production_id" },
+                    { data: "quality_testing_time" },
+                    { data: "operator_per" },
+                    { data: "result" },
+                    { data: null }
                 ],
                 "aoColumnDefs": [{
                     "targets": -1, //操作按钮目标列
@@ -109,9 +112,10 @@
                     //"data": null,
                     "render": function (data, type, row) {
                         var id = row.materialr_plan_id;
-                        var html = "<div class='btn-group' id='app'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon - edit'></span> 详情<tton>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'><span class='glyphicon glyphicon-trash'></span> 删除<tton>";
+                        var html = "<div class='btn-group'>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'>入库<tton>";
+                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'>详情<tton>";
+                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除<tton>";
                         html += "</div>";
                         return html;
                     }
@@ -119,7 +123,7 @@
                     "targets": 0,
                     "render": function () {
                         var html = "<div class='btn-group' id='app1'>";
-                        html += "<input type='checkbox' value='' style='width:15px;height:15px;box-shadow: 0px 1px 10px 3px rgb(228,228,229);'/>";
+                        html += "<input type='checkbox' value=''  style='width:15px;height:15px;box-shadow: 0px 1px 10px 3px rgb(228,228,229);'/>";
                         html += "</div>";
                         return html;
                     }

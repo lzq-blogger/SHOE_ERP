@@ -138,6 +138,7 @@
     <Compile Include="Controllers\loginController.cs" />
     <Compile Include="Controllers\materialr_repertoryController.cs" />
     <Compile Include="Controllers\moneyController.cs" />
+    <Compile Include="Controllers\orderController.cs" />
     <Compile Include="Controllers\productController.cs" />
     <Compile Include="Controllers\product_repertoryController.cs" />
     <Compile Include="Controllers\qualityController.cs" />
@@ -1252,6 +1253,8 @@
     <Content Include="Views\buy_Manage\order_tail.cshtml" />
     <Content Include="Views\index\Index.cshtml" />
     <Content Include="Views\product\add_product_plan.cshtml" />
+    <Content Include="Views\order\customerOrder_statistical.cshtml" />
+    <Content Include="Views\product_repertory\select_in_product.cshtml" />
     <Content Include="Views\buy_Manage\select_materialr.cshtml" />
   </ItemGroup>
   <ItemGroup>

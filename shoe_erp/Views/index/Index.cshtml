@@ -52,7 +52,6 @@
                         <ul class="sub-menu-list">
                             <li><a href="/customer/customerInfo" target="iframs">客户信息</a></li>
                             <li><a href="/customer/customerOrder" target="iframs">客户订单管理</a></li>
-                            <li><a href="/customer/customerOrder_statistical" target="iframs">客户订单统计</a></li>
                         </ul>
                     </li>
                     <li class="menu-list">
@@ -60,13 +59,13 @@
                         <ul class="sub-menu-list">
                             <li><a href="/product/product_plan" target="iframs">生产计划</a></li>
                             <li><a href="/product/get_materials" target="iframs">领料管理</a></li>
-                            <li><a href="/product/product_product" target="iframs">产品生产</a></li>
+                            <li><a href="/product/product_product" target="iframs">产品登记</a></li>
                         </ul>
                     </li>
                     <li class="menu-list">
                         <a href=""><i class="fa fa-envelope"></i> <span>销售管理</span></a>
                         <ul class="sub-menu-list">
-                            <li><a href="/sale/customer_order" target="iframs">客户订单管理</a></li>
+                            <li><a href="/sale/customer_order" target="iframs">客户订单处理</a></li>
                             <li><a href="/sale/sale_statistics" target="iframs">销售统计</a></li>
                         </ul>
                     </li>
@@ -102,9 +101,14 @@
                             <li><a href="/money/money_statistics" target="iframs">财务统计</a></li>
                         </ul>
                     </li>
+                    <li class="menu-list">
+                        <a href="#"><i class="fa fa-map-marker"></i> <span>订单跟踪</span></a>
+                        <ul class="sub-menu-list">
+                            <li><a href="/order/customerOrder_statistical" target="iframs">客户订单跟踪</a></li>
+                        </ul>
+                    </li>
 
                 </ul>
-                <!--sidebar nav end-->
             </div>
         </div>
         <div class="main-content" style="height:1000px;padding-top:60px;background-color:rgb(239,240,244)">
@@ -263,9 +267,9 @@
                                 <i class="fa fa-bell-o"></i>
                                 <span class="badge">4</span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-head pull-right">
-                                <h5 class="title">未处理订单数</h5>
-                                <ul class="dropdown-list normal-list">
+                            <!--<div class="dropdown-menu dropdown-menu-head pull-right">
+                                <h5 class="title">未处理订单数</h5>-->
+                                @*<ul class="dropdown-list normal-list">
                                     <li class="new">
                                         <a href="">
                                             <span class="label label-danger"><i class="fa fa-bolt"></i></span>
@@ -295,8 +299,8 @@
                                         </a>
                                     </li>
                                     <li class="new"><a href="">See All Notifications</a></li>
-                                </ul>
-                            </div>
+                                </ul>*@
+                            <!--</div>-->
                         </li>
                         <li>
                             <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
