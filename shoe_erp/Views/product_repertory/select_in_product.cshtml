@@ -37,16 +37,10 @@
 </head>
 <body>
     <div id="selectshop">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px;
-       border-bottom: 1px solid rgb(234 234 234)">
-            <h4>领料单表</h4>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
+            <h4>产品入库登记表</h4>
             <div id="app">
-                <a style="color:gray" href="/product/add_get_materials_order">
-                    <el-button type="primary" icon="el-icon-plus" style="background-color: rgb(52,123,183);">
-                        添加
-                    </el-button>
-                </a>
-                <el-button type="danger" icon="el-icon-delete-solid" style="background-color: rgb(217,84,80);">删除</el-button>
+                <el-button type="danger" icon="el-icon-delete-solid">删除</el-button>
             </div>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
@@ -61,12 +55,12 @@
                                             <input type="radio" name="xuan" value="Yxuan" />全选&nbsp;&nbsp;
                                             <input type="radio" name="xuan" value="Nxuan" />全不选
                                         </th>
-                                        <th scope="col">领料单ID</th>
-                                        <th scope="col">计划单ID</th>
-                                        <th scope="col">领取部门</th>
+                                        <th scope="col">产品名</th>
+                                        <th scope="col">质检单号</th>
+                                        <th scope="col">产品登记号</th>
+                                        <th scope="col">质检时间</th>
                                         <th scope="col">操作人</th>
-                                        <th scope="col">提货状态</th>
-                                        <th scope="col">领取日期</th>
+                                        <th scope="col">质检结果</th>
                                         <th scope="col">操作</th>
                                     </tr>
                                 </thead>
@@ -89,7 +83,6 @@
     <!-- Page-Level Scripts -->
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
-    <!-- Page-Level Scripts -->
     <script>
         $(document).ready(function () {
             //$('.dataTables-example').dataTable();
@@ -98,19 +91,19 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/product/select_get_materials",
+                    url: "https://localhost:44360/api/pro_repertory/select_in_product",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
                 //columns是绑定表格数据源
                 columns: [
                     { data: null },
-                    { data: "get_materials_id" },
-                    { data: "product_plan_id" },
-                    { data: "get_department" },
+                    { data: "product_name" },
+                    { data: "quality_testing_id" },
+                    { data: "pro_production_id" },
+                    { data: "quality_testing_time" },
                     { data: "operator_per" },
-                    { data: "status" },
-                    { data: "get_time" },
+                    { data: "result" },
                     { data: null }
                 ],
                 "aoColumnDefs": [{
@@ -120,29 +113,29 @@
                     "render": function (data, type, row) {
                         var id = row.materialr_plan_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'>详情<tton>";
-                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'>编辑<tton>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'>入库<tton>";
+                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'>详情<tton>";
                         html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除<tton>";
                         html += "</div>";
                         return html;
                     }
                 }, {
-                        "targets": 0,
-                        "render": function () {
-                            var html = "<div class='btn-group' id='app1'>";
-                            html += "<input type='checkbox' value='' style='width:15px;height:15px;box-shadow: 0px 1px 10px 3px rgb(228,228,229);'/>";
-                            html += "</div>";
-                            return html;
-                        }
-                    }]
+                    "targets": 0,
+                    "render": function () {
+                        var html = "<div class='btn-group' id='app1'>";
+                        html += "<input type='checkbox' value=''  style='width:15px;height:15px;box-shadow: 0px 1px 10px 3px rgb(228,228,229);'/>";
+                        html += "</div>";
+                        return html;
+                    }
+                }]
             });
         });
-        new Vue({
+        var vm1 = new Vue({
             el: "#app",
             data: {
 
             }
-        })
+        });
     </script>
 
 </body>

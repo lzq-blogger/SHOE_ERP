@@ -9,10 +9,169 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>add_in_product</title>
+    @*elementui*@
+    <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
+    <style>
+        #app {
+            width: 100%;
+           /* box-shadow: 1px 1px 5px 1px rgb(212 212 212);*/
+        }
+        table {
+            margin: 0 auto;
+            color:grey;
+        }
+        table tr td{
+            height: 60px;
+        }
+        table tr .lefttd{
+            padding-right:60px;
+        }
+    </style>
 </head>
 <body>
-    <div> 
-        新增产品入库单
+    <div id="app">
+        <div class="top" style="margin: 0 auto; border-bottom: 1px solid rgb(231 231 231); padding-bottom: 10px;">
+            <table>
+                <tr>
+                    <td>生产计划详情单号：</td>
+                    <td>
+                        <el-select v-model="value" placeholder="请选择">
+                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        @*//展示商品信息*@
+        <div class="center" style="margin:0 auto;border-bottom:1px solid rgb(231 231 231);padding:10px;">
+            <table>
+                <tr>
+                    <td>产品名称：</td>
+                    <td  class="lefttd">
+                        <el-input placeholder="请输入内容" v-model="name" :disabled="true"></el-input>
+                    </td>
+                    <td>产品类别：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="type" :disabled="true"></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>产    商：</td>
+                    <td   class="lefttd">
+                        <el-input placeholder="请输入内容" v-model="produre" :disabled="true"></el-input>
+                    </td>
+                    <td>产品价格：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="price" :disabled="true"></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>产品单位：</td>
+                    <td   class="lefttd">
+                        <el-input placeholder="请输入内容" v-model="unit" :disabled="true"></el-input>
+                    </td>
+                    <td>产商地址：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="address" :disabled="true"></el-input>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="bottom" style="padding: 10px;">
+            <table>
+                <tr>
+                    <td>生产部门车间：</td>
+                    <td class="lefttd">
+                        <el-select v-model="value1" placeholder="请选择">
+                            <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </td>
+                    <td>操作人：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="person" clearable></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>生产时间：</td>
+                    <td class="lefttd">
+                        <el-date-picker v-model="time" type="date" placeholder="选择日期"> </el-date-picker>
+                    </td>
+                    <td>质检状态：</td>
+                    <td>
+                        <el-select v-model="value2" placeholder="请选择">
+                            <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center;">
+                        <el-button type="primary">确定</el-button>
+                    </td>    
+                    <td colspan="2">
+                        <el-button type="danger">重置</el-button>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
+    <!-- Page-Level Scripts -->
+    <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/ElementUI/element-ui.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    //产品信息变量名===
+                    name: "",
+                    type: "",
+                    produre: "",
+                    price: "",
+                    unit: "",
+                    address:"",                         
+                    //=================
+                    visible: false,
+                    person: "",
+                    time: '',
+                    dialogwidth: '60%',
+                    options: [{
+                        value: '1',
+                        label: '1'
+                    }, {
+                        value: '2',
+                        label: '2'
+                    }], options1: [{
+                        value: '第一生产车间',
+                        label: '第一生产车间'
+                    }, {
+                        value: '第二生产车间',
+                        label: '第二生产车间'
+                    }], options2: [{
+                        value: '未质检',
+                        label: '未质检'
+                    }, {
+                        value: '已质检',
+                        label: '已质检'
+                    }],
+                    pickerOptions: {
+                        disabledDate(time) {
+                            return time.getTime() > Date.now();
+                        },
+                    },
+                    value: '',
+                    value1: '',
+                    value2: '',
+                }
+            },
+            methods: {
+                handleChange(value) {
+                    console.log(value);
+                }
+            }
+        });
+    </script>
 </body>
 </html>

@@ -45,61 +45,16 @@
 
 </head>
 <body>
-    <div id="app">
-        <el-dialog :visible.sync="visible" title="新增生产计划" width="55%">
-            <table class="table1">
-                <tr>
-                    <td>生产计划详情单号：</td>
-                    <td>
-                        <el-select v-model="value" placeholder="请选择">
-                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>生产部门车间：</td>
-                    <td>
-                        <el-select v-model="value" placeholder="请选择">
-                            <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </td>
-                    <td class="tdtext">操作人：</td>
-                    <td>
-                        <el-input placeholder="请输入内容" v-model="input" clearable></el-input>
-                    </td>
-                </tr>
-                <tr>
-                    <td>生产时间：</td>
-                    <td>
-                        <el-date-picker v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
-                    </td>
-                    <td class="tdtext"> 质检状态：</td>
-                    <td>
-                        <el-select v-model="value" placeholder="请选择">
-                            <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="text-align:center;">
-                        <el-button type="primary"  style="background-color: rgb(52,123,183);">确定</el-button>
-                    </td>
-                    <td colspan="2">
-                        <el-button type="danger"  style="background-color: rgb(217,84,80);">重置</el-button>
-                    </td>
-                </tr>
-            </table>
-        </el-dialog>
-    </div>
     <div id="selectshop">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
             <h4>产品登记表</h4>
             <div id="app1">
-                <el-button type="primary" icon="el-icon-plus" onclick="tanchu()"  style="background-color: rgb(52,123,183);">添加</el-button>
-                <el-button type="danger" icon="el-icon-delete-solid"  style="background-color: rgb(217,84,80);">删除</el-button>
+                <a style="color:white;" href="/product/add_product_product">
+                    <el-button type="primary" icon="el-icon-plus" style="background-color: rgb(52,123,183);">
+                        新增
+                    </el-button>
+                </a>
+                <el-button type="danger" icon="el-icon-delete-solid" style="background-color: rgb(217,84,80);">删除</el-button>
             </div>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
@@ -171,9 +126,9 @@
                     "render": function (data, type, row) {
                         var id = row.materialr_plan_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon - edit'></span> 详情<tton>";
-                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon-edit'></span> 编辑<tton>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'><span class='glyphicon glyphicon-trash'></span> 删除<tton>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'>详情<tton>";
+                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'>编辑<tton>";
+                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除<tton>";
                         html += "</div>";
                         return html;
                     }
