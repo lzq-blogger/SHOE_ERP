@@ -1255,6 +1255,7 @@
     <Content Include="Views\product\add_product_plan.cshtml" />
     <Content Include="Views\order\customerOrder_statistical.cshtml" />
     <Content Include="Views\product_repertory\select_in_product.cshtml" />
+    <Content Include="Views\sale\out_repertory_order.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

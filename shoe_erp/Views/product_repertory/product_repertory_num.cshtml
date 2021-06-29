@@ -59,7 +59,7 @@
                                         <th scope="col">商品名</th>
                                         <th scope="col">产品类型</th>
                                         <th scope="col">产品价格</th>
-                                        <th scope="col">产品数量</th>
+                                        <th scope="col">库存数量</th>
                                         <th scope="col">操作</th>
                                     </tr>
                                 </thead>
@@ -110,8 +110,7 @@
                     "render": function (data, type, row) {
                         var id = row.materialr_plan_id;
                         var html = "<div class='btn-group' id='app'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon - edit'></span> 详情<tton>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'><span class='glyphicon glyphicon-trash'></span> 删除<tton>";
+                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除</button>";
                         html += "</div>";
                         return html;
                     }

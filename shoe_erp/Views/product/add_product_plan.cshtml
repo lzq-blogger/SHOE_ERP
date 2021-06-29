@@ -36,6 +36,10 @@
     </style>
 </head>
 <body>
+    <a style="color: rgb(38 149 255); font-size: 20px; text-decoration: none;padding-left:10px;padding-top:10px;" 
+       href="/product/select_product_plan">
+        <i class="el-icon-back" style="font-size:25px;"></i>&nbsp;返回
+    </a>
     @*新增领料详情*@
     <div id="addmate">
         <el-dialog :visible.sync="visible" title="新增产品" width="35%" style="background-color:rgba(255, 255, 255,0.3)">
@@ -62,7 +66,7 @@
         </el-dialog>
     </div>
     @*计划单*@
-    <div id="app" style="border:1px solid rgb(228, 228, 228);">
+    <div id="app">
         <table style="margin:0 auto;margin-top:20px;" class="table1">
             <tr>
                 <td>请选择客户订单单号：</td>
@@ -163,7 +167,7 @@
                     <el-button type="primary">确定</el-button>
                 </td>
                 <td colspan="2" class="btn">
-                    <el-button type="danger">重置</el-button>
+                    <el-button type="danger" plain>重置</el-button>
                 </td>
             </tr>
         </table>
