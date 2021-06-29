@@ -47,12 +47,55 @@
 </head>
 <body>
     @*修改*@
-    @*详情*@
     <div id="update_app">
         <el-dialog :visible.sync="visible" title="生产计划详情" width="40%" style="background-color: rgba(255,255,255,0.3)">
-            <div>
-
+            <div style="text-align:center;">
+                <el-select v-model="status" placeholder="请选择">
+                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                </el-select>
+                <el-button type="primary" style="background-color: rgb(52,123,183);"> 保存 </el-button>
             </div>
+        </el-dialog>
+    </div>
+    @*详情*@
+    <div id="edit_app">
+        <el-dialog :visible.sync="visible" title="生产计划详情" width="75%" style="background-color: rgba(255,255,255,0.3)">
+            <template>
+                <el-table border="1" :data="tableData.filter(data => !search || data.product_name.toLowerCase().includes(search.toLowerCase()))"
+                          style="width: 100%;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                    <el-table-column label="计划详情ID"
+                                     prop="product_plan_details_id">
+                    </el-table-column>
+                    <el-table-column label="产品名" width="120px"
+                                     prop="product_name">
+                    </el-table-column>
+                    <el-table-column label="产品类型" width="80px"
+                                     prop="product_type">
+                    </el-table-column>
+                    <el-table-column label="单价" width="100px"
+                                     prop="product_price">
+                    </el-table-column>
+                    <el-table-column label="生产数量"
+                                     prop="product_details_num">
+                    </el-table-column>
+                    <el-table-column label="单位"
+                                     prop="unit">
+                    </el-table-column>
+                    <el-table-column label="处理状态"
+                                     prop="pro_status">
+                    </el-table-column>
+                    <el-table-column align="center">
+                        <template slot="header" slot-scope="scope">
+                            <el-input v-model="search" placeholder="输入关键字搜索"></el-input>
+                        </template>
+                        <template slot-scope="scope">
+                            <el-button size="mini"
+                                       type="danger"
+                                       v-on:click="">删除</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </template>
         </el-dialog>
     </div>
     @*查询所有计划*@
@@ -85,7 +128,6 @@
                                         <th scope="col">操作人</th>
                                         <th scope="col">计划生产时间</th>
                                         <th scope="col">计划结束时间</th>
-                                        <th scope="col">处理状态</th>
                                         <th scope="col">操作</th>
                                     </tr>
                                 </thead>
@@ -110,103 +152,102 @@
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <!-- Page-Level Scripts -->
     <script>
-         $(document).ready(function () {
-             //$('.dataTables-example').dataTable();
-             $('.dataTables-example').dataTable({
-                 "processing": true,
-                 "serverSide": true,
-                 "ajax": {
-                     type: "POST",
-                     url: "https://localhost:44360/api/product/pro_plan",
-                     "dataType": "json",
-                     //"dataSrc": "data"
-                 },
-                 //columns是绑定表格数据源
-                 columns: [
-                     { data: null },
-                     { data: "product_plan_id" },
-                     { data: "order_id" },
-                     { data: "operator_per" },
-                     { data: "product_time" },
-                     { data: "product_end_time" },
-                     { data: "status" },
-                     { data: null }
-                 ],
-                 "aoColumnDefs": [{
-                     "targets": -1, //操作按钮目标列
-                     "orderable": false,
-                     "data": null,
-                     "render": function (data, type, row) {
-                         var id = row.materialr_plan_id;
-                         var html = "<div class='btn-group'>";
-                         html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(" + id + ")'>详情</button>";
-                         html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'>编辑</button>";
-                         html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除</button>";
-                         html += "</div>";
-                         return html;
-                     }
-                 }, {
-                     "targets": 0,
-                     "render": function () {
-                         var html = "<div class='btn-group'>";
-                         html += "<input type='checkbox' value='' style='width:15px;height:15px;box-shadow: 0px 1px 10px 3px rgb(228,228,229);'/>";
-                         html += "</div>";
-                         return html;
-                     }
-                 }]
-             });
-         });
-
+        $(document).ready(function () {
+            //$('.dataTables-example').dataTable();
+            $('.dataTables-example').dataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    type: "POST",
+                    url: "https://localhost:44360/api/product/pro_plan",
+                    "dataType": "json",
+                    //"dataSrc": "data"
+                },
+                //columns是绑定表格数据源
+                columns: [
+                    { data: null },
+                    { data: "product_plan_id" },
+                    { data: "order_id" },
+                    { data: "operator_per" },
+                    { data: "product_time" },
+                    { data: "product_end_time" },
+                    { data: null }
+                ],
+                "aoColumnDefs": [{
+                    "targets": -1, //操作按钮目标列
+                    "orderable": false,
+                    "data": null,
+                    "render": function (data, type, row) {
+                        var id = row.product_plan_id;
+                        var html = "<div class='btn-group'>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(" + id + ")'>详情</button>";
+                        html += "<button class='btn btn-warning btn-sm' onclick='bianji(" + id + ")'>编辑</button>";
+                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除</button>";
+                        html += "</div>";
+                        return html;
+                    }
+                }, {
+                    "targets": 0,
+                    "render": function () {
+                        var html = "<div class='btn-group'>";
+                        html += "<input type='checkbox' value='' style='width:15px;height:15px;box-shadow: 0px 1px 10px 3px rgb(228,228,229);'/>";
+                        html += "</div>";
+                        return html;
+                    }
+                }]
+            });
+        });
         var vm1 = new Vue({
             el: "#app",
             data: {
 
             }
         });
-
-        //var vm = new Vue({
-        //    el: '#app1',
-        //    data: function () {
-        //        return {
-        //            visible: false,
-        //            input: "",
-        //            num: '',
-        //            options: [{
-        //                value: '选项1',
-        //                label: '黄金糕'
-        //            }, {
-        //                value: '选项2',
-        //                label: '双皮奶'
-        //            }],
-        //            value: '',
-        //            pickerOptions: {
-        //                disabledDate(time) {
-        //                    return time.getTime() > Date.now();
-        //                },
-        //            },
-        //            value1: '',
-        //            value2: '',
-        //        }
-        //    },
-        //    methods: {
-        //        handleChange(value) {
-        //            console.log(value);
-        //        }
-        //    }
-        //});
-
         var vm2 = new Vue({
+            el: "#edit_app",
+            data() {
+                return {
+                    tableData: [{
+                        name: "李宁篮球鞋鞋垫",
+                        num: 20,
+                        price: 40,
+                        type: "篮球鞋",
+                        supplier: "李宁篮球鞋垫供应商"
+                    }],
+                    search: '',
+                    visible: false,
+                    num: 1,
+                }
+            },
+            methods: {
+                handleEdit(index, row) {
+                    console.log(index, row);
+                },
+                handleDelete(index, row) {
+                    console.log(index, row);
+                }
+            },
+        })
+        var vm3 = new Vue({
             el: "#update_app",
             data: {
-                visible:false,
+                status: '未处理',
+                visible:false
             }
         })
-        //function tanchu() {
-        //    vm.visible = true;
-        //}
-
-        function xinagqtanchuan() {
+        function xinagqtanchuan(id) {
             vm2.visible = true;
+            $.ajax({
+                type: "Get",
+                url: "https://localhost:44360/api/product/pro_plan_detail?id="+id,
+                dataType: "json",
+                success: function (data) {
+                    vm2.tableData = eval(data);
+                }
+            })
+        }
+        function bianji(id) {
+            vm3.visible = true;
         }
     </script>
 </body>

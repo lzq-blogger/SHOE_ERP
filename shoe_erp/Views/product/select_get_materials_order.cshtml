@@ -36,6 +36,56 @@
     </style>
 </head>
 <body>
+    @*修改*@
+    <div id="update_app">
+        <el-dialog :visible.sync="visible" title="领料单状态" width="40%" style="background-color: rgba(255,255,255,0.3)">
+            <div style="text-align:center;">
+                <el-select v-model="status" placeholder="请选择">
+                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                </el-select>
+                <el-button type="primary" style="background-color: rgb(52,123,183);"> 保存 </el-button>
+            </div>
+        </el-dialog>
+    </div>
+    @*详情*@
+    <div id="edit_app">
+        <el-dialog :visible.sync="visible" title="生产计划详情" width="75%" style="background-color: rgba(255,255,255,0.3)">
+            <template>
+                <el-table border="1" :data="tableData.filter(data => !search || data.product_name.toLowerCase().includes(search.toLowerCase()))"
+                          style="width: 100%;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                    <el-table-column label="材料详情ID" width="100px"
+                                     prop="materialr_details_id">
+                    </el-table-column>
+                    <el-table-column label="材料名" width="120px"
+                                     prop="materialr_details_name">
+                    </el-table-column>
+                    <el-table-column label="材料价格" width="80px"
+                                     prop="materialr_details_price">
+                    </el-table-column>
+                    <el-table-column label="材料类型" width="140px"
+                                     prop="materialr_type_name">
+                    </el-table-column>
+                    <el-table-column label="材料数量" width="100px"
+                                     prop="materialr_details_num">
+                    </el-table-column>
+                    <el-table-column label="材料商"
+                                     prop="material_supplier">
+                    </el-table-column>
+                    <el-table-column align="center">
+                        <template slot="header" slot-scope="scope">
+                            <el-input v-model="search" placeholder="输入关键字搜索"></el-input>
+                        </template>
+                        <template slot-scope="scope">
+                            <el-button size="mini"
+                                       type="danger"
+                                       v-on:click="">删除</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </template>
+        </el-dialog>
+    </div>
+    @*查询领料单*@
     <div id="selectshop">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px;
        border-bottom: 1px solid rgb(234 234 234)">
@@ -63,7 +113,7 @@
                                         </th>
                                         <th scope="col">领料单ID</th>
                                         <th scope="col">计划单ID</th>
-                                        <th scope="col">领取部门</th>
+                                        <th scope="col">领取车间</th>
                                         <th scope="col">操作人</th>
                                         <th scope="col">提货状态</th>
                                         <th scope="col">领取日期</th>
@@ -105,7 +155,7 @@
                 //columns是绑定表格数据源
                 columns: [
                     { data: null },
-                    { data: "get_materials_id" },
+                    { data: "w_materials_id" },
                     { data: "product_plan_id" },
                     { data: "get_department" },
                     { data: "operator_per" },
@@ -118,31 +168,71 @@
                     //"orderable": false,
                     //"data": null,
                     "render": function (data, type, row) {
-                        var id = row.materialr_plan_id;
+                        var id = row.w_materials_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'>详情<tton>";
-                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'>编辑<tton>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(" + id + ")'>详情<tton>";
+                        html += "<button class='btn btn-warning btn-sm' onclick='bianji(" + id + ")'>编辑<tton>";
                         html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除<tton>";
                         html += "</div>";
                         return html;
                     }
                 }, {
-                        "targets": 0,
-                        "render": function () {
-                            var html = "<div class='btn-group' id='app1'>";
-                            html += "<input type='checkbox' value='' style='width:15px;height:15px;box-shadow: 0px 1px 10px 3px rgb(228,228,229);'/>";
-                            html += "</div>";
-                            return html;
-                        }
-                    }]
+                    "targets": 0,
+                    "render": function () {
+                        var html = "<div class='btn-group' id='app1'>";
+                        html += "<input type='checkbox' value='' style='width:15px;height:15px;box-shadow: 0px 1px 10px 3px rgb(228,228,229);'/>";
+                        html += "</div>";
+                        return html;
+                    }
+                }]
             });
         });
-        new Vue({
+        var vm= new Vue({
             el: "#app",
             data: {
 
             }
         })
+        var vm2 = new Vue({
+            el: "#edit_app",
+            data() {
+                return {
+                    tableData: [],
+                    search: '',
+                    visible: false,
+                    num: 1,
+                }
+            },
+            methods: {
+                handleEdit(index, row) {
+                    console.log(index, row);
+                },
+                handleDelete(index, row) {
+                    console.log(index, row);
+                }
+            },
+        })   //详情
+        var vm3 = new Vue({
+            el: "#update_app",
+            data: {
+                status: '未提货',
+                visible: false
+            }
+        })   //修改
+        function xinagqtanchuan(id) {
+            vm2.visible = true;
+            $.ajax({
+                type: "Get",
+                url: "https://localhost:44360/api/product/select_get_materials_detail?id=" + id,
+                dataType: "json",
+                success: function (data) {
+                    vm2.tableData = eval(data);
+                }
+            })
+        }
+        function bianji(id) {
+            vm3.visible = true;
+        }
     </script>
 
 </body>

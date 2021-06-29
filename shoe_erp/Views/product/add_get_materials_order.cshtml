@@ -35,6 +35,10 @@
     </style>
 </head>
 <body>
+    <a style="color: rgb(38 149 255); font-size: 20px; text-decoration: none;padding-left:10px;padding-top:10px;"
+       href="/product/select_get_materials_order">
+        <i class="el-icon-back" style="font-size:25px;"></i>&nbsp;返回
+    </a>
     @*新增领料详情*@
     <div id="addmate">
         <el-dialog :visible.sync="visible" title="新增生产计划" width="35%">
@@ -42,7 +46,7 @@
                 <tr>
                     <td>原料名称：</td>
                     <td colspan="2">
-                        <el-select v-model="value" placeholder="请选择">
+                        <el-select v-model="name" placeholder="请选择">
                             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
@@ -61,12 +65,12 @@
         </el-dialog>
     </div>
     @*计划单*@
-    <div id="app" style="border:1px solid rgb(228, 228, 228);">
+    <div id="app">
         <table style="margin:0 auto;margin-top:20px;" class="table1">
             <tr>
                 <td>请选择计划单号：</td>
                 <td>
-                    <el-select v-model="value" placeholder="请选择">
+                    <el-select v-model="planid" placeholder="请选择">
                         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                         </el-option>
                     </el-select>
@@ -94,24 +98,24 @@
         </el-dialog>
         <template>
             <el-table border="1" :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
-                        style="width: 100%;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                      style="width: 100%;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
                 <el-table-column width="70px;">
                     <el-checkbox></el-checkbox>
                 </el-table-column>
                 <el-table-column label="原料名"
-                                    prop="name">
+                                 prop="name">
                 </el-table-column>
                 <el-table-column label="原料数量"
-                                    prop="num">
+                                 prop="num">
                 </el-table-column>
                 <el-table-column label="原料单价"
-                                    prop="price">
+                                 prop="price">
                 </el-table-column>
                 <el-table-column label="原料类别"
-                                    prop="type">
+                                 prop="type">
                 </el-table-column>
                 <el-table-column label="原料供应商"
-                                    prop="supplier">
+                                 prop="supplier">
                 </el-table-column>
                 <el-table-column align="right">
                     <template slot="header" slot-scope="scope">
@@ -119,10 +123,10 @@
                     </template>
                     <template slot-scope="scope">
                         <el-button size="mini"
-                                    v-on:click="visible = !visible">编辑</el-button>
+                                   v-on:click="visible = !visible">编辑</el-button>
                         <el-button size="mini"
-                                    type="danger"
-                                    v-on:click="">删除</el-button>
+                                   type="danger"
+                                   v-on:click="">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -132,9 +136,12 @@
     <div id="app2" style="border:1px solid rgb(228, 228, 228);">
         <table style="margin:0 auto;margin-top:20px;" class="table1">
             <tr>
-                <td>领取部门：</td>
+                <td>领取车间：</td>
                 <td>
-                    <el-input placeholder="请输入内容" v-model="input" clearable></el-input>
+                    <el-select v-model="chejian" placeholder="请选择">
+                        <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
                 </td>
                 <td>操作人：</td>
                 <td>
@@ -156,7 +163,7 @@
             </tr>
             <tr>
                 <td colspan="2" style="text-align:center"><el-button type="primary">确定</el-button></td>
-                <td colspan="2" style="text-align:center"><el-button type="danger">重置</el-button></td>
+                <td colspan="2" style="text-align:center"><el-button type="danger" plain>重置</el-button></td>
             </tr>
         </table>
     </div>
@@ -182,7 +189,7 @@
             data: function () {
                 return {
                     visible: false,
-                    value: "",
+                    name: "",
                     num: 0,
                     dialogwidth: '60%',
                     options: [{
@@ -212,7 +219,7 @@
                         value: '32efe#Ffe9',
                         label: '32efe#Ffe9'
                     }],
-                    value: ''
+                    planid: ''
                 }
             },
             methods: {
@@ -226,16 +233,10 @@
             el: '#app1',
             data() {
                 return {
-                    tableData: [{
-                        name: "李宁篮球鞋鞋垫",
-                        num: 20,
-                        price: 40,
-                        type: "篮球鞋",
-                        supplier: "李宁篮球鞋垫供应商"
-                    }],
+                    tableData: [],
                     search: '',
                     visible: false,
-                    num:1,
+                    num: 1,
                 }
             },
             methods: {
