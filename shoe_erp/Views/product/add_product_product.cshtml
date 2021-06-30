@@ -59,8 +59,12 @@
                         <el-input placeholder="请输入内容" v-model="name" :disabled="true"></el-input>
                     </td>
                     <td>产品类别：</td>
-                    <td>
+                    <td class="lefttd"> 
                         <el-input placeholder="请输入内容" v-model="type" :disabled="true"></el-input>
+                    </td>
+                    <td>产商地址：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="address" :disabled="true"></el-input>
                     </td>
                 </tr>
                 <tr>
@@ -69,18 +73,12 @@
                         <el-input placeholder="请输入内容" v-model="produre" :disabled="true"></el-input>
                     </td>
                     <td>产品价格：</td>
-                    <td>
+                    <td class="lefttd">
                         <el-input placeholder="请输入内容" v-model="price" :disabled="true"></el-input>
                     </td>
-                </tr>
-                <tr>
                     <td>产品单位：</td>
-                    <td class="lefttd">
-                        <el-input placeholder="请输入内容" v-model="unit" :disabled="true"></el-input>
-                    </td>
-                    <td>产商地址：</td>
                     <td>
-                        <el-input placeholder="请输入内容" v-model="address" :disabled="true"></el-input>
+                        <el-input placeholder="请输入内容" v-model="unit" :disabled="true"></el-input>
                     </td>
                 </tr>
             </table>

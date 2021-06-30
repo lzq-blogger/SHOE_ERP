@@ -62,11 +62,11 @@
         <el-dialog :visible.sync="visible" title="生产计划详情" width="75%" style="background-color: rgba(255,255,255,0.3)">
             <template>
                 <el-table border="1" :data="tableData.filter(data => !search || data.product_name.toLowerCase().includes(search.toLowerCase()))"
-                          style="width: 100%;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-                    <el-table-column label="计划详情ID"
+                          style="width: 1000px;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                    <el-table-column label="计划详情ID" width="120px"
                                      prop="product_plan_details_id">
                     </el-table-column>
-                    <el-table-column label="产品名" width="120px"
+                    <el-table-column label="产品名" width="160px"
                                      prop="product_name">
                     </el-table-column>
                     <el-table-column label="产品类型" width="80px"
@@ -84,14 +84,17 @@
                     <el-table-column label="处理状态"
                                      prop="pro_status">
                     </el-table-column>
-                    <el-table-column align="center">
+                    <el-table-column align="center"  width="200px">
                         <template slot="header" slot-scope="scope">
                             <el-input v-model="search" placeholder="输入关键字搜索"></el-input>
                         </template>
                         <template slot-scope="scope">
                             <el-button size="mini"
                                        type="danger"
-                                       v-on:click="">删除</el-button>
+                                       v-on:click="handleEdit(scope.row)">修改</el-button>
+                            <el-button size="mini"
+                                       type="danger"
+                                       v-on:click="handleDelete(scope.row)">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -181,7 +184,7 @@
                         var id = row.product_plan_id;
                         var html = "<div class='btn-group'>";
                         html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(" + id + ")'>详情</button>";
-                        html += "<button class='btn btn-warning btn-sm' onclick='bianji(" + id + ")'>编辑</button>";
+/*                        html += "<button class='btn btn-warning btn-sm' onclick='bianji(" + id + ")'>编辑</button>";*/
                         html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除</button>";
                         html += "</div>";
                         return html;
@@ -207,24 +210,19 @@
             el: "#edit_app",
             data() {
                 return {
-                    tableData: [{
-                        name: "李宁篮球鞋鞋垫",
-                        num: 20,
-                        price: 40,
-                        type: "篮球鞋",
-                        supplier: "李宁篮球鞋垫供应商"
-                    }],
+                    tableData: [],
                     search: '',
                     visible: false,
                     num: 1,
                 }
             },
             methods: {
-                handleEdit(index, row) {
-                    console.log(index, row);
+                handleEdit(row) {
+                    console.log(row);
+                    vm3.visible = true;
                 },
-                handleDelete(index, row) {
-                    console.log(index, row);
+                handleDelete(row) {
+                    console.log(row);
                 }
             },
         })
@@ -245,9 +243,6 @@
                     vm2.tableData = eval(data);
                 }
             })
-        }
-        function bianji(id) {
-            vm3.visible = true;
         }
     </script>
 </body>

@@ -33,12 +33,9 @@
         <div class="top" style="margin: 0 auto; border-bottom: 1px solid rgb(231 231 231); padding-bottom: 10px;">
             <table>
                 <tr>
-                    <td>生产计划详情单号：</td>
+                    <td>生产登记单号：</td>
                     <td>
-                        <el-select v-model="value" placeholder="请选择">
-                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-select>
+                        <el-input placeholder="请输入内容" v-model="pro_pro_id" :disabled="true"></el-input>
                     </td>
                 </tr>
             </table>
@@ -57,23 +54,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>产    商：</td>
+                    <td>数    量：</td>
                     <td   class="lefttd">
-                        <el-input placeholder="请输入内容" v-model="produre" :disabled="true"></el-input>
+                        <el-input placeholder="请输入内容" v-model="num" :disabled="true"></el-input>
                     </td>
                     <td>产品价格：</td>
                     <td>
                         <el-input placeholder="请输入内容" v-model="price" :disabled="true"></el-input>
-                    </td>
-                </tr>
-                <tr>
-                    <td>产品单位：</td>
-                    <td   class="lefttd">
-                        <el-input placeholder="请输入内容" v-model="unit" :disabled="true"></el-input>
-                    </td>
-                    <td>产商地址：</td>
-                    <td>
-                        <el-input placeholder="请输入内容" v-model="address" :disabled="true"></el-input>
                     </td>
                 </tr>
             </table>
@@ -81,29 +68,13 @@
         <div class="bottom" style="padding: 10px;">
             <table>
                 <tr>
-                    <td>生产部门车间：</td>
-                    <td class="lefttd">
-                        <el-select v-model="value1" placeholder="请选择">
-                            <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </td>
-                    <td>操作人：</td>
-                    <td>
-                        <el-input placeholder="请输入内容" v-model="person" clearable></el-input>
-                    </td>
-                </tr>
-                <tr>
                     <td>生产时间：</td>
                     <td class="lefttd">
                         <el-date-picker v-model="time" type="date" placeholder="选择日期"> </el-date-picker>
                     </td>
-                    <td>质检状态：</td>
+                    <td>操作人：</td>
                     <td>
-                        <el-select v-model="value2" placeholder="请选择">
-                            <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-select>
+                        <el-input placeholder="请输入内容" v-model="person" clearable></el-input>
                     </td>
                 </tr>
                 <tr>
@@ -120,50 +91,35 @@
     <!-- Page-Level Scripts -->
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
     <script>
-        new Vue({
+        var vm = new Vue({
             el: '#app',
             data: function () {
                 return {
+                    pro_pro_id: "",
                     //产品信息变量名===
                     name: "",
                     type: "",
-                    produre: "",
+                    num: "",
                     price: "",
-                    unit: "",
-                    address:"",                         
                     //=================
                     visible: false,
                     person: "",
                     time: '',
                     dialogwidth: '60%',
-                    options: [{
-                        value: '1',
-                        label: '1'
-                    }, {
-                        value: '2',
-                        label: '2'
-                    }], options1: [{
+                    options1: [{
                         value: '第一生产车间',
                         label: '第一生产车间'
                     }, {
                         value: '第二生产车间',
                         label: '第二生产车间'
-                    }], options2: [{
-                        value: '未质检',
-                        label: '未质检'
-                    }, {
-                        value: '已质检',
-                        label: '已质检'
                     }],
                     pickerOptions: {
                         disabledDate(time) {
                             return time.getTime() > Date.now();
                         },
-                    },
-                    value: '',
-                    value1: '',
-                    value2: '',
+                    }
                 }
             },
             methods: {
@@ -172,6 +128,21 @@
                 }
             }
         });
+        //获取传过来的ID
+        var id = window.localStorage.getItem('id');
+        //掉接口进行数据查询
+        $.ajax({
+            type: "Get",
+            url: "https://localhost:44360/api/pro_repertory/pro_product_detail?id=" + id,
+            dataType: "json",
+            success: function (data) {
+                vm.pro_pro_id = id;
+                vm.name = eval(data)[0].product_name;
+                vm.type = eval(data)[0].product_type;
+                vm.num = eval(data)[0].product_details_num;
+                vm.price = eval(data)[0].product_price;
+            }
+        })
     </script>
 </body>
 </html>

@@ -36,7 +36,16 @@
     </style>
 </head>
 <body>
-    @*修改*@
+    @*修改提货数量*@
+    <div id="update_num_app">
+        <el-dialog :visible.sync="visible" title="修改提货数量" width="40%" style="background-color: rgba(255,255,255,0.3)">
+            <div style="text-align:center;">
+                <el-input-number v-model="num" :min="1" :max="10" label="描述文字"></el-input-number>
+                <el-button type="primary" style="background-color: rgb(52,123,183);"> 保存 </el-button>
+            </div>
+        </el-dialog>
+    </div>
+    @*修改提货状态*@
     <div id="update_app">
         <el-dialog :visible.sync="visible" title="领料单状态" width="40%" style="background-color: rgba(255,255,255,0.3)">
             <div style="text-align:center;">
@@ -78,7 +87,10 @@
                         <template slot-scope="scope">
                             <el-button size="mini"
                                        type="danger"
-                                       v-on:click="">删除</el-button>
+                                       v-on:click="handleEdit(scope.row)">修改</el-button>
+                            <el-button size="mini"
+                                       type="danger"
+                                       v-on:click="handleDelete(scope.row)">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -187,7 +199,7 @@
                 }]
             });
         });
-        var vm= new Vue({
+        var vm = new Vue({
             el: "#app",
             data: {
 
@@ -204,10 +216,11 @@
                 }
             },
             methods: {
-                handleEdit(index, row) {
+                handleEdit(row) {
+                    vm4.visible = true;
                     console.log(index, row);
                 },
-                handleDelete(index, row) {
+                handleDelete(row) {
                     console.log(index, row);
                 }
             },
@@ -218,7 +231,15 @@
                 status: '未提货',
                 visible: false
             }
-        })   //修改
+        })   //修改状态
+        //修改数量
+        var vm4 = new Vue({
+            el: "#update_num_app",
+            data: {
+                num: "",
+                visible: false
+            }
+        })
         function xinagqtanchuan(id) {
             vm2.visible = true;
             $.ajax({

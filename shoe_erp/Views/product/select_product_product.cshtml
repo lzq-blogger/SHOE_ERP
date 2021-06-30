@@ -47,11 +47,11 @@
 <body>
     @*详情*@
     <div id="edit_app">
-        <el-dialog :visible.sync="visible" title="生产计划详情" width="75%" style="background-color: rgba(255,255,255,0.3)">
+        <el-dialog :visible.sync="visible" title="产品登记信息" width="60%" style="background-color: rgba(255,255,255,0.3)">
             <template>
                 <el-table border="1" :data="tableData.filter(data => !search || data.product_name.toLowerCase().includes(search.toLowerCase()))"
-                          style="width: 100%;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-                    <el-table-column label="产品名" width="140px"
+                          style="width: 800px;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                    <el-table-column label="产品名" width="140px" align="center"
                                      prop="product_name">
                     </el-table-column>
                     <el-table-column label="产品类型" width="120px"
@@ -66,15 +66,15 @@
                     <el-table-column label="单位"
                                      prop="unit">
                     </el-table-column>
-                    <el-table-column align="center">
+                    <el-table-column align="center" width="200px">
                         <template slot="header" slot-scope="scope">
                             <el-input v-model="search" placeholder="输入关键字搜索"></el-input>
                         </template>
-                        <template slot-scope="scope">
+                        @*<template slot-scope="scope">
                             <el-button size="mini"
                                        type="danger"
                                        v-on:click="">删除</el-button>
-                        </template>
+                        </template>*@
                     </el-table-column>
                 </el-table>
             </template>
