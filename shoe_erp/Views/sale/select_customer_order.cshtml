@@ -43,6 +43,37 @@
     </style>
 </head>
 <body>
+    @*详情*@
+    <div id="edit_app">
+        <el-dialog :visible.sync="visible" title="销售订单详情" width="58%" style="background-color: rgba(255,255,255,0.3)">
+            <template>
+                <el-table border="1" :data="tableData.filter(data => !search || data.product_name.toLowerCase().includes(search.toLowerCase()))"
+                          style="width: 820px;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                    <el-table-column label="产品ID" width="120px"
+                                     prop="product_id">
+                    </el-table-column>
+                    <el-table-column label="产品名" width="120px"
+                                     prop="product_name">
+                    </el-table-column>
+                    <el-table-column label="产品价格" width="160px"
+                                     prop="product_price">
+                    </el-table-column>
+                    <el-table-column label="产品数量" width="80px"
+                                     prop="quantity">
+                    </el-table-column>
+                    <el-table-column label="产品类型" width="100px"
+                                     prop="product_type">
+                    </el-table-column>
+                    <el-table-column align="center" width="200px">
+                        <template slot="header" slot-scope="scope">
+                            <el-input v-model="search" placeholder="输入关键字搜索"></el-input>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </template>
+        </el-dialog>
+    </div>
+    @*//查询所有*@
     <div id="selectshop">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
             <h4>客户订单处理表</h4>
@@ -127,9 +158,9 @@
                     //"orderable": false,
                     //"data": null,
                     "render": function (data, type, row) {
-                        var id = row.materialr_plan_id;
+                        var id = row.orderr_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'>详情</button>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(" + id + ")'>详情</button>";
                         html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除</button>";
                         html += "</div>";
                         return html;
@@ -151,8 +182,27 @@
 
             }
         });
-        function tanchu() {
-            vm.visible = true;
+        var vm2 = new Vue({
+            el: "#edit_app",
+            data() {
+                return {
+                    tableData: [],
+                    search: '',
+                    visible: false,
+                    num: 1,
+                }
+            }
+        })
+        function xinagqtanchuan(id) {
+            vm2.visible = true;
+            $.ajax({
+                type: "Get",
+                url: "https://localhost:44360/api/sale/select_customer_details?id=" + id,
+                dataType: "json",
+                success: function (data) {
+                    vm2.tableData = eval(data);
+                }
+            })
         }
     </script>
 

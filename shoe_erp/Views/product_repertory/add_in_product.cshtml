@@ -29,6 +29,10 @@
     </style>
 </head>
 <body>
+    <a style="color: rgb(38 149 255); font-size: 20px; text-decoration: none;padding-left:10px;padding-top:10px;"
+       href="/product_repertory/select_in_product">
+        <i class="el-icon-back" style="font-size:25px;"></i>&nbsp;返回
+    </a>
     <div id="app">
         <div class="top" style="margin: 0 auto; border-bottom: 1px solid rgb(231 231 231); padding-bottom: 10px;">
             <table>
@@ -45,7 +49,7 @@
             <table>
                 <tr>
                     <td>产品名称：</td>
-                    <td  class="lefttd">
+                    <td class="lefttd">
                         <el-input placeholder="请输入内容" v-model="name" :disabled="true"></el-input>
                     </td>
                     <td>产品类别：</td>
@@ -55,7 +59,7 @@
                 </tr>
                 <tr>
                     <td>数    量：</td>
-                    <td   class="lefttd">
+                    <td class="lefttd">
                         <el-input placeholder="请输入内容" v-model="num" :disabled="true"></el-input>
                     </td>
                     <td>产品价格：</td>
@@ -80,7 +84,7 @@
                 <tr>
                     <td colspan="2" style="text-align:center;">
                         <el-button type="primary">确定</el-button>
-                    </td>    
+                    </td>
                     <td colspan="2">
                         <el-button type="danger">重置</el-button>
                     </td>
