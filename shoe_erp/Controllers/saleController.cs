@@ -25,5 +25,10 @@ namespace shoe_erp.Controllers
         {
             return View();
         }
+        //新增产品出库(针对订单进行销售)
+        public ActionResult out_repertory_order()
+        {
+            return View();
+        }
     }
 }

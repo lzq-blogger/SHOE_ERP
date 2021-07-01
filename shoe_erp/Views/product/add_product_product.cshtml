@@ -32,13 +32,17 @@
     </style>
 </head>
 <body>
+    <a style="color: rgb(38 149 255); font-size: 20px; text-decoration: none;padding-left:10px;padding-top:10px;"
+       href="/product/select_product_product">
+        <i class="el-icon-back" style="font-size:25px;"></i>&nbsp;返回
+    </a>
     <div id="app">
         <div class="top" style="margin: 0 auto; border-bottom: 1px solid rgb(231 231 231); padding-bottom: 10px;">
             <table>
                 <tr>
                     <td>生产计划详情单号：</td>
                     <td>
-                        <el-select v-model="value" placeholder="请选择">
+                        <el-select v-model="pro_id" placeholder="请选择">
                             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
@@ -55,8 +59,12 @@
                         <el-input placeholder="请输入内容" v-model="name" :disabled="true"></el-input>
                     </td>
                     <td>产品类别：</td>
-                    <td>
+                    <td class="lefttd"> 
                         <el-input placeholder="请输入内容" v-model="type" :disabled="true"></el-input>
+                    </td>
+                    <td>产商地址：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="address" :disabled="true"></el-input>
                     </td>
                 </tr>
                 <tr>
@@ -65,18 +73,12 @@
                         <el-input placeholder="请输入内容" v-model="produre" :disabled="true"></el-input>
                     </td>
                     <td>产品价格：</td>
-                    <td>
+                    <td class="lefttd">
                         <el-input placeholder="请输入内容" v-model="price" :disabled="true"></el-input>
                     </td>
-                </tr>
-                <tr>
                     <td>产品单位：</td>
-                    <td class="lefttd">
-                        <el-input placeholder="请输入内容" v-model="unit" :disabled="true"></el-input>
-                    </td>
-                    <td>产商地址：</td>
                     <td>
-                        <el-input placeholder="请输入内容" v-model="address" :disabled="true"></el-input>
+                        <el-input placeholder="请输入内容" v-model="unit" :disabled="true"></el-input>
                     </td>
                 </tr>
             </table>
@@ -86,7 +88,7 @@
                 <tr>
                     <td>生产部门车间：</td>
                     <td class="lefttd">
-                        <el-select v-model="value1" placeholder="请选择">
+                        <el-select v-model="bumen" placeholder="请选择">
                             <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
@@ -103,7 +105,7 @@
                     </td>
                     <td>质检状态：</td>
                     <td>
-                        <el-select v-model="value2" placeholder="请选择">
+                        <el-select v-model="stauts" placeholder="请选择">
                             <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
@@ -120,56 +122,11 @@
             </table>
         </div>
     </div>
-    <table class="table1">
-        <tr>
-            <td>生产计划详情单号：</td>
-            <td>
-                <el-select v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                </el-select>
-            </td>
-        </tr>
-        <tr>
-            <td>生产部门车间：</td>
-            <td>
-                <el-select v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                </el-select>
-            </td>
-            <td class="tdtext">操作人：</td>
-            <td>
-                <el-input placeholder="请输入内容" v-model="input" clearable></el-input>
-            </td>
-        </tr>
-        <tr>
-            <td>生产时间：</td>
-            <td>
-                <el-date-picker v-model="value1" type="date" placeholder="选择日期"> </el-date-picker>
-            </td>
-            <td class="tdtext"> 质检状态：</td>
-            <td>
-                <el-select v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                </el-select>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="text-align:center;">
-                <el-button type="primary" style="background-color: rgb(52,123,183);">确定</el-button>
-            </td>
-            <td colspan="2">
-                <el-button type="danger" style="background-color: rgb(217,84,80);">重置</el-button>
-            </td>
-        </tr>
-    </table>
     <!-- Page-Level Scripts -->
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
-        new Vue({
+       var vm= new Vue({
             el: '#app',
             data: function () {
                 return {
@@ -185,19 +142,17 @@
                     person: "",
                     time: '',
                     dialogwidth: '60%',
-                    options: [{
-                        value: '1',
-                        label: '1'
-                    }, {
-                        value: '2',
-                        label: '2'
-                    }], options1: [{
+                    options: [],
+                    options1: [{
                         value: '第一生产车间',
                         label: '第一生产车间'
                     }, {
                         value: '第二生产车间',
                         label: '第二生产车间'
-                    }], options2: [{
+                        }, {
+                            value: '第三生产车间',
+                            label: '第三生产车间'
+                        }], options2: [{
                         value: '未质检',
                         label: '未质检'
                     }, {
@@ -209,17 +164,46 @@
                             return time.getTime() > Date.now();
                         },
                     },
-                    value: '',
-                    value1: '',
-                    value2: '',
+                    pro_id: '',
+                    bumen: '',
+                    status: '',
                 }
             },
             methods: {
                 handleChange(value) {
                     console.log(value);
                 }
+           },
+           watch: {
+               pro_id: function () {
+                   var _this = this;
+                   //查询生产详情单号相关的产品信息
+                   $.ajax({
+                       type: "Get",
+                       url: "https://localhost:44360/api/product/select_pro_plan_details?id=" + _this.pro_id,
+                       dataType: "json",
+                       success: function (data) {
+                           _this.name = data.product_name;
+                           _this.price = data.product_price;
+                           _this.type = data.product_type;
+                           _this.produre = "长沙智联公司";
+                           _this.unit = data.unit;
+                           _this.address = data.product_address;
+                       }
+                   })
+               }
+           }
+       });  //App
+        //查询未处理的生产详情单号
+        $.ajax({
+            type: "Get",
+            url: "https://localhost:44360/api/product/select_pro_plan_details_id?id=" + id,
+            dataType: "json",
+            success: function (data) {
+                vm.options = eval(data);
             }
-        });
+        })
+       
     </script>
 </body>
 </html>
