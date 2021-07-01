@@ -31,10 +31,10 @@ namespace shoe_erp.Controllers
         }
         //二级页面================================================================
         //添加产品入库
-        //public ActionResult add_in_product()
-        //{
-        //    return View();
-        //}
+        public ActionResult add_in_product()
+        {
+            return View();
+        }
         //产品库存数量
         public ActionResult product_repertory_num()
         {

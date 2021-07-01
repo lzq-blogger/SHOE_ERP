@@ -36,9 +36,39 @@
     </style>
 </head>
 <body>
+    @*详情*@
+    <div id="edit_app">
+        <el-dialog :visible.sync="visible" title="产品出库详情" width="75%" style="background-color: rgba(255,255,255,0.3)">
+            <template>
+                <el-table border="1" :data="tableData.filter(data => !search || data.product_name.toLowerCase().includes(search.toLowerCase()))"
+                          style="width: 1000px;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                    <el-table-column label="产品名" width="140px"
+                                     prop="product_name">
+                    </el-table-column>
+                    <el-table-column label="产品价格" width="160px"
+                                     prop="product_price">
+                    </el-table-column>
+                    <el-table-column label="产品数量" width="80px"
+                                     prop="quantity">
+                    </el-table-column>
+                    <el-table-column label="客户名" width="300px"
+                                     prop="customer_name">
+                    </el-table-column>
+                    <el-table-column label="客户电话"
+                                     prop="customer_phone">
+                    </el-table-column>
+                    <el-table-column align="center" width="200px">
+                        <template slot="header" slot-scope="scope">
+                            <el-input v-model="search" placeholder="输入关键字搜索"></el-input>
+                        </template> 
+                    </el-table-column>
+                </el-table>
+            </template>
+        </el-dialog>
+    </div>
     <div id="selectshop">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
-            <h4>产品入库登记表</h4>
+            <h4>产品出库登记表</h4>
             <div id="app">
                 <el-button type="danger" icon="el-icon-delete-solid">删除</el-button>
             </div>
@@ -108,21 +138,21 @@
                     //"orderable": false,
                     //"data": null,
                     "render": function (data, type, row) {
-                        var id = row.materialr_plan_id;
+                        var id = row.out_repertory_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'>详情</button>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(" + id + ")'>详情</button>";
                         html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除</button>";
                         html += "</div>";
                         return html;
                     }
                 }, {
-                        "targets": 0,
-                        "render": function () {
-                            var html = "<div class='btn-group' id='app1'>";
-                            html += "<input type='checkbox' value=''  style='width:15px;height:15px;box-shadow: 0px 1px 10px 3px rgb(228,228,229);'/>";
-                            html += "</div>";
-                            return html;
-                        }
+                    "targets": 0,
+                    "render": function () {
+                        var html = "<div class='btn-group' id='app1'>";
+                        html += "<input type='checkbox' value=''  style='width:15px;height:15px;box-shadow: 0px 1px 10px 3px rgb(228,228,229);'/>";
+                        html += "</div>";
+                        return html;
+                    }
                 }]
             });
         });
@@ -132,6 +162,28 @@
 
             }
         });
+        var vm2 = new Vue({
+            el: "#edit_app",
+            data() {
+                return {
+                    tableData: [],
+                    search: '',
+                    visible: false,
+                    num: 1,
+                }
+            }
+        })
+        function xinagqtanchuan(id) {
+            vm2.visible = true;
+            $.ajax({
+                type: "Get",
+                url: "https://localhost:44360/api/pro_repertory/select_out_product_details?id=" + id,
+                dataType: "json",
+                success: function (data) {
+                    vm2.tableData = eval(data);
+                }
+            })
+        }
     </script>
 
 </body>

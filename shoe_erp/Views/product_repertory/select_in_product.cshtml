@@ -59,7 +59,7 @@
                                         <th scope="col">质检单号</th>
                                         <th scope="col">产品登记号</th>
                                         <th scope="col">质检时间</th>
-                                        <th scope="col">操作人</th>
+                                        <th scope="col">经手人</th>
                                         <th scope="col">质检结果</th>
                                         <th scope="col">操作</th>
                                     </tr>
@@ -111,14 +111,14 @@
                     //"orderable": false,
                     //"data": null,
                     "render": function (data, type, row) {
-                        var id = row.materialr_plan_id;
+                        var id = row.pro_production_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'>入库</button>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='add_repeartory(" + id + ")'>入库</button>";
                         html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除</button>";
                         html += "</div>";
                         return html;
                     }
-                }, {
+                },{
                     "targets": 0,
                     "render": function () {
                         var html = "<div class='btn-group' id='app1'>";
@@ -135,6 +135,12 @@
 
             }
         });
+        //入库跳转
+        function add_repeartory(id) {
+            location.href = "add_in_product";
+            //跨界面传值
+            window.localStorage.setItem('id', id);
+        }
     </script>
 
 </body>

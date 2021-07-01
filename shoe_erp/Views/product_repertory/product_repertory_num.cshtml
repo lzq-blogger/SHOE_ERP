@@ -36,6 +36,16 @@
     </style>
 </head>
 <body>
+    @*修改提货数量*@
+    <div id="update_num_app">
+        <el-dialog :visible.sync="visible" title="修改库存数量" width="40%" style="background-color: rgba(255,255,255,0.3)">
+            <div style="text-align:center;">
+                <el-input-number v-model="num" :min="1" :max="10" label="描述文字"></el-input-number>
+                <el-button type="primary" style="background-color: rgb(52,123,183);"> 保存 </el-button>
+            </div>
+        </el-dialog>
+    </div>
+    @*信息*@
     <div id="selectshop">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
             <h4>产品库存表</h4>
@@ -95,22 +105,23 @@
                 },
                 //columns是绑定表格数据源
                 columns: [
-                    {data:null},
+                    { data: null },
                     { data: "repertory_id" },
                     { data: "product_name" },
                     { data: "product_type" },
                     { data: "product_price" },
                     { data: "pro_repertory_num" },
-                    {data:null}
+                    { data: null }
                 ],
                 "aoColumnDefs": [{
                     "targets": -1, //操作按钮目标列
                     //"orderable": false,
                     //"data": null,
                     "render": function (data, type, row) {
-                        var id = row.materialr_plan_id;
+                        var id = row.repertory_id;
                         var html = "<div class='btn-group' id='app'>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除</button>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='handleEdit(" + id + ")'>编辑</button>";
+                        html += "<button class='btn btn-danger btn-sm' onclick='handleDelete(" + id + ")'>删除</button>";
                         html += "</div>";
                         return html;
                     }
@@ -131,6 +142,21 @@
 
             }
         });
+        var vm2 = new Vue({
+            el: "#update_num_app",
+            data() {
+                return {
+                    visible: false,
+                    num: "",
+                }
+            }
+        });
+        function handleEdit(id) {
+            vm2.visible = true;
+        }   //编辑  
+        function handleDelete(id) {    //删除
+
+        }   //删除
     </script>
 
 </body>
