@@ -20,14 +20,44 @@
     <link href="/Content/select/css/style.css?v=4.1.0" rel="stylesheet" />
     <script src="/Content/select/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
+    <style>
+        table tr .shao {
+            width: 120px;
+        }
+
+        .table1 tr {
+            height: 65px;
+        }
+
+            .table1 tr .tdtext {
+                padding-left: 20px;
+            }
+
+        table tr .shao {
+            width: 120px;
+        }
+
+        table tr td, table tr th {
+            text-align: center;
+        }
+
+        table thead tr {
+            background-color: rgb(239,240,244);
+        }
+    </style>
 </head>
 <body>
     <div id="selectshop">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px;
-       border-bottom: 1px solid rgb(234 234 234)">
+       border-bottom: 1px solid rgb(234 234 234);">
             <h4>客户表</h4>
             <div id="app">
-                <el-button type="danger" icon="el-icon-delete-solid">删除</el-button>
+                <a style="color:white" href="/customer/add_customerInfo">
+                    <el-button type="primary" icon="el-icon-plus" style="background-color: rgb(52,123,183);">
+                        添加
+                    </el-button>
+                </a>
+                <el-button type="danger" icon="el-icon-delete-solid" style="background-color: rgb(217,84,80);">删除</el-button>
             </div>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
@@ -43,15 +73,15 @@
                                             <input type="radio" name="xuan" value="Nxuan" />全不选
                                         </th>
                                         <th scope="col">客户ID</th>
-                                        <th scope="col">用户名称</th>
-                                        <th scope="col">用户电话号码</th>
+                                        <th scope="col">客户名称</th>
+                                        <th scope="col">客户电话号码</th>
                                         <th scope="col">联系人</th>
-                                        <th scope="col">用户邮箱</th>
+                                        <th scope="col">电子邮箱</th>
                                         <th scope="col">客户地址</th>
                                         <th scope="col">客户传真</th>
                                         <th scope="col">邮政编码</th>
                                         <th scope="col">开户银行</th>
-                                        <th scope="col">银行账户</th>
+                                        <th scope="col">银行账号</th>
                                         <th scope="col">操作</th>
                                     </tr>
                                 </thead>
@@ -109,9 +139,8 @@
                     "render": function (data, type, row) {
                         var id = row.materialr_plan_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon - edit'></span> 详情<tton>";
-                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon-edit'></span> 编辑<tton>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'><span class='glyphicon glyphicon-trash'></span> 删除<tton>";
+                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'>编辑</button>";
+                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除</button>";
                         html += "</div>";
                         return html;
                     }

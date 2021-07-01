@@ -27,7 +27,12 @@
        border-bottom: 1px solid rgb(234 234 234)">
             <h4>客户订单表</h4>
             <div id="app">
-                <el-button type="danger" icon="el-icon-delete-solid">删除</el-button>
+                <a style="color:white" href="/customer/add_customerOrder">
+                    <el-button type="primary" icon="el-icon-plus" style="background-color: rgb(52,123,183);">
+                        添加
+                    </el-button>
+                </a>
+                <el-button type="danger" icon="el-icon-delete-solid" style="background-color: rgb(217,84,80);">删除</el-button>
             </div>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
@@ -103,9 +108,9 @@
                     //"orderable": false,
                     //"data": null,
                     "render": function (data, type, row) {
-                        var id = row.materialr_plan_id;
+                        var id = row.orderr_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon - edit'></span> 详情<tton>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon-edit'></span> 详情<tton>";
                         html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon-edit'></span> 编辑<tton>";
                         html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'><span class='glyphicon glyphicon-trash'></span> 删除<tton>";
                         html += "</div>";

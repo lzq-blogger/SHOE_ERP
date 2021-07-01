@@ -14,7 +14,7 @@ namespace shoe_erp.Controllers
         {
             return View();
         }
-        //待质检原料
+        //待质检材料
         public ActionResult wait_quality_materials()
         {
             return View();
@@ -30,7 +30,7 @@ namespace shoe_erp.Controllers
         {
             return View();
         }
-        //查询原料质检单(在同一个页面需要有个模态窗来进行质检产品，也就是新增质检单)
+        //查询材料质检单(在同一个页面需要有个模态窗来进行质检产品，也就是新增质检单)
         public ActionResult select_wait_quality_materials()
         {
             return View();
