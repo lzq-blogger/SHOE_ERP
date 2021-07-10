@@ -45,10 +45,11 @@
 <body>
     @*详情*@
     <div id="edit_app">
-        <el-dialog :visible.sync="visible" title="销售订单详情" width="58%" style="background-color: rgba(255,255,255,0.3)">
+        <el-dialog :visible.sync="visible" title="销售订单详情" width="51%" style="background-color: rgba(255,255,255,0.3)">
+            
             <template>
                 <el-table border="1" :data="tableData.filter(data => !search || data.product_name.toLowerCase().includes(search.toLowerCase()))"
-                          style="width: 820px;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                          style="width: 720px;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
                     <el-table-column label="产品ID" width="120px"
                                      prop="product_id">
                     </el-table-column>
@@ -64,10 +65,8 @@
                     <el-table-column label="产品类型" width="100px"
                                      prop="product_type">
                     </el-table-column>
-                    <el-table-column align="center" width="200px">
-                        <template slot="header" slot-scope="scope">
-                            <el-input v-model="search" placeholder="输入关键字搜索"></el-input>
-                        </template>
+                    <el-table-column label="产品编号" width="100px"
+                                     prop="product_num">
                     </el-table-column>
                 </el-table>
             </template>
