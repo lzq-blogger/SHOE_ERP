@@ -18,9 +18,44 @@
     <link href="/Content/select/css/animate.css" rel="stylesheet" />
     <!--ElementUI 只用了icon库-->
     <link href="~/Content/ElementUI/element-ui.css" rel="stylesheet" />
+
+    <style>
+        table tr .shao {
+            width: 120px;
+        }
+
+        .table1 tr {
+            height: 65px;
+        }
+
+            .table1 tr .tdtext {
+                padding-left: 20px;
+            }
+
+        table tr .shao {
+            width: 120px;
+        }
+
+        table tr td, table tr th {
+            text-align: center;
+        }
+
+        table thead tr {
+            background-color: rgb(239,240,244);
+        }
+    </style>
+
 </head>
 <body>
     <div id="selectshop" style="height:100%">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
+            <h4>采购计划</h4>
+            <div id="app">
+                <a id='btn_add' class="btn btn-info" tabindex="-1" role="button" aria-disabled="true" href='/buy_Manage/add_plan'><span class='el-icon-plus'></span> 新增</a>
+
+                <a class='btn btn-danger' id='btnAll'><span class='el-icon-delete-solid'>批量删除</span></a>
+            </div>
+        </div>
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-sm-12">
@@ -29,6 +64,9 @@
                             <table class="table table-striped table-bordered table-hover dataTables-example">
                                 <thead>
                                     <tr>
+                                        <th>
+                                            <input type="checkbox" class="checkall" id="group_checkbox" />
+                                        </th>
                                         <th scope="col">采购计划ID</th>
                                         <th scope="col">经办人</th>
                                         <th scope="col">操作人</th>
@@ -38,7 +76,7 @@
                                     </tr>
                                 </thead>
                                 <!--<tbody>
-                            </tbody>-->
+                                </tbody>-->
                             </table>
                         </div>
                     </div>
@@ -54,33 +92,27 @@
                             <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
                         </button>
                         @*<i class="fa fa-laptop modal-icon"></i>*@
-                        <h4 class="modal-title">新增计划</h4>
+                        <h4 class="modal-title">采购详情</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="form-horizontal m-t" id="commentForm" novalidate="novalidate">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">材料：</label>
-                                <div class="col-sm-8">
-                                    <input id="cname" name="name" minlength="2" type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">价格：</label>
-                                <div class="col-sm-8">
-                                    <input id="cphone" type="text" class="form-control" name="phone">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">数量：</label>
-                                <div class="col-sm-8">
-                                    <input id="cemail" type="text" class="form-control" name="email">
-                                </div>
-                            </div>
-                        </form>
+                        <table class="table table-striped table-bordered table-hover dataTables-modal">
+                            <thead>
+                                <tr>
+                                    <th scope="col">采购计划ID</th>
+                                    <th scope="col">材料名</th>
+                                    <th scope="col">材料类型</th>
+                                    <th scope="col">材料价格（单位：元）</th>
+                                    <th scope="col">预计采购数量</th>
+                                    <th scope="col">供应商</th>
+                                </tr>
+                            </thead>
+                            <!--<tbody>
+                             </tbody>-->
+                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary" id="btn_save">保存</button>
+                        @*<button type="button" class="btn btn-primary" id="btn_save">保存</button>*@
                     </div>
                 </div>
             </div>
@@ -98,20 +130,38 @@
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- 分页 Scripts -->
-    <script>      
+    <script>
         var se_url = "https://localhost:44360/"
+        var urlS = se_url + "api/Buy_Manage/"
         $(document).ready(function () {
             $('.dataTables-example').dataTable({
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: se_url + "Buy_Manage/PostAllData_jihua",
-                    "dataType": "json",
+                    url: se_url + "Buy_Manages/PostAllData_jihua",
+                    dataType: "json",
                     //"dataSrc": "data"
                 },
                 //columns是绑定表格数据源
                 "columns": [
+                    {
+                        "data": "materialr_plan_id",
+                        "width": "100px",
+                        "bSortable": false,
+                        "orderable": false, // 禁用排序
+                        "render": function (data, type, full, meta) {
+                            var checkHtml = '<input type="checkbox" class="checkchild"  value="' + data + '" />';
+                            return checkHtml;
+                        },
+                        "createdCell": function (td, cellData, rowData, row, col) {
+                            $(td).css('text-align', 'center');
+                        }
+                    },
+                    //{
+                    //    "title": "<input align=\"center\" type=\"checkbox\" class=\"checkAll\"  id=\"checkAll\"/>",
+                    //    "orderable": false, // 禁用排序
+                    //},
                     { data: "materialr_plan_id" },
                     { data: "person_handling" },
                     { data: "operator_per" },
@@ -119,27 +169,56 @@
                     { data: "status" },
                     { data: null },
                 ],
-                "aoColumnDefs": [{
-                    "targets": -1, //操作按钮目标列
-                    //"orderable": false,
-                    //"data": null,
-                    "render": function (data, type, row) {
-                        var id = row.materialr_plan_id;
-                        var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_seach(" + id + ")'><span class='el-icon-search'></span> 查看</button>";
-                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='el-icon-edit'></span> 编辑</button>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'><span class='el-icon-delete'></span> 删除</button>";
-                        html += "</div>";
-                        return html;
-                    }
-                }]
+                "aoColumnDefs": [
+                    {
+                        "data": "materialr_plan_id",
+                        "render": function (data, type) {
+                            return "<div align='center'><input type=\"checkbox\"   name=\"ckb-jobid\" value=" + data + "></div>";
+                        }, "aTargets": 0 //第一列
+                    },
+                    {
+                        "targets": -1, //操作按钮目标列
+                        //"orderable": false,
+                        //"data": null,
+                        "render": function (data, type, row) {
+                            var id = row.materialr_plan_id;
+                            var html = "<div class='btn-group'>";
+                            html += "<button class='btn btn-primary btn-sm' onclick='btn_row_seach(" + id + ")'><span class='el-icon-search'></span> 详情</button>";
+                            html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='el-icon-edit'></span> 编辑</button>";
+                            html += "<button class='btn btn-danger  btn-sm' onclick='btn_row_del(" + id + ")'><span class='el-icon-delete'></span> 删除</button>";
+                            html += "</div>";
+                            return html;
+                        }
+                    }]
             });
 
-            //var buttonHtml = " &nbsp;&nbsp;<button id='btn_add' class='btn btn-info btn-sm' onclick='btn_row_add()'><span class='el-icon-plus'></span> 新增</button> &nbsp;&nbsp;";
-            var buttonHtml = " &nbsp;&nbsp;<a id='btn_add' class='btn btn-info btn-sm' href='/buy_Manage/add_plan'><span class='el-icon-plus'></span> 新增</a> &nbsp;&nbsp;";
-            //buttonHtml += "<button class='btn btn-primary btn-sm' id='btnAll'><i class='fa fa-trash'></i> 批量删除</button> &nbsp;&nbsp;";
-            $("div.col-sm-6").eq(0).append(buttonHtml); //追加到length后面
+            //var buttonHtml = " &nbsp;&nbsp;<a id='btn_add' class='btn btn-info btn-sm' href='/buy_Manage/add_plan'><span class='el-icon-plus'></span> 新增</a> &nbsp;&nbsp;";
+            //$("div.col-sm-6").eq(0).append(buttonHtml); //追加到length后面
         });
+
+        ////使用live绑定数据，因为checkAll还没有加载好
+        //$("#checkAll").on("click", function () {
+        //    if (this.checked) {
+        //        $(this).attr('checked', 'checked')
+        //        $("input[name='ckb-jobid']").each(function () {
+        //            this.checked = true;
+        //        });
+        //    } else {
+        //        $(this).removeAttr('checked')
+        //        $("input[name='ckb-jobid']").each(function () {
+        //            this.checked = false;
+
+        //        });
+        //    }
+        //});
+        //全选
+        $(".checkall").click(function () {
+            var check = $(this).prop("checked");
+            $(".checkchild").prop("checked", check);
+        });
+
+
+
         //新增
         function btn_row_add() {
             $("#hf_editid").val("");
@@ -152,19 +231,70 @@
             $("#myModal").modal('show');
         };
 
+
+        //批量处理数据
+        $('#btnAll').on('click', function () {
+            var selectLoans = [];
+            $('.checkchild').each(function () {
+                if ($(this).is(':checked')) {
+                    selectLoans.push($(this).val());
+                }
+            });
+            if (selectLoans.length > 0) {
+                $.ajax({
+                    url: urlS + "Shans?ids=" + selectLoans,
+                    type: "Delete",
+                    dataType: "json",
+                    success: function (data, status) {
+                        window.location.reload();
+                    }
+                });
+            } else {
+                alert('至少选择一项数据！');
+            }
+        });
+
         //行查看按钮
         function btn_row_seach(id) {
-            $.get(urlS, {
-                "id": id
-            }, function (data, status) {
-                $("#cname").val(data.User_Name);
-                $("#cphone").val(data.Phone);
-                $("#cemail").val(data.Email);
-                $("#csex").val(data.Sex);
-                $("#cbirthday").val(data.BirthDay.replace("T", " "));
-                $("#ccomment").val(data.Comments);
-                $("#btn_save").hide();
-                $("#myModal").modal('show');
+            if ($('.dataTables-modal').hasClass('dataTable')) {
+
+                var oldTable = $('.dataTables-modal').dataTable();
+
+                oldTable.fnClearTable(); //清空一下table
+
+                oldTable.fnDestroy(); //还原初始化了的dataTable
+
+                $('#data-table').empty();
+
+            }
+            $('.dataTables-modal').dataTable({                
+                "searching": false,// 是否允许检索
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    type: "POST",
+                    url: urlS + "Select_jihua_detail",
+                    dataType: "json",
+                    // 传给服务器的数据，可以添加我们自己的查询参数
+                    data: function (param) {
+                        param.detail_id = id;
+                        return param;
+                    },
+                    //"dataSrc": "data"
+                },
+                //columns是绑定表格数据源
+                "columns": [
+                    { data: "materialr_plan_id" },
+                    { data: "materialr_details_name" },
+                    { data: "materialr_type_name" },
+                    { data: "materialr_details_price" },
+                    { data: "materialr_details_num" },
+                    { data: "material_supplier" },
+                ]
+            });
+            //弹出模态窗
+            $("#myModal").modal({
+
             });
         }
         //行编辑按钮
@@ -182,6 +312,18 @@
                 $("#ccomment").val(data.Comments);
                 $("#btn_save").show();
                 $("#myModal").modal('show');
+            });
+        }
+
+        //行删除按钮
+        function btn_row_del(id) {
+            $.ajax({
+                url: urlS + "Shan?id=" + id,
+                type: "Delete",
+                dataType: "json",
+                success: function (data, status) {
+                    window.location.reload();
+                }
             });
         }
     </script>
