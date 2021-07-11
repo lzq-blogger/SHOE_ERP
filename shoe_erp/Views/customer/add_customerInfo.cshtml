@@ -9,10 +9,123 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>add_customerInfo</title>
+    <link href="~/Content/ElementUI/element-ui.css" rel="stylesheet" />
 </head>
 <body>
-    <div> 
-        新增客户信息界面
+    <div style="margin:0 auto;border-bottom:1px solid rgb(231 231 231);">
+        <p style="margin-left:20px"><strong>客户资料</strong></p>
     </div>
+    <div id="app">
+        <div class="center" style="margin:0px auto; border-bottom:1px solid rgb(231 231 231);padding:10px;">
+            <table cellpadding="20" cellspacing="10" style="margin-left:60px">
+                <tr>
+                    <td>客户名称：</td>
+                    <td class="lefttd">
+                        <el-input placeholder="请输入内容" v-model="name"></el-input>
+                    </td>
+                    <td>客户电话号码：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="type"></el-input>
+                    </td>
+                    <td>联系人：</td>
+                    <td class="lefttd">
+                        <el-input placeholder="请输入内容" v-model="produre"></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>电子邮箱：</td>
+                    <td class="lefttd">
+                        <el-input placeholder="请输入内容" v-model="produre"></el-input>
+                    </td>
+                    <td>开户银行：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="price"></el-input>
+                    </td>
+                    <td>客户地址：</td>
+                    <td class="lefttd">
+                        <el-input placeholder="请输入内容" v-model="unit"></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>客户传真：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="address"></el-input>
+                    </td>
+                    <td>银行账号：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="address"></el-input>
+                    </td>
+                    <td>邮政编码：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="address"></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align:center;">
+                        <el-button type="primary" style="background-color: rgb(217,84,80);">取消</el-button>
+                    </td>
+                    <td colspan="2">
+                        <el-button type="danger" style="background-color: rgb(52,123,183);">提交</el-button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- Page-Level Scripts -->
+    <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/ElementUI/element-ui.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    //产品信息变量名===
+                    name: "",
+                    type: "",
+                    produre: "",
+                    price: "",
+                    unit: "",
+                    address: "",
+                    //=================
+                    visible: false,
+                    person: "",
+                    time: '',
+                    dialogwidth: '60%',
+                    options: [{
+                        value: '1',
+                        label: '1'
+                    }, {
+                        value: '2',
+                        label: '2'
+                    }], options1: [{
+                        value: '第一生产车间',
+                        label: '第一生产车间'
+                    }, {
+                        value: '第二生产车间',
+                        label: '第二生产车间'
+                    }], options2: [{
+                        value: '未质检',
+                        label: '未质检'
+                    }, {
+                        value: '已质检',
+                        label: '已质检'
+                    }],
+                    pickerOptions: {
+                        disabledDate(time) {
+                            return time.getTime() > Date.now();
+                        },
+                    },
+                    value: '',
+                    value1: '',
+                    value2: '',
+                }
+            },
+            methods: {
+                handleChange(value) {
+                    console.log(value);
+                }
+            }
+        });
+    </script>
 </body>
 </html>

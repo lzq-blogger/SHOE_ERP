@@ -43,64 +43,45 @@
     </style>
 </head>
 <body>
-    <div id="app1">
-        <el-dialog :visible.sync="visible" title="客户订单产品出库">
-            <table class="table1">
-                <tr>
-                    <td>请选择订单号：</td>
-                    <td>
-                        <el-select v-model="value" placeholder="请选择">
-                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>经手人：</td>
-                    <td>
-                        <el-input placeholder="请输入内容" v-model="input1" :disabled="true"> </el-input>
-                    </td>
-                    <td class="tdtext">操作人：</td>
-                    <td>
-                        <el-input placeholder="请输入内容" v-model="input" clearable></el-input>
-                    </td>
-                </tr>
-                <tr>
-                    <td>未付金额：</td>
-                    <td>
-                        <el-input placeholder="请输入内容" v-model="input2" :disabled="true"> </el-input>
-                    </td>
-                    <td class="tdtext">总金额：</td>
-                    <td>
-                        <el-input placeholder="请输入内容" v-model="input2" :disabled="true"> </el-input>
-                    </td>
-                </tr>
-                <tr>
-                    <td>预计交付时间：</td>
-                    <td>
-                        <el-date-picker v-model="value1" type="date" placeholder="选择日期" :disabled="true"> </el-date-picker>
-                    </td>
-                    <td class="tdtext">实际交付时间：</td>
-                    <td>
-                        <el-date-picker v-model="value2" type="date" placeholder="选择日期"> </el-date-picker>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="text-align:center;">
-                        <el-button type="primary" style="background-color: rgb(52,123,183);">确定</el-button>
-                    </td>
-                    <td colspan="2">
-                        <el-button type="danger" style="background-color: rgb(217,84,80);">重置</el-button>
-                    </td>
-                </tr>
-            </table>
+    @*详情*@
+    <div id="edit_app">
+        <el-dialog :visible.sync="visible" title="销售订单详情" width="51%" style="background-color: rgba(255,255,255,0.3)">
+            
+            <template>
+                <el-table border="1" :data="tableData.filter(data => !search || data.product_name.toLowerCase().includes(search.toLowerCase()))"
+                          style="width: 720px;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                    <el-table-column label="产品ID" width="120px"
+                                     prop="product_id">
+                    </el-table-column>
+                    <el-table-column label="产品名" width="120px"
+                                     prop="product_name">
+                    </el-table-column>
+                    <el-table-column label="产品价格" width="160px"
+                                     prop="product_price">
+                    </el-table-column>
+                    <el-table-column label="产品数量" width="80px"
+                                     prop="quantity">
+                    </el-table-column>
+                    <el-table-column label="产品类型" width="100px"
+                                     prop="product_type">
+                    </el-table-column>
+                    <el-table-column label="产品编号" width="100px"
+                                     prop="product_num">
+                    </el-table-column>
+                </el-table>
+            </template>
         </el-dialog>
     </div>
+    @*//查询所有*@
     <div id="selectshop">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
             <h4>客户订单处理表</h4>
             <div id="app">
-                <el-button type="primary" icon="el-icon-plus" onclick="tanchu()" style="background-color: rgb(52,123,183);">出库</el-button>
+                <a style="color:white" href="/sale/out_repertory_order">
+                    <el-button type="primary" icon="el-icon-plus" style="background-color: rgb(52,123,183);">
+                        出库
+                    </el-button>
+                </a>
                 <el-button type="danger" icon="el-icon-delete-solid" style="background-color: rgb(217,84,80);">删除</el-button>
             </div>
         </div>
@@ -176,10 +157,10 @@
                     //"orderable": false,
                     //"data": null,
                     "render": function (data, type, row) {
-                        var id = row.materialr_plan_id;
+                        var id = row.orderr_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon - edit'></span> 详情<tton>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'><span class='glyphicon glyphicon-trash'></span> 删除<tton>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(" + id + ")'>详情</button>";
+                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除</button>";
                         html += "</div>";
                         return html;
                     }
@@ -200,41 +181,27 @@
 
             }
         });
-        var vm = new Vue({
-            el: '#app1',
-            data: function () {
+        var vm2 = new Vue({
+            el: "#edit_app",
+            data() {
                 return {
+                    tableData: [],
+                    search: '',
                     visible: false,
-                    input: "",
-                    input1: "",
-                    input2: "",
-                    input3: "",
-                    num: '',
-                    options: [{
-                        value: '选项1',
-                        label: '黄金糕'
-                    }, {
-                        value: '选项2',
-                        label: '双皮奶'
-                    }],
-                    value: '',
-                    pickerOptions: {
-                        disabledDate(time) {
-                            return time.getTime() > Date.now();
-                        },
-                    },
-                    value1: '',
-                    value2: '',
-                }
-            },
-            methods: {
-                handleChange(value) {
-                    console.log(value);
+                    num: 1,
                 }
             }
-        });
-        function tanchu() {
-            vm.visible = true;
+        })
+        function xinagqtanchuan(id) {
+            vm2.visible = true;
+            $.ajax({
+                type: "Get",
+                url: "https://localhost:44360/api/sale/select_customer_details?id=" + id,
+                dataType: "json",
+                success: function (data) {
+                    vm2.tableData = eval(data);
+                }
+            })
         }
     </script>
 

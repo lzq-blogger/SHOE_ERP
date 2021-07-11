@@ -1,0 +1,239 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>out_repertory_order</title>
+    @*elementui*@
+    <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
+    <style>
+        .table1 tr {
+            height: 65px;
+        }
+
+            .table1 tr .tdtext {
+                padding-left: 20px;
+                text-align:right;
+            }
+
+        table tr .shao {
+            width: 120px;
+        }
+
+        table tr td, table tr th {
+            text-align: center;
+        }
+
+        table thead tr {
+            background-color: rgb(239,240,244);
+        }
+    </style>
+</head>
+<body>
+    <a style="color: rgb(38 149 255); font-size: 20px; text-decoration: none;padding-left:10px;padding-top:10px;"
+       href="/sale/select_customer_order">
+        <i class="el-icon-back" style="font-size:25px;"></i>&nbsp;返回
+    </a>
+    @*计划单*@
+    <div id="app">
+        <table style="margin:0 auto;margin-top:20px;" class="table1">
+            <tr>
+                <td class="tdtext">请选择订单号：</td>
+                <td>
+                    <el-select v-model="proid" placeholder="请选择">
+                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                </td>
+                <td class="tdtext">客户姓名：</td>
+                <td>
+                    <el-input placeholder="请输入内容" v-model="customer" :disabled="true"> </el-input>
+                </td>
+            </tr>
+            <tr>
+                <td  class="tdtext">经手人：</td>
+                <td>
+                    <el-input placeholder="请输入内容" v-model="person1" :disabled="true"> </el-input>
+                </td>
+                <td  class="tdtext">预计交付时间：</td>
+                <td>
+                    <el-date-picker v-model="time1" type="date" placeholder="选择日期" :disabled="true"> </el-date-picker>
+                </td>
+            </tr>
+            <tr>
+                <td  class="tdtext">未付金额：</td>
+                <td>
+                    <el-input placeholder="请输入内容" v-model="price1" :disabled="true"> </el-input>
+                </td>
+                <td class="tdtext">总金额：</td>
+                <td>
+                    <el-input placeholder="请输入内容" v-model="price2" :disabled="true"> </el-input>
+                </td>
+            </tr>
+        </table>
+    </div>
+    @*订单详情*@
+    <div id="app1" style="padding:20px 60px;">
+        <template>
+            <el-table border="1" :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+                      style="width: 100%;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                <el-table-column label="产品编号"
+                                 prop="product_num">
+                </el-table-column>
+                <el-table-column label="产品名称"
+                                 prop="product_name">
+                </el-table-column>
+                <el-table-column label="产品数量"
+                                 prop="product_details_num">
+                </el-table-column>
+                <el-table-column label="产品价格"
+                                 prop="price">
+                </el-table-column>
+                <el-table-column label="产品类型"
+                                 prop="type">
+                </el-table-column>
+                <el-table-column label="产品单位"
+                                 prop="unit">
+                </el-table-column>
+                <el-table-column align="right">
+                    <template slot="header" slot-scope="scope">
+                        <el-input v-model="search" placeholder="输入关键字搜索"></el-input>
+                    </template>
+                    <template slot-scope="scope">
+                        <el-button type="primary"  style="background-color: rgb(52,123,183);">出库</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </template>
+    </div>
+    @*其他信息*@
+    <div id="app2">
+        <table class="table1" style="margin:0 auto;">
+            <tr>
+                <td class="tdtext">操作人：</td>
+                <td>
+                    <el-input placeholder="请输入内容" v-model="person2" clearable></el-input>
+                </td>
+                <td class="tdtext">尾款数：</td>
+                <td>
+                    <el-input placeholder="请输入内容" v-model="price3" clearable></el-input>
+                </td>
+                <td class="tdtext">实际交付时间：</td>
+                <td>
+                     <el-date-picker v-model="time2" type="date" placeholder="选择日期"> </el-date-picker>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align:right;">
+                    <el-button type="primary" style="background-color: rgb(52,123,183);">出库</el-button>
+                </td>
+                <td colspan="3">
+                    <el-button type="danger" style="background-color: rgb(217,84,80);">重置</el-button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- Page-Level Scripts -->
+    <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/ElementUI/element-ui.js"></script>
+    <script> 
+        var vm = new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    visible: false,
+                    proid: "",
+                    person1: "",
+                    price1: "",
+                    price2: "",
+                    time1: "",
+                    customer:"",
+                    num: '',
+                    options: [],
+                    pickerOptions: {
+                        disabledDate(time) {
+                            return time.getTime() > Date.now();
+                        },
+                    },
+                }
+            },
+            watch: {
+                proid: function () {
+                    var _this = this;
+                    //请求数据进行订单详情渲染(根据订单ID)
+                    $.ajax({
+                        type: "Get",
+                        url: "https://localhost:44360/api/sale/customer_order_detail?id=" + _this.proid,
+                        dataType: "json",
+                        success: function (data) {
+                            vm1.tableData = eval(data);
+                        }
+                    });
+                    //查询所有订单ID  customerID
+                    $.ajax({
+                        type: "Get",
+                        url: "https://localhost:44360/api/sale/customerID",
+                        dataType: "json",
+                        success: function (data) {
+                            for (var i = 0; i < data.length; i++) {
+                                var q = { value: "", label: "" }
+                                q.value = data[i];
+                                q.label = data[i];
+                                _this.options.push(q);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+        var vm1 = new Vue({
+            el: "#app1",
+            data() {
+                return {
+                    tableData: [],
+                    search: '',
+                    visible: false,
+                    num: 1,
+                }
+            },
+            methods: {
+                handleEdit(index, row) {
+                    console.log(index, row);
+                },
+                handleDelete(index, row) {
+                    console.log(index, row);
+                }
+            },
+        });
+
+        var vm2 = new Vue({
+            el: '#app2',
+            data: function () {
+                return {
+                    person2: "",
+                    price3: "",
+                    time2:"",
+                    options: [{
+                        value: '选项1',
+                        label: '黄金糕'
+                    }, {
+                        value: '选项2',
+                        label: '双皮奶'
+                    }],
+                    pickerOptions: {
+                        disabledDate(time) {
+                            return time.getTime() > Date.now();
+                        },
+                    },
+                }
+            },
+        });
+    </script>
+</body>
+</html>
