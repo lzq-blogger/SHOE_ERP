@@ -22,6 +22,46 @@
     <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
 </head>
 <body>
+    @*详情*@
+    <div id="edit_app">
+        <el-dialog :visible.sync="visible" title="客户订单详情" width="75%" style="background-color: rgba(255,255,255,0.3)">
+            <template>
+                <el-table border="1" :data="tableData.filter(data => !search || data.product_name.toLowerCase().includes(search.toLowerCase()))"
+                          style="width: 1000px;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                    <el-table-column label="详情编号" width="120px"
+                                     prop="order_details_id">
+                    </el-table-column>
+                    <el-table-column label="产品名称" width="160px"
+                                     prop="product_name">
+                    </el-table-column>
+                    <el-table-column label="产品类型" width="80px"
+                                     prop="product_type">
+                    </el-table-column>
+                    <el-table-column label="单价" width="100px"
+                                     prop="product_price">
+                    </el-table-column>
+                    <el-table-column label="生产数量"
+                                     prop="quantity">
+                    </el-table-column>
+                    <el-table-column label="单位"
+                                     prop="unit">
+                    </el-table-column>
+                    <el-table-column label="产品编号"
+                                     prop="product_num">
+                    </el-table-column>                    
+                        @*<template slot-scope="scope">
+                            <el-button size="mini"
+                                       type="danger"
+                                       v-on:click="handleEdit(scope.row)">修改</el-button>
+                            <el-button size="mini"
+                                       type="danger"
+                                       v-on:click="handleDelete(scope.row)">删除</el-button>
+                        </template>*@
+                    @*</el-table-column>*@
+                </el-table>
+            </template>
+        </el-dialog>
+    </div>
     <div id="selectshop">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px;
        border-bottom: 1px solid rgb(234 234 234)">
@@ -110,9 +150,9 @@
                     "render": function (data, type, row) {
                         var id = row.orderr_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon-edit'></span> 详情<tton>";
-                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon-edit'></span> 编辑<tton>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'><span class='glyphicon glyphicon-trash'></span> 删除<tton>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(" + id + ")'> 详情</button>";
+                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'> 编辑</button>";
+                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'> 删除</button>";
                         html += "</div>";
                         return html;
                     }
@@ -133,6 +173,28 @@
 
             }
         })
+        var vm2 = new Vue({
+            el: "#edit_app",
+            data() {
+                return {
+                    tableData: [],
+                    search: '',
+                    visible: false,
+                    num: 1,
+                }
+            } 
+        })
+        function xinagqtanchuan(id) {
+            vm2.visible = true;
+            $.ajax({
+                type: "Get",
+                url: "https://localhost:44360/api/customer/order_details?id=" + id,
+                dataType: "json",
+                success: function (data) {
+                    vm2.tableData = eval(data);
+                }
+            })
+        }
     </script>
 
 </body>
