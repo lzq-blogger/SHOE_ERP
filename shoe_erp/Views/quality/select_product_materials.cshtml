@@ -42,11 +42,11 @@
                                             <input type="radio" name="xuan" value="Yxuan" />全选&nbsp;&nbsp;
                                             <input type="radio" name="xuan" value="Nxuan" />全不选
                                         </th>
-                                        <th scope="col">入库订单ID</th>
+                                        <th scope="col">采购订单ID</th>
                                         <th scope="col">采购计划ID</th>
-                                        <th scope="col">入库数量</th>
+                                        <th scope="col">经手人</th>
                                         <th scope="col">操作人</th>
-                                        <th scope="col">原料质检状态</th>
+                                        <th scope="col">材料质检状态</th>
                                         <th scope="col">操作</th>
                                     </tr>
                                 </thead>
@@ -85,7 +85,7 @@
                 //columns是绑定表格数据源
                 columns: [
                     { data: null },
-                    { data: "in_materialr_id" },
+                    { data: "materials_order_id " },
                     { data: "materialr_plan_id" },
                     { data: "person_handling" },
                     { data: "operator_per" },
@@ -99,9 +99,9 @@
                     "render": function (data, type, row) {
                         var id = row.materialr_plan_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon - edit'></span> 详情<tton>";
-                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon-edit'></span> 编辑<tton>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'><span class='glyphicon glyphicon-trash'></span> 删除<tton>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'>详情</button>";
+                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'>编辑</button>";
+                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除</button>";
                         html += "</div>";
                         return html;
                     }
