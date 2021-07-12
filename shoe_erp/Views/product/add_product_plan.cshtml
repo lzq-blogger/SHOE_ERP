@@ -126,7 +126,7 @@
                 <el-table-column label="产品名称" 
                                  prop="product_name">
                 </el-table-column>
-                <el-table-column label="产品数量"  
+                <el-table-column label="产品数量"  width="80px"
                                  prop="product_details_num">
                 </el-table-column>
                 <el-table-column label="产品价格" width="100px"
@@ -138,7 +138,7 @@
                 <el-table-column label="产品单位" width="80px"  
                                  prop="unit">
                 </el-table-column>
-                <el-table-column label="鞋子规格" width="80px"  
+                <el-table-column label="鞋子规格" width="200px"  
                                  prop="product_guige">
                 </el-table-column>
                 <el-table-column align="right">
@@ -201,7 +201,7 @@
         //获取未处理的订单号
         $.ajax({
             type: "Get",
-            url: "https://localhost:44360/api/product/weichuli_order",
+            url: "https://localhost:44360/api/product/weichuli_order?status=0",
             dataType: "json",
             success: function (data) {
                 var info = eval(data);
@@ -386,12 +386,12 @@
                 "infoList": []
             };
             for (var i = 0; i < vmapp1.tableData.length; i++) {
-                var info = {"product_id":"", "product_name": "", "product_details_num": ""}
+                var info = {"product_id":"", "product_name": "", "product_details_num": "","pro_status":"未登记"}
                 info.product_id = vmapp1.tableData[i].product_id;
                 info.product_name = vmapp1.tableData[i].product_name;
                 info.product_details_num = vmapp1.tableData[i].product_details_num;
                 json1.infoList.push(info);
-                info = { "product_id": "","product_name": "", "product_details_num": ""}
+                info = { "product_id": "", "product_name": "", "product_details_num": "", "pro_status": "未登记"}
             }
             var json2 = JSON.stringify(json1);
             console.log(json2);

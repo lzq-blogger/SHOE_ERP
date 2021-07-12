@@ -45,8 +45,8 @@
             <tr>
                 <td class="tdtext">请选择订单号：</td>
                 <td>
-                    <el-select v-model="proid" placeholder="请选择">
-                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                    <el-select v-model="proid" placeholder="请选择" filterable allow-create default-first-option>
+                        <el-option v-for="item in options" :value="item">
                         </el-option>
                     </el-select>
                 </td>
@@ -56,17 +56,17 @@
                 </td>
             </tr>
             <tr>
-                <td  class="tdtext">经手人：</td>
+                <td class="tdtext">经手人：</td>
                 <td>
                     <el-input placeholder="请输入内容" v-model="person1" :disabled="true"> </el-input>
                 </td>
-                <td  class="tdtext">预计交付时间：</td>
+                <td class="tdtext">预计交付时间：</td>
                 <td>
                     <el-date-picker v-model="time1" type="date" placeholder="选择日期" :disabled="true"> </el-date-picker>
                 </td>
             </tr>
             <tr>
-                <td  class="tdtext">未付金额：</td>
+                <td class="tdtext">未付金额：</td>
                 <td>
                     <el-input placeholder="请输入内容" v-model="price1" :disabled="true"> </el-input>
                 </td>
@@ -89,30 +89,30 @@
                                  prop="product_name">
                 </el-table-column>
                 <el-table-column label="产品数量"
-                                 prop="product_details_num">
+                                 prop="quantity">
                 </el-table-column>
                 <el-table-column label="产品价格"
-                                 prop="price">
+                                 prop="product_price">
                 </el-table-column>
                 <el-table-column label="产品类型"
-                                 prop="type">
+                                 prop="product_type">
                 </el-table-column>
                 <el-table-column label="产品单位"
                                  prop="unit">
                 </el-table-column>
-                <el-table-column align="right">
+                @*<el-table-column align="right">
                     <template slot="header" slot-scope="scope">
                         <el-input v-model="search" placeholder="输入关键字搜索"></el-input>
                     </template>
                     <template slot-scope="scope">
-                        <el-button type="primary"  style="background-color: rgb(52,123,183);">出库</el-button>
+                        <el-button type="primary" style="background-color: rgb(52,123,183);">出库</el-button>
                     </template>
-                </el-table-column>
+                </el-table-column>*@
             </el-table>
         </template>
     </div>
     @*其他信息*@
-    <div id="app2">
+    <div id="app2" v-loading.fullscreen.lock="fullscreenLoading">
         <table class="table1" style="margin:0 auto;">
             <tr>
                 <td class="tdtext">操作人：</td>
@@ -125,12 +125,12 @@
                 </td>
                 <td class="tdtext">实际交付时间：</td>
                 <td>
-                     <el-date-picker v-model="time2" type="date" placeholder="选择日期"> </el-date-picker>
+                    <el-date-picker v-model="time2" type="date" placeholder="选择日期"> </el-date-picker>
                 </td>
             </tr>
             <tr>
                 <td colspan="3" style="text-align:right;">
-                    <el-button type="primary" style="background-color: rgb(52,123,183);">出库</el-button>
+                    <el-button type="primary" style="background-color: rgb(52,123,183);" onclick="addinfo()">出库</el-button>
                 </td>
                 <td colspan="3">
                     <el-button type="danger" style="background-color: rgb(217,84,80);">重置</el-button>
@@ -139,9 +139,23 @@
         </table>
     </div>
     <!-- Page-Level Scripts -->
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
-    <script> 
+    <script>
+        //获取未处理的订单号
+        $.ajax({
+            type: "Get",
+            url: "https://localhost:44360/api/product/weichuli_order?status=1",
+            dataType: "json",
+            success: function (data) {
+                var info = eval(data);
+                for (var i = 0; i < eval(data).length; i++) {
+                    vm.options.push(info[i].order_id);
+                }
+            }
+        })
+        //app
         var vm = new Vue({
             el: '#app',
             data: function () {
@@ -152,8 +166,7 @@
                     price1: "",
                     price2: "",
                     time1: "",
-                    customer:"",
-                    num: '',
+                    customer: "",
                     options: [],
                     pickerOptions: {
                         disabledDate(time) {
@@ -172,26 +185,17 @@
                         dataType: "json",
                         success: function (data) {
                             vm1.tableData = eval(data);
-                        }
-                    });
-                    //查询所有订单ID  customerID
-                    $.ajax({
-                        type: "Get",
-                        url: "https://localhost:44360/api/sale/customerID",
-                        dataType: "json",
-                        success: function (data) {
-                            for (var i = 0; i < data.length; i++) {
-                                var q = { value: "", label: "" }
-                                q.value = data[i];
-                                q.label = data[i];
-                                _this.options.push(q);
-                            }
+                            _this.customer = eval(data)[0].customer_name;
+                            _this.person1 = eval(data)[0].person_handling;
+                            _this.time1 = eval(data)[0].order_endtime;
+                            _this.price1 = eval(data)[0].order_unpaid;
+                            _this.price2 = eval(data)[0].order_paid;
                         }
                     });
                 }
             }
         });
-
+        //app1
         var vm1 = new Vue({
             el: "#app1",
             data() {
@@ -199,33 +203,18 @@
                     tableData: [],
                     search: '',
                     visible: false,
-                    num: 1,
-                }
-            },
-            methods: {
-                handleEdit(index, row) {
-                    console.log(index, row);
-                },
-                handleDelete(index, row) {
-                    console.log(index, row);
                 }
             },
         });
-
+        //app2
         var vm2 = new Vue({
             el: '#app2',
             data: function () {
                 return {
                     person2: "",
                     price3: "",
-                    time2:"",
-                    options: [{
-                        value: '选项1',
-                        label: '黄金糕'
-                    }, {
-                        value: '选项2',
-                        label: '双皮奶'
-                    }],
+                    time2: "",
+                    fullscreenLoading: false,
                     pickerOptions: {
                         disabledDate(time) {
                             return time.getTime() > Date.now();
@@ -234,6 +223,43 @@
                 }
             },
         });
+        //新增计划确定按钮
+        function addinfo() {
+            vm2.fullscreenLoading = true;
+            //转为JSON字符串
+            var json1 = {
+                "proid": vm.proid,
+                "operator_per": vm2.person,
+                "time2": vm2.time2,
+                "price": vm2.price3,
+            };
+            var json2 = JSON.stringify(json1);
+            console.log(json2);
+            //新增数据
+            $.ajax({
+                url: "https://localhost:44360/api/sale/add_out_repertory?json="+json2,
+                type: "post",
+                dataType: "json",
+                contentType: 'application/json;charset=utf-8',
+                success: function (data) {
+                    console.log("进来了");
+                }
+            })
+            //效果展示
+            setTimeout(() => {
+                vm2.fullscreenLoading = false;
+                const h = vm2.$createElement;
+                vm2.$notify({
+                    title: '订单销售',
+                    message: h('i', { style: 'color: teal' }, '订单销售处理成功')
+                });
+                setTimeout(() => {
+                    //跳转到计划查询页面
+                    window.location.href = "@Url.Content("~/sale/select_customer_order/")";
+                }, 1000);
+            }, 1000);
+
+        }
     </script>
 </body>
 </html>

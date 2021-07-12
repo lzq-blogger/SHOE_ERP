@@ -31,12 +31,41 @@
         }
 
         table thead tr {
-            background-color: rgb(239,240,244);
+            background-color: rgb(52,123,183);
+            color: white;
         }
     </style>
 </head>
 <body>
-    <div id="selectshop">
+    @*详情*@
+    <div id="edit_app">
+        <el-dialog :visible.sync="visible" title="产品登记信息" width="67%" style="background-color: rgba(255,255,255,0.3)">
+            <template>
+                <el-table border="1" :data="tableData.filter(data => !search || data.product_name.toLowerCase().includes(search.toLowerCase()))"
+                          style="width: 900px;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                    <el-table-column label="产品名" width="140px" align="center"
+                                     prop="product_name">
+                    </el-table-column>
+                    <el-table-column label="产品类型" width="120px"
+                                     prop="product_type">
+                    </el-table-column>
+                    <el-table-column label="单价" width="120px"
+                                     prop="product_price">
+                    </el-table-column>
+                    <el-table-column label="生产数量" width="120px"
+                                     prop="product_details_num">
+                    </el-table-column>
+                    <el-table-column label="单位"
+                                     prop="unit">
+                    </el-table-column>
+                    <el-table-column label="产品规格"
+                                     prop="pro_guige">
+                    </el-table-column>
+                </el-table>
+            </template>
+        </el-dialog>
+    </div>
+    <div id="selectshop" v-loading.fullscreen.lock="fullscreenLoading">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
             <h4>产品入库登记表</h4>
             <div id="app">
@@ -84,6 +113,27 @@
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
+        //加载一秒后加载状态消失
+        setTimeout(() => {
+            vms.fullscreenLoading = false;
+        }, 1000);
+        //挂载一下
+        var vms = new Vue({
+            el: "#selectshop",
+            data: {
+                fullscreenLoading: true
+            }
+        })
+        var vm2 = new Vue({
+            el: "#edit_app",
+            data() {
+                return {
+                    tableData: [],
+                    search: '',
+                    visible: false,
+                }
+            }
+        })   //详情
         $(document).ready(function () {
             //$('.dataTables-example').dataTable();
             $('.dataTables-example').dataTable({
@@ -113,16 +163,16 @@
                     "render": function (data, type, row) {
                         var id = row.pro_production_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='add_repeartory(" + id + ")'>入库</button>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除</button>";
+                        html += "<button class='btn btn-warning btn-sm' onclick='add_repeartory(" + id + ")'>入库</button>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(" + id + ")'>详情</button>";
                         html += "</div>";
                         return html;
                     }
-                },{
+                }, {
                     "targets": 0,
                     "render": function () {
                         var html = "<div class='btn-group' id='app1'>";
-                        html += "<input type='checkbox' value=''  style='width:15px;height:15px;box-shadow: 0px 1px 10px 3px rgb(228,228,229);'/>";
+                        html += "<input type='checkbox' value=''  style='width:15px;height:15px;'/>";
                         html += "</div>";
                         return html;
                     }
@@ -140,6 +190,18 @@
             location.href = "add_in_product";
             //跨界面传值
             window.localStorage.setItem('id', id);
+        }
+        //详情
+        function xinagqtanchuan(id) {
+            vm2.visible = true;
+            $.ajax({
+                type: "Get",
+                url: "https://localhost:44360/api/product/select_pro_plan_details?id=" + id + "&status=" + "不好",
+                dataType: "json",
+                success: function (data) {
+                    vm2.tableData = eval(data);
+                }
+            })
         }
     </script>
 

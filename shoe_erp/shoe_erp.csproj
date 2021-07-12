@@ -1256,6 +1256,7 @@
     <Content Include="Views\order\customerOrder_statistical.cshtml" />
     <Content Include="Views\product_repertory\select_in_product.cshtml" />
     <Content Include="Views\sale\out_repertory_order.cshtml" />
+    <Content Include="Views\sale\sale_order.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1291,9 +1292,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>63749</DevelopmentServerPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44313/</IISUrl>
+          <IISUrl>http://localhost:55414/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
