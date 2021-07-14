@@ -51,7 +51,8 @@ namespace shoe_erp.Controllers
         {
             return View();
         }
-        //材料入库
+
+        //材料入库单显示
         public ActionResult select_in_materialr_order()
         {
             return View();
