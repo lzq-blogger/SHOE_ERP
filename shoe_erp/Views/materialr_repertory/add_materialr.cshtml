@@ -291,7 +291,12 @@
                     }, 1000);
                 }, 1000);
             } else {
-                window.alert("请输入完整信息！");
+                const h = vm.$createElement;
+                vm.$notify({
+                    title: '新增材料',
+                    message: h('i', { style: 'color: teal' }, '新增材料失败，请填写完整！')
+                });
+                //window.alert("请输入完整信息！");
             }
 
         }
