@@ -113,7 +113,7 @@
                 <el-table-column label="产品名称"
                                  prop="product_name">
                 </el-table-column>
-                <el-table-column label="产品数量"
+                <el-table-column label="产品数量" width="80px"
                                  prop="product_details_num">
                 </el-table-column>
                 <el-table-column label="产品价格" width="100px"
@@ -125,7 +125,7 @@
                 <el-table-column label="产品单位" width="80px"
                                  prop="unit">
                 </el-table-column>
-                <el-table-column label="鞋子规格" width="80px"
+                <el-table-column label="鞋子规格" width="200px"
                                  prop="product_guige">
                 </el-table-column>
                 <el-table-column align="right">
@@ -149,8 +149,8 @@
             <tr>
                 <td class="texttd">客户名称：</td>
                 <td class="inputtd">
-                    <el-select v-model="type" placeholder="请选择">
-                        <el-option v-for="item in options2" :value="item">
+                    <el-select v-model="name" placeholder="请选择">
+                        <el-option v-for="item in options1" :value="item">
                         </el-option>
                     </el-select>
                 </td>
@@ -199,7 +199,7 @@
                     <el-button type="primary" onclick="addcancel()">取消</el-button>
                 </td>
                 <td colspan="3" class="btn">
-                    <el-button type="danger">提交</el-button>
+                    <el-button type="danger" onclick="addinfo()">提交</el-button>
                 </td>
             </tr>
         </table>
@@ -210,13 +210,25 @@
     <!-- import JavaScript -->
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
+        //查询客户名称
+        $.ajax({
+            type: "Get",
+            url: "https://localhost:44360/api/customer/add_name",
+            dataType: "json",
+            success: function (data) {
+                var info = eval(data);
+                for (var i = 0; i < eval(data).length; i++) {
+                    vmapp2.options1.push(info[i].customer_name);
+                }
+            }
+        })
         function tanchu() {
             vm2.visible = true;
             vm2.name = ""; vm2.num = ""; vm2.guige = "";
             //获取产品名称
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/customer/pro_plan_name",
+                url: "https://localhost:44360/api/product/pro_plan_name",
                 dataType: "json",
                 success: function (data) {
                     var info = eval(data);
@@ -316,6 +328,8 @@
             data: function () {
                 return {
                     visible: true,
+                    name: "",
+                    type:"",
                     xdtime: "",
                     jftime: '',
                     czr: '',
@@ -323,6 +337,7 @@
                     yfprice: '',
                     wfprice: '',
                     jhfs: '',
+                    options1: [],
                     fullscreenLoading: false,
                     options2: ["未处理"],
                     pickerOptions: {
@@ -336,6 +351,104 @@
         //取消按钮
         function addcancel() {
             vm2.visible = false;
+        }
+        //新增订单详情确定按钮
+        function addqueding() {
+            //首先要获取选择的产品名，然后进行新增
+            var name1 = vm2.name;
+            var guige = vm2.guige;
+            //然后进行查询显示（这里暂时不需要进行数据库的新增，
+            //暂时先寄存在app1中的tableData, 到时候新增生产计划的时候再进行新增）
+            $.ajax({
+                type: "Post",
+                contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "https://localhost:44360/api/product/pro_name_info?product_name=" + name1 + "&pro_guige=" + guige,
+                dataType: "json",
+                data: { product_name: name1, pro_guige: guige },
+                success: function (data) {
+                    var info = eval(data);
+                    for (var i = 0; i < info.length; i++) {
+                        vmapp1.info.product_id = info[i].product_id;
+                        vmapp1.info.product_num = info[i].product_num;
+                        vmapp1.info.product_name = info[i].product_name;
+                        vmapp1.info.product_details_num = vm2.num;
+                        vmapp1.info.price = info[i].product_price;
+                        vmapp1.info.type = info[i].product_type;
+                        vmapp1.info.unit = info[i].unit;
+                        vmapp1.info.product_guige = vm2.guige;
+                        //加到数组中
+                        vmapp1.tableData.push(vmapp1.info);
+                        //重新赋值
+                        vmapp1.info = {
+                            product_id: "", product_num: "", product_name: "", product_details_num: "", price: "",
+                            type: "", unit: "", product_guige: ""
+                        }
+                    }
+                }
+            })
+            //隐藏弹框
+            addcancel();
+        }
+        //新增订单确定按钮
+        function addinfo() {
+            if (vmapp2.name == '' || vmapp2.type == '' || vmapp2.xdtime == ''
+                || vmapp2.jftime == '' || vmapp2.czr == '' || vmapp2.jsr == '' || vmapp2.yfprice == ''
+                || vmapp2.wfprice == '' || vmapp2.jhfs == '') {
+                const h = vm2.$createElement;
+                vm2.$notify({
+                    title: '新增订单',
+                    message: h('i', { style: 'color: red' }, '新增产品失败，请填写完整数据')
+                });
+            } else {
+                vmapp2.fullscreenLoading = true;
+                //转为JSON字符串
+                var json1 = {
+                    "customer_name": vmapp2.name,
+                    "order_starttime": vmapp2.xdtime,
+                    "order_endtime": vmapp2.jftime,
+                    "person_handling": vmapp2.jsr,
+                    "operator_per": vmapp2.czr,
+                    "order_paid": vmapp2.yfprice,
+                    "order_unpaid": vmapp2.wfprice,
+                    "order_delivery_way": vmapp2.jhfs,
+                    "order_status": vmapp2.type,
+                    "infoList": []
+                };
+                for (var i = 0; i < vmapp1.tableData.length; i++) {
+                    var info = {"product_id":"", "product_name": "", "product_details_num": "","pro_price":""}
+                    info.product_id = vmapp1.tableData[i].product_id;
+                    info.product_name = vmapp1.tableData[i].product_name;
+                    info.product_details_num = vmapp1.tableData[i].product_details_num;
+                    info.pro_price = vmapp1.tableData[i].product_price;
+                    json1.infoList.push(info);
+                    info = { "product_id": "", "product_name": "", "product_details_num": "", "pro_price": ""}
+                }
+                var json2 = JSON.stringify(json1);
+                console.log(json2);
+                //新增数据
+                $.ajax({
+                    url: "https://localhost:44360/api/customer/add_customer_order?json="+json2,
+                    type: "post",
+                    dataType: "json",
+                    contentType: 'application/json;charset=utf-8',
+                    success: function (data) {
+                        console.log("进来了");
+                    }
+                })
+                //效果展示
+                setTimeout(() => {
+                    vmapp2.fullscreenLoading = false;
+                    const h = vmapp2.$createElement;
+                    vmapp2.$notify({
+                        title: '新增订单',
+                        message: h('i', { style: 'color: teal' }, '新增订单成功')
+                    });
+                    setTimeout(() => {
+                        //跳转到计划查询页面
+                        window.location.href = "@Url.Content("~/customer/select_customerOrder/")";
+                    }, 1000);
+                }, 1000);
+            }
         }
     </script>
 </body>

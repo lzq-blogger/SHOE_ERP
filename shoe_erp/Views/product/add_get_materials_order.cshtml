@@ -257,7 +257,6 @@
                         dataType: "json",
                         data: { materialr_details_name: newName },
                         success: function (data) {
-                            console.log(data+"材料规格");
                             var info = eval(data);
                             for (var i = 0; i < info.length; i++) {
                                 vm2.options2.push(info[i].pro_guige);

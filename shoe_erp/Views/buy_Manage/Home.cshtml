@@ -78,7 +78,7 @@
         </div>
     </div>
     <!--商品管理-->
-    <div style="height:1000px;padding:20px;">
+    <div style="height:1000px;padding:20px;" id="xx">
         @*//头部*@
         <div style="width:100%;height:120px;display:flex;
          justify-content:space-between;">
@@ -87,8 +87,8 @@
                     <i class="el-icon-shopping-cart-2" style="color:white;"></i>
                     总销售量
                 </div>
-                <div class="shuju">     
-                    2000 单
+                <div class="shuju">
+                    {{order_count}}单
                 </div>
                 <div style="background-color: rgb(224,244,231);color:rgb(109,197,163);font-size:10px;
                     font-weight:bold;width:60px;text-align:center;margin-left:20px;">
@@ -101,9 +101,9 @@
                     今年销量
                 </div>
                 <div class="shuju">
-                    156 单
+                    9 单
                 </div>
-                <div style="background-color: rgb(255 227 141); color: rgb(255 175 9); font-size: 10px; 
+                <div style="background-color: rgb(255 227 141); color: rgb(255 175 9); font-size: 10px;
                                 font-weight: bold; width: 60px; text-align: center; margin-left: 20px; ">
                     今年销量
                 </div>
@@ -115,7 +115,7 @@
                         总支出
                     </div>
                     <div class="shuju">
-                        $ 1,000 万元
+                        ￥125706元
                     </div>
                     <div style="background-color: rgb(255 146 146); color: rgb(214 0 0); font-size: 10px;
                                 font-weight: bold; width: 60px; text-align: center; margin-left: 20px; ">
@@ -128,7 +128,7 @@
                         总收入
                     </div>
                     <div class="shuju">
-                        $ 2,000 万元
+                        ￥2410015元
                     </div>
                     <div style="background-color: rgb(113 180 255); color: rgb(0 129 204); font-size: 10px;
                                 font-weight: bold; width: 60px; text-align: center; margin-left: 20px; ">
@@ -143,7 +143,7 @@
                         今年支出
                     </div>
                     <div class="shuju">
-                        $ 100 万元
+                        ￥57220元
                     </div>
                     <div style="background-color: rgb(255 146 146); color: rgb(214 0 0); font-size: 10px;
                                 font-weight: bold; width: 60px; text-align: center; margin-left: 20px; ">
@@ -156,7 +156,7 @@
                         今年收入
                     </div>
                     <div class="shuju">
-                        $ 200 万元
+                        ￥754100元
                     </div>
                     <div style="background-color: rgb(113 180 255); color: rgb(0 129 204); font-size: 10px;
                                 font-weight: bold; width: 60px; text-align: center; margin-left: 20px; ">
@@ -192,16 +192,26 @@
     <script src="/Content/public/js/Lightweight-Chart/jquery.chart.js"></script>
     <script src="/Content/public/js/custom-scripts.js"></script>
     <script src="~/Scripts/echarts.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <!-- import Vue before Element -->
+    <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
-        //$.ajax({
-        //    url: 'https://localhost:44368/api/Default/ss',
-        //    type: 'GET',
-        //    dataType: 'JSON',
-        //    success: function (data) {
-        //        console.log(data);
-        //    }
-        //});
+        var vm = new Vue({
+            el: "#xx",
+            data: {
+                order_count: "11",
+            }
+        })
+        //查询单数
+        $.ajax({
+            url: 'https://localhost:44368/api/product/ss',
+            type: 'GET',
+            success: function (data) {
+                console.log("有数据" + data);
+                vm.order_count = data;
+            }
+        });
         //订单数
         var myChart = echarts.init(document.getElementById('app'));
         var option = {
@@ -260,26 +270,26 @@
                 {
                     name: '篮球鞋',
                     type: 'bar',
-                    data: [100, 49, 70, 230, 250, 70, 130, 160, 32, 200, 60, 30],
+                    data: [100, 49, 70, 0, 218, 0, 0, 0, 32, 0, 0, 30],
                     color: '#6ce26c'
                 },
                 {
                     name: '帆布鞋',
                     type: 'bar',
-                    data: [20, 50, 90, 26, 200, 70, 170, 180, 40, 180, 60, 230],
+                    data: [20, 50, 90, 0, 200, 0, 0, 0, 40, 0, 0, 230],
                     color: '#6d9eeb'
                 },
                 {
                     name: '皮鞋',
                     type: 'bar',
-                    data: [120, 50, 90, 26, 20, 170, 170, 18, 40, 80, 60, 30],
+                    data: [120, 50, 90, 0, 20, 0, 0, 0, 40, 0, 0, 30],
                     color: '#ffd966'
                 },
                 {
                     name: '订单数',
                     type: 'line',
                     yAxisIndex: 1,
-                    data: [2, 2, 13, 5, 16, 11, 12, 23, 12, 16, 12, 16],
+                    data: [3, 4, 2, 0, 2, 0, 0, 0, 6, 0, 0, 1],
                     color: '#3d85c6'
                 }
             ]
@@ -370,9 +380,9 @@
 
         //财务支出
         var myChart3 = echarts.init(document.getElementById('app3'));
-        var i = 12;
-        var j = 23;
-        var z = 45;
+        var i = 20;
+        var j = 15;
+        var z = 20;
         var option3 = {
             title: {
                 text: '支出统计',
