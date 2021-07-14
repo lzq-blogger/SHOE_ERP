@@ -19,12 +19,12 @@ namespace shoe_erp.Controllers
             return View();
         }
         //二级页面
-        // 财务支出详情
+        // 财务收入详情
         public ActionResult money_detail_in()
         {
             return View();
         }
-        // 财务收入详情
+        // 财务支出详情
         public ActionResult money_detail_out()
         {
             return View();
