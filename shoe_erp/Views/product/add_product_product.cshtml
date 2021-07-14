@@ -193,40 +193,48 @@
         }) 
         //新增计划确定按钮
         function addinfo() {
-            vm.fullscreenLoading = true;
-            //转为JSON字符串
-            var json1 = {
-                "product_plan_details_id": vm.pro_id,
-                "pro_production_dep": vm.bumen,
-                "operator_per": vm.person,
-                "product_time": vm.time,
-                "status": "未质检",
-            };
-            var json2 = JSON.stringify(json1);
-            //新增数据
-            $.ajax({
-                url: "https://localhost:44360/api/product/add_pro_product?json="+json2,
-                type: "post",
-                dataType: "json",
-                contentType: 'application/json;charset=utf-8',
-                success: function (data) {
-                    console.log("进来了");
-                }
-            })
-            //效果展示
-            setTimeout(() => {
-                vm.fullscreenLoading = false;
+            if (vm.pro_id == '' || vm.status == '' || vm.person == ''
+                || vm.time == '') {
                 const h = vm.$createElement;
                 vm.$notify({
                     title: '产品登记',
-                    message: h('i', { style: 'color: teal' }, '产品登记成功')
+                    message: h('i', { style: 'color: red' }, '产品登记失败，请填写完整数据')
                 });
+            } else {
+                vm.fullscreenLoading = true;
+                //转为JSON字符串
+                var json1 = {
+                    "product_plan_details_id": vm.pro_id,
+                    "pro_production_dep": vm.bumen,
+                    "operator_per": vm.person,
+                    "product_time": vm.time,
+                    "status": "未质检",
+                };
+                var json2 = JSON.stringify(json1);
+                //新增数据
+                $.ajax({
+                    url: "https://localhost:44360/api/product/add_pro_product?json=" + json2,
+                    type: "post",
+                    dataType: "json",
+                    contentType: 'application/json;charset=utf-8',
+                    success: function (data) {
+                        console.log("进来了");
+                    }
+                })
+                //效果展示
                 setTimeout(() => {
-                    //跳转到计划查询页面
-                    window.location.href = "@Url.Content("~/product/select_product_product/")";
+                    vm.fullscreenLoading = false;
+                    const h = vm.$createElement;
+                    vm.$notify({
+                        title: '产品登记',
+                        message: h('i', { style: 'color: teal' }, '产品登记成功')
+                    });
+                    setTimeout(() => {
+                        //跳转到计划查询页面
+                        window.location.href = "@Url.Content("~/product/select_product_product/")";
+                    }, 1000);
                 }, 1000);
-            }, 1000);
-
+            }
         }
     </script>
 </body>
