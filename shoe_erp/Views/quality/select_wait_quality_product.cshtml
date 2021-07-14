@@ -20,13 +20,67 @@
     <link href="/Content/select/css/style.css?v=4.1.0" rel="stylesheet" />
     <script src="/Content/select/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
+    <style>
+        table tr .shao {
+            width: 120px;
+        }
+
+        .table1 tr {
+            height: 65px;
+        }
+
+            .table1 tr .tdtext {
+                padding-left: 20px;
+            }
+
+        table tr .shao {
+            width: 80px;
+        }
+
+        table tr .duo {
+            width: 200px;
+        }
+
+        table tr td, table tr th {
+            text-align: center;
+        }
+
+        table thead tr {
+            background-color: rgb(52,123,183);
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <div id="selectshop">
+    @*详情*@
+    <div id="edit_app">
+        <el-dialog :visible.sync="visible" title="待检产品详情" width="60%" style="background-color: rgba(255,255,255,0.3)">
+            <template>
+                <el-table border="1" :data="tableData.filter(data => !search || data.product_name.toLowerCase().includes(search.toLowerCase()))"
+                          style="width: 1000px;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                    <el-table-column label="产品名称" width="120px"
+                                     prop="product_name">
+                    </el-table-column>
+                    <el-table-column label="产品类型" width="160px"
+                                     prop="product_type">
+                    </el-table-column>
+                    <el-table-column label="生产数量" width="100px"
+                                     prop="product_details_num">
+                    </el-table-column>
+                    <el-table-column label="生产日期" width="250px"
+                                     prop="product_time">
+                    </el-table-column>
+                    <el-table-column label="产品规格" width="200px"
+                                     prop="pro_guige">
+                    </el-table-column>
+                </el-table>
+            </template>
+        </el-dialog>
+    </div>
+    <div id="selectshop" v-loading.fullscreen.lock="fullscreenLoading">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
             <h4>产品质检单表</h4>
             <div id="app">
-                <el-button type="primary" icon="el-icon-plus" onclick="tanchu()">添加</el-button>
                 <el-button type="danger" icon="el-icon-delete-solid">删除</el-button>
             </div>
         </div>
@@ -39,8 +93,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">
-                                            <input type="radio" name="xuan" value="Yxuan" />全选&nbsp;&nbsp;
-                                            <input type="radio" name="xuan" value="Nxuan" />全不选
+                                            <input type="radio" name="xuan" value="Yxuan" />全选
                                         </th>
                                         <th scope="col">质检单ID</th>
                                         <th scope="col">产品登记ID</th>
@@ -48,7 +101,6 @@
                                         <th scope="col">操作人</th>
                                         <th scope="col">质检结果</th>
                                         <th scope="col">操作</th>
-
                                     </tr>
                                 </thead>
                             </table>
@@ -73,6 +125,17 @@
     <!-- Page-Level Scripts -->
 
     <script>
+        //加载一秒后加载状态消失
+        setTimeout(() => {
+            vm.fullscreenLoading = false;
+        }, 1000);
+        //挂载一下
+        var vm = new Vue({
+            el: "#selectshop",
+            data: {
+                fullscreenLoading: true
+            }
+        })
         $(document).ready(function () {
             //$('.dataTables-example').dataTable();
             $('.dataTables-example').dataTable({
@@ -94,20 +157,20 @@
                     { data: "result" },
                     { data: null }
                 ],
-                "aoColumnDefs": [{
-                    "targets": -1, //操作按钮目标列
-                    //"orderable": false,
-                    //"data": null,
-                    "render": function (data, type, row) {
-                        var id = row.materialr_plan_id;
-                        var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon - edit'></span> 详情<tton>";
-                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='glyphicon glyphicon-edit'></span> 编辑<tton>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'><span class='glyphicon glyphicon-trash'></span> 删除<tton>";
-                        html += "</div>";
-                        return html;
-                    }
-                }, {
+                "aoColumnDefs": [
+                    {
+                        "targets": -1, //操作按钮目标列
+                        //"orderable": false,
+                        //"data": null,
+                        "render": function (data, type, row) {
+                            var id = row.pro_production_id;
+                            var html = "<div class='btn-group'>";
+                            html += "<button class='btn btn-primary btn-sm' onclick='xiangqingdaijian(\"" + id + "\")'><span class='el-icon-search'></span> 详情</button>";
+                            html += "</div>";
+                            return html;
+                        }
+                    },
+                    {
                         "targets": 0,
                         "render": function () {
                             var html = "<div class='btn-group' id='app1'>";
@@ -124,6 +187,30 @@
 
             }
         });
+        //详情new
+        var vm2 = new Vue({
+            el: "#edit_app",
+            data() {
+                return {
+                    tableData: [],
+                    search: '',
+                    visible: false,
+                    num: 1,
+                }
+            }
+        })
+        //待检详情
+        function xiangqingdaijian(id) {
+            vm2.visible = true;
+            $.ajax({
+                type: "Get",
+                url: "https://localhost:44360/api/quality/plan_pro_detile?id=" + id,
+                dataType: "json",
+                success: function (data) {
+                    vm2.tableData = eval(data);
+                }
+            })
+        }
     </script>
 </body>
 </html>

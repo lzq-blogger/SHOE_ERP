@@ -34,7 +34,11 @@
             }
 
         table tr .shao {
-            width: 120px;
+            width: 80px;
+        }
+
+        table tr .duo {
+            width: 200px;
         }
 
         table tr td, table tr th {
@@ -42,12 +46,71 @@
         }
 
         table thead tr {
-            background-color: rgb(239,240,244);
+            background-color: rgb(52,123,183);
+            color: white;
+        }
+        .table1 tr{
+            padding:50px;
+        }
+        .table1 tr td {
+            padding-right: 20px;
         }
     </style>
 </head>
 <body>
-    <div id="selectshop">
+    @*修改客户信息*@
+    <div id="update_num_app">
+        <el-dialog :visible.sync="visible" title="修改客户信息" width="80%" style="background-color: rgba(255,255,255,0.3)">
+            <div style="text-align:center;">
+                <table class="table1" cellpadding="20" cellspacing="10" style="margin-left:80px">
+                    <tr>
+                        <td>客户名称：</td>
+                        <td class="lefttd">
+                            <el-input placeholder="请输入内容" v-model="name"></el-input>
+                        </td>
+                        <td>客户电话号码：</td>
+                        <td>
+                            <el-input placeholder="请输入内容" v-model="photo"></el-input>
+                        </td>
+                        <td>联系人：</td>
+                        <td class="lefttd">
+                            <el-input placeholder="请输入内容" v-model="lianxiren"></el-input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>电子邮箱：</td>
+                        <td class="lefttd">
+                            <el-input placeholder="请输入内容" v-model="email"></el-input>
+                        </td>
+                        <td>开户银行：</td>
+                        <td>
+                            <el-input placeholder="请输入内容" v-model="yinhang"></el-input>
+                        </td>
+                        <td>客户地址：</td>
+                        <td class="lefttd">
+                            <el-input placeholder="请输入内容" v-model="address"></el-input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>客户传真：</td>
+                        <td>
+                            <el-input placeholder="请输入内容" v-model="chuanzhen"></el-input>
+                        </td>
+                        <td>银行账号：</td>
+                        <td>
+                            <el-input placeholder="请输入内容" v-model="zhanghu"></el-input>
+                        </td>
+                        <td>邮政编码：</td>
+                        <td>
+                            <el-input placeholder="请输入内容" v-model="bianma"></el-input>
+                        </td>
+                    </tr>
+                </table>
+                <el-button type="primary" style="background-color: rgb(52,123,183);margin-top:25px" onclick='baocun()'> 保存 </el-button>
+            </div>
+        </el-dialog>
+    </div>
+    <div id="selectshop" v-loading.fullscreen.lock="fullscreenLoading">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px;
        border-bottom: 1px solid rgb(234 234 234);">
             <h4>客户表</h4>
@@ -69,8 +132,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">
-                                            <input type="radio" name="xuan" value="Yxuan" />全选&nbsp;&nbsp;
-                                            <input type="radio" name="xuan" value="Nxuan" />全不选
+                                            <input type="radio" name="xuan" value="Yxuan" />全选
                                         </th>
                                         <th scope="col">客户ID</th>
                                         <th scope="col">客户名称</th>
@@ -106,8 +168,18 @@
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <!-- Page-Level Scripts -->
     <script>
+        //加载一秒后加载状态消失
+        setTimeout(() => {
+            vm.fullscreenLoading = false;
+        }, 1000);
+        //挂载一下
+        var vm = new Vue({
+            el: "#selectshop",
+            data: {
+                fullscreenLoading: true
+            }
+        })
         $(document).ready(function () {
-            //$('.dataTables-example').dataTable();
             $('.dataTables-example').dataTable({
                 "processing": true,
                 "serverSide": true,
@@ -137,10 +209,9 @@
                     //"orderable": false,
                     //"data": null,
                     "render": function (data, type, row) {
-                        var id = row.materialr_plan_id;
+                        var id = row.customer_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'>编辑</button>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除</button>";
+                        html += "<button class='btn btn-warning btn-sm' onclick='bianji(\"" + id + "\")'>编辑</button>";
                         html += "</div>";
                         return html;
                     }
@@ -161,6 +232,100 @@
 
             }
         })
+        var vm3 = new Vue({
+            el: "#update_num_app",
+            data: {
+                id:"",
+                name: "",
+                photo: "",
+                email: "",
+                lianxiren: "",
+                yinhang: "",
+                address: "",
+                chuanzhen: "",
+                zhanghu: "",
+                bianma: "",
+                visible: false
+            }
+        })
+        //获取要修改的信息
+        function bianji(id) {
+            vm3.visible = true;
+            $.ajax({
+                type: "post",
+                contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "https://localhost:44360/api/customer/Updatecustomer?customer_id=" + id ,
+                dataType: "json",
+                data: {customer_id:id},
+                success: function (data) {
+                    var info = eval(data);
+                    for (var i = 0; i < info.length; i++) {
+                        vm3.id = id;
+                        vm3.name = info[i].customer_name;
+                        vm3.photo = info[i].customer_phone;
+                        vm3.lianxiren = info[i].customer_linkman;
+                        vm3.email = info[i].customer_email;
+                        vm3.yinhang = info[i].bank;
+                        vm3.address = info[i].customer_address;
+                        vm3.chuanzhen = info[i].customer_fax;
+                        vm3.zhanghu = info[i].bank_account;
+                        vm3.bianma = info[i].customer_postcode;
+                    }
+                }
+            })
+        }
+        //修改客户信息
+        function baocun() {
+            vm.fullscreenLoading = true;
+            var json1 = {
+                "customer_id": vm3.id,
+                "customer_name": vm3.name,
+                "customer_phone": vm3.photo,
+                "customer_linkman": vm3.lianxiren,
+                "customer_email": vm3.email,
+                "customer_address": vm3.address,
+                "customer_fax": vm3.chuanzhen,
+                "customer_postcode": vm3.bianma,
+                "bank": vm3.yinhang,
+                "bank_account":vm3.zhanghu
+            };
+            var json2 = JSON.stringify(json1);
+            $.ajax({
+                type: "post",
+                contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "https://localhost:44360/api/customer/UpCustomer?json=" + json2,
+                dataType: "json",
+                data: { json: json2 },
+                success: function (data) {
+                    var info = eval(data);
+                    console.log(info)
+                    for (var i = 0; i < info.length; i++) {
+                        vm3.name = info[i].customer_name;
+                        vm3.photo = info[i].customer_phone;
+                        vm3.lianxiren = info[i].customer_linkman;
+                        vm3.email = info[i].customer_email;
+                        vm3.yinhang = info[i].bank;
+                        vm3.address = info[i].customer_address;
+                        vm3.chuanzhen = info[i].customer_fax;
+                        vm3.zhanghu = info[i].bank_account;
+                        vm3.bianma = info[i].customer_postcode;
+                    }
+                }
+            })
+            //效果展示
+            setTimeout(() => {
+                vm.fullscreenLoading = false;
+                const h = vm3.$createElement;
+                vm3.$notify({
+                    title: '修改用户信息',
+                    message: h('i', { style: 'color: teal' }, '修改用户信息成功')
+                });
+                setTimeout(() => {
+                    //跳转到计划查询页面
+                    window.location.href = "@Url.Content("~/customer/select_customerInfo/")";
+                }, 1000);
+            }, 1000);
+        }
     </script>
 </body>
 </html>

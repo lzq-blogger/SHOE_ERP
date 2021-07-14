@@ -20,6 +20,36 @@
     <link href="/Content/select/css/style.css?v=4.1.0" rel="stylesheet" />
     <script src="/Content/select/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
+    <style>
+        table tr .shao {
+            width: 120px;
+        }
+
+        .table1 tr {
+            height: 65px;
+        }
+
+            .table1 tr .tdtext {
+                padding-left: 20px;
+            }
+
+        table tr .shao {
+            width: 80px;
+        }
+
+        table tr .duo {
+            width: 200px;
+        }
+
+        table tr td, table tr th {
+            text-align: center;
+        }
+
+        table thead tr {
+            background-color: rgb(52,123,183);
+            color: white;
+        }
+    </style>
 </head>
 <body>
     @*详情*@
@@ -62,7 +92,7 @@
             </template>
         </el-dialog>
     </div>
-    <div id="selectshop">
+    <div id="selectshop" v-loading.fullscreen.lock="fullscreenLoading">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px;
        border-bottom: 1px solid rgb(234 234 234)">
             <h4>客户订单表</h4>
@@ -84,8 +114,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">
-                                            <input type="radio" name="xuan" value="Yxuan" />全选&nbsp;&nbsp;
-                                            <input type="radio" name="xuan" value="Nxuan" />全不选
+                                            <input type="radio" name="xuan" value="Yxuan" />全选
                                         </th>
                                         <th scope="col">订单编号</th>
                                         <th scope="col">用户名</th>
@@ -119,6 +148,17 @@
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <!-- Page-Level Scripts -->
     <script>
+        //加载一秒后加载状态消失
+        setTimeout(() => {
+            vm.fullscreenLoading = false;
+        }, 1000);
+        //挂载一下
+        var vm = new Vue({
+            el: "#selectshop",
+            data: {
+                fullscreenLoading: true
+            }
+        })
         $(document).ready(function () {
             //$('.dataTables-example').dataTable();
             $('.dataTables-example').dataTable({
@@ -150,9 +190,7 @@
                     "render": function (data, type, row) {
                         var id = row.orderr_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(" + id + ")'> 详情</button>";
-                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'> 编辑</button>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'> 删除</button>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(\"" + id + "\")'> 详情</button>";
                         html += "</div>";
                         return html;
                     }
@@ -184,6 +222,7 @@
                 }
             } 
         })
+        //详情
         function xinagqtanchuan(id) {
             vm2.visible = true;
             $.ajax({

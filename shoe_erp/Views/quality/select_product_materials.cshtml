@@ -20,13 +20,121 @@
     <link href="/Content/select/css/style.css?v=4.1.0" rel="stylesheet" />
     <script src="/Content/select/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
+    <style>
+        table tr .shao {
+            width: 120px;
+        }
+
+        .table1 tr {
+            height: 65px;
+        }
+
+            .table1 tr .tdtext {
+                padding-left: 20px;
+            }
+
+        table tr .shao {
+            width: 80px;
+        }
+
+        table tr .duo {
+            width: 200px;
+        }
+
+        table tr td, table tr th {
+            text-align: center;
+        }
+
+        table thead tr {
+            background-color: rgb(52,123,183);
+            color: white;
+        }
+        .table1 tr {
+            padding: 50px;
+        }
+
+        .table1 tr td {
+            padding-right: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div id="selectshop">
+    @*修改质检结果*@
+    <div id="update_app">
+        <el-dialog :visible.sync="visible" title="" width="60%" style="background-color: rgba(255,255,255,0.3)">
+            <div style="text-align:center;">
+                <table class="table1" cellpadding="20" cellspacing="10" style="margin-left:80px">
+                    <tr>
+                        <td>生产编号：</td>
+                        <td class="lefttd">
+                            <el-input placeholder="请输入内容" v-model="proid"></el-input>
+                        </td>
+                        <td>操作人：</td>
+                        <td class="lefttd">
+                            <el-input placeholder="请输入内容" v-model="caozuoren"></el-input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>质检日期：</td>
+                        <td class="lefttd">
+                            <el-date-picker v-model="zjtime" type="date" placeholder="选择日期"> </el-date-picker>
+                        </td>
+                        <td>质检结果：</td>
+                        <td>
+                            <el-select v-model="zjjieguo" placeholder="请选择" filterable allow-create default-first-option>
+                                <el-option value="合格">
+                                </el-option>
+                                <el-option value="不合格">
+                                </el-option>
+                            </el-select>
+                        </td>
+                    </tr>
+                </table>
+                <el-button type="primary" style="background-color: rgb(52,123,183);" onclick="baocun()"> 保存 </el-button>
+            </div>
+        </el-dialog>
+    </div>
+    @*详情*@
+    <div id="edit_app">
+        <el-dialog :visible.sync="visible" title="待检材料详情" width="60%" style="background-color: rgba(255,255,255,0.3)">
+            <template>
+                <el-table border="1" :data="tableData.filter(data => !search || data.product_name.toLowerCase().includes(search.toLowerCase()))"
+                          style="width: 1000px;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                    <el-table-column label="材料名称" width="160px"
+                                     prop="materialr_details_name">
+                    </el-table-column>
+                    <el-table-column label="材料类型" width="100px"
+                                     prop="materialr_type_name">
+                    </el-table-column>
+                    <el-table-column label="数量" width="100px"
+                                     prop="materialr_details_num">
+                    </el-table-column>
+                    <el-table-column label="材料价格" width="250px"
+                                     prop="materialr_details_price">
+                    </el-table-column>
+                    @*<el-table-column label="状态"
+                                     prop="unit">
+                    </el-table-column>*@
+                    <el-table-column label="材料规格"
+                                     prop="pro_guige">
+                    </el-table-column>
+                    @*<template slot-scope="scope">
+                            <el-button size="mini"
+                                       type="danger"
+                                       v-on:click="handleEdit(scope.row)">修改</el-button>
+                            <el-button size="mini"
+                                       type="danger"
+                                       v-on:click="handleDelete(scope.row)">删除</el-button>
+                        </template>*@
+                    @*</el-table-column>*@
+                </el-table>
+            </template>
+        </el-dialog>
+    </div>
+    <div id="selectshop" v-loading.fullscreen.lock="fullscreenLoading">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
             <h4>采购订单表</h4>
             <div id="app">
-                <el-button type="primary" icon="el-icon-plus" onclick="tanchu()">添加</el-button>
                 <el-button type="danger" icon="el-icon-delete-solid">删除</el-button>
             </div>
         </div>
@@ -39,8 +147,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">
-                                            <input type="radio" name="xuan" value="Yxuan" />全选&nbsp;&nbsp;
-                                            <input type="radio" name="xuan" value="Nxuan" />全不选
+                                            <input type="radio" name="xuan" value="Yxuan" />全选
                                         </th>
                                         <th scope="col">采购订单ID</th>
                                         <th scope="col">采购计划ID</th>
@@ -71,6 +178,17 @@
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <!-- Page-Level Scripts -->
     <script>
+        //加载一秒后加载状态消失
+        setTimeout(() => {
+            vm.fullscreenLoading = false;
+        }, 1000);
+        //挂载一下
+        var vm = new Vue({
+            el: "#selectshop",
+            data: {
+                fullscreenLoading: true
+            }
+        })
         $(document).ready(function () {
             //$('.dataTables-example').dataTable();
             $('.dataTables-example').dataTable({
@@ -85,7 +203,7 @@
                 //columns是绑定表格数据源
                 columns: [
                     { data: null },
-                    { data: "materials_order_id " },
+                    { data: "materials_order_id" },
                     { data: "materialr_plan_id" },
                     { data: "person_handling" },
                     { data: "operator_per" },
@@ -97,11 +215,10 @@
                     //"orderable": false,
                     //"data": null,
                     "render": function (data, type, row) {
-                        var id = row.materialr_plan_id;
+                        var id = row.materials_order_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'>详情</button>";
-                        html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'>编辑</button>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除</button>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='xiangqingcailiao(\"" + id + "\")'><span class='el-icon-search'></span>详情</button>";
+                        html += "<button class='btn btn-warning btn-sm' onclick='bianji((\"" + id + "\"))'><span class='el-icon-edit'></span>编辑</button>";
                         html += "</div>";
                         return html;
                     }
@@ -116,12 +233,87 @@
                 }]
             });
         });
-        var vm1 = new Vue({
-            el: "#app",
-            data: {
-
+        //详情new
+        var vm2 = new Vue({
+            el: "#edit_app",
+            data() {
+                return {
+                    tableData: [],
+                    search: '',
+                    visible: false,
+                    num: 1,
+                }
             }
-        });
+        })
+        //待检详情
+        function xiangqingcailiao(id) {
+            vm2.visible = true;
+            $.ajax({
+                type: "Get",
+                url: "https://localhost:44360/api/quality/order_details?id=" + id,
+                dataType: "json",
+                success: function (data) {
+                    vm2.tableData = eval(data);
+                }
+            })
+        }
+        //编辑
+        var vm3 = new Vue({
+            el: "#update_app",
+            data: {
+                visible: false,
+                proid: "",
+                caozuoren: "",
+                zjtime: "",
+                zjjieguo: ""
+            }
+        })
+        function bianji(id) {
+            vm3.visible = true;
+            vm3.proid = id;
+        }
+        function baocun() {
+            if (vm3.proid == "" || vm3.caozuoren == "" || vm3.zjtime == "" || vm3.zjjieguo == "") {
+                const h = vm3.$createElement;
+                vm3.$notify({
+                    title: '新增质检单',
+                    message: h('i', { style: 'color: red' }, '新增质检单信息失败，请填写完整')
+                });
+            } else {
+                vm.fullscreenLoading = true;
+            
+            //转为JSON字符串
+            var json1 = {
+                "pro_production_id": vm3.proid,
+                "quality_testing_time": vm3.zjtime,
+                "operator_per": vm3.caozuoren,
+                "result": vm3.zjjieguo
+            };
+            var json2 = JSON.stringify(json1);
+        //新增数据
+            $.ajax({
+                url: "https://localhost:44360/api/quality/addselect_product_materials?json="+json2,
+                type: "post",
+                dataType: "json",
+                contentType: 'application/json;charset=utf-8',
+                success: function (data) {
+                }
+            })
+            //效果展示
+            setTimeout(() => {
+                vm.fullscreenLoading = false;
+                const h = vm.$createElement;
+                vm.$notify({
+                    title: '新增质检单',
+                    message: h('i', { style: 'color: teal' }, '新增质检单成功')
+                });
+                setTimeout(() => {
+                    //跳转到计划查询页面
+                    window.location.href = "@Url.Content("~/quality/select_product_materials/")";
+                }, 1000);
+            }, 1000);
+        }
+    }
     </script>
 
 </body>
