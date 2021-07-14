@@ -4,15 +4,304 @@
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>add_order</title>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+
+    <link href="~/Content/ElementUI/element-ui.css" rel="stylesheet" />
+    <style>
+        html body {
+            height: 100%;
+        }
+
+        .table1 tr {
+            height: 60px;
+        }
+
+            .table1 tr .texttd {
+                padding-right: 10px;
+                padding-left: 10px;
+                text-align: right;
+            }
+
+            .table1 tr .inputtd {
+                text-align: left;
+            }
+
+            .table1 tr .btn {
+                text-align: center;
+            }
+
+        .table1 {
+            margin: 0 auto;
+        }
+    </style>
 </head>
-<body>
-    <div> 
-        新增采购订单（针对采购计划来进行新增订单的）
+<body v->
+    <a style="color: rgb(64,158,255); font-size: 20px; text-decoration: none; padding-left: 10px; padding-top: 10px; "
+       href="/Buy_Manage/select_order">
+        <i class="el-icon-back" style="font-size:25px;"></i>&nbsp;返回
+    </a>
+
+    @*计划单*@
+    <div id="app">
+        <table style="margin:0 auto;margin-top:20px;" class="table1">
+            <tr>
+                <td>请选择采购计划单号：</td>
+                <td>
+                    <el-select v-model="orderid" placeholder="请选择" filterable allow-create default-first-option>
+                        <el-option v-for="item in options" :value="item">
+                        </el-option>
+                    </el-select>
+                </td>
+
+            </tr>
+        </table>
     </div>
+    @*计划详情*@
+    <div id="app1" style="padding:20px 60px;">
+        <el-dialog :visible.sync="visible" title="修改产品数量" width="35%" style="background-color:rgba(255, 255, 255,0.3)">
+            <table class="table1">
+                <tr>
+                    <td>产品数量：</td>
+                    <td colspan="2">
+                        <el-input-number v-model="num" :min="1" :max="20000" label="描述文字"></el-input-number>
+                    </td>
+                    <td>
+                        <el-button type="primary" style="margin-left:30px;" v-on:click="confirm()">确定</el-button>
+                    </td>
+                </tr>
+            </table>
+        </el-dialog>
+        <template>
+            <el-table border="1" :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+                      style="width: 100%;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                <el-table-column label="材料ID"
+                                 prop="materialr_details_id">
+                </el-table-column>
+                <el-table-column label="材料名称"
+                                 prop="materialr_details_name">
+                </el-table-column>
+                <el-table-column label="材料数量"
+                                 prop="materialr_details_num">
+                </el-table-column>
+                <el-table-column label="材料价格"
+                                 prop="materialr_details_price">
+                </el-table-column>
+                <el-table-column label="供应商"
+                                 prop="material_supplier">
+                </el-table-column>
+                <el-table-column label="材料规格"
+                                 prop="pro_guige">
+                </el-table-column>
+            </el-table>
+        </template>
+    </div>
+    @*计划单*@
+    <div id="app2" style="border:1px solid rgb(228, 228, 228);" v-loading.fullscreen.lock="fullscreenLoading">
+        <table class="table1">
+            <tr>
+                <td class="texttd">操作人：</td>
+                <td class="inputtd">
+                    <el-input placeholder="请输入内容" v-model="person1" clearable></el-input>
+                </td>
+                <td class="texttd">采购人：</td>
+                <td class="inputtd">
+                    <el-input placeholder="请输入内容" v-model="person2" clearable></el-input>
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="2" class="btn">
+                    <el-button type="primary" onclick="addinfo()">确定</el-button>
+                </td>
+                <td colspan="2" class="btn">
+                    <el-button type="danger" plain onclick="chongzhi()">重置</el-button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <!-- import Vue before Element -->
+    <script src="~/Scripts/vue.js"></script>
+    <!-- import JavaScript -->
+    <script src="~/Scripts/ElementUI/element-ui.js"></script>
+    <script>
+        //获取未处理的采购计划号
+        $.ajax({
+            type: "Get",
+            url: "https://localhost:44360/api/Buy_Manage/weichuli_order",
+            dataType: "json",
+            success: function (data) {
+                var info = eval(data);
+                for (var i = 0; i < eval(data).length; i++) {
+                    vmapp.options.push(info[i].materialr_plan_id);
+                }
+            }
+        })
+
+        //表单app
+        var vmapp = new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    options: [],
+                    orderid: ''
+                }
+            },
+            watch: {
+                orderid(newId) {//根据下拉框的值进行查询更新，表格数据
+                    $.ajax({
+                        type: "Get",
+                        contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                        url: "https://localhost:44360/api/Buy_Manage/Select_jihua_details?materialr_plan_id=" + newId,
+                        dataType: "json",
+                        //data: { materialr_plan_id: materialr_plan_id  },
+                        success: function (data) {
+                            var info = eval(data);
+                            //清空数组
+                            vmapp1.tableData = [];
+                            for (var i = 0; i < info.length; i++) {
+                                vmapp1.info.materialr_details_id = info[i].materials_plan__details_id;
+                                vmapp1.info.materialr_details_name = info[i].materialr_details_name;
+                                vmapp1.info.materialr_details_num = info[i].materialr_details_num;
+                                vmapp1.info.materialr_details_price = info[i].materialr_details_price;
+                                vmapp1.info.material_supplier = info[i].material_supplier;
+                                vmapp1.info.pro_guige = info[i].pro_guige;
+                                //加到数组中
+                                vmapp1.tableData.push(vmapp1.info);
+                                //重新赋值
+                                vmapp1.info = {
+                                    materialr_details_id: "", materialr_details_name: "", materialr_details_price: "", materialr_details_num: "", material_supplier: "", pro_guige: ""
+                                }
+                            }
+                        }
+                    })
+                }
+            },
+
+        });
+        //表格app1
+        var vmapp1 = new Vue({
+            el: '#app1',
+            data() {
+                return {
+                    tableData: [],
+                    info: {
+                        materialr_details_id: "", materialr_details_name: "", materialr_details_price: "", materialr_details_num: "", material_supplier: "", pro_guige: ""
+                    },
+                    search: '',
+                    visible: false,
+                    num: 1,
+                    index:0
+                }
+            },
+
+        });
+        //表单app2
+        var vmapp2 = new Vue({
+            el: '#app2',
+            data: function () {
+                return {
+                    visible: true,
+                    type: "",
+                    person1: '',
+                    person2: '',
+                    fullscreenLoading: false,
+                    pickerOptions: {
+                        disabledDate(time) {
+                            return time.getTime() > Date.now();
+                        },
+                    },
+                }
+            },
+        });
+        //新增计划详情取消按钮
+        function addcancel() {
+            vm2.visible = false;
+        }
+
+
+        //请求获取采购计划下的详情数据
+        function select_detail() {
+            //根据获取的采购计划id，进行tableData数据的更新
+            var materialr_plan_id = vmapp.orderid;
+            $.ajax({
+                type: "Get",
+                contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                url: "https://localhost:44360/api/Buy_Manage/Select_jihua_details?materialr_plan_id=" + materialr_plan_id,
+                dataType: "json",
+                //data: { materialr_plan_id: materialr_plan_id  },
+                success: function (data) {
+                    var info = eval(data);
+                    for (var i = 0; i < info.length; i++) {
+                        vmapp1.info.product_id = info[i].product_id;
+                        vmapp1.info.product_num = info[i].product_num;
+                        vmapp1.info.product_name = info[i].product_name;
+                        vmapp1.info.product_details_num = vm2.num;
+                        vmapp1.info.price = info[i].product_price;
+                        vmapp1.info.type = info[i].product_type;
+                        vmapp1.info.unit = info[i].unit;
+                        vmapp1.info.product_guige = vm2.guige;
+                        //加到数组中
+                        vmapp1.tableData.push(vmapp1.info);
+                        //重新赋值
+                        vmapp1.info = {
+                            product_id: "", product_num: "", product_name: "", product_details_num: "", price: "",
+                            type: "", unit: "", product_guige: ""
+                        }
+                    }
+                }
+            })
+        }
+
+        //新增计划确定按钮
+        function addinfo() {
+            vmapp2.fullscreenLoading = true;
+            //转为JSON字符串
+            var json1 = {
+                "materialr_plan_id": vmapp.orderid,
+                "operator_per": vmapp2.person1,
+                "person_handling": vmapp2.person2,
+                "status": "未质检",
+                "infoList": []
+            };
+            for (var i = 0; i < vmapp1.tableData.length; i++) {
+                var info = {  "materialr_details_id": "", "materialr_details_num": "" }
+                info.materialr_details_id = vmapp1.tableData[i].materialr_details_id;
+                info.materialr_details_num = vmapp1.tableData[i].materialr_details_num;
+                json1.infoList.push(info);
+                info = { "materialr_details_id": "", "materialr_details_num": "" }
+            }
+            var json2 = JSON.stringify(json1);
+            console.log(json2);
+            //新增数据
+            $.ajax({
+                url: "https://localhost:44360/api/Buy_Manage/add_Order_plan?json="+json2,
+                type: "post",
+                dataType: "json",
+                contentType: 'application/json;charset=utf-8',
+                success: function (data) {
+                    console.log("进来了");
+                }
+            })
+            //效果展示
+            setTimeout(() => {
+                vmapp2.fullscreenLoading = false;
+                const h = vmapp2.$createElement;
+                vmapp2.$notify({
+                    title: '新增计划',
+                    message: h('i', { style: 'color: teal' }, '新增计划成功')
+                });
+                setTimeout(() => {
+                    //跳转到计划查询页面
+                    window.location.href = "@Url.Content("~/Buy_Manage/select_order/")";
+                }, 1000);
+            }, 1000);
+
+        }
+    </script>
 </body>
+
 </html>

@@ -184,8 +184,9 @@
                             var id = row.materialr_plan_id;
                             var html = "<div class='btn-group'>";
                             html += "<button class='btn btn-primary btn-sm' onclick='btn_row_seach(" + id + ")'><span class='el-icon-search'></span> 详情</button>";
-                            html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='el-icon-edit'></span> 编辑</button>";
-                            html += "<button class='btn btn-danger  btn-sm' onclick='btn_row_del(" + id + ")'><span class='el-icon-delete'></span> 删除</button>";
+                            //html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='el-icon-edit'></span> 编辑</button>";
+                            //html += "<a class='btn btn-warning btn-sm' href='/buy_Manage/add_plan?id="+id+"'><span class='el-icon-edit'></span> 编辑</a>";
+                            // html += "<button class='btn btn-danger  btn-sm' onclick='btn_row_del(" + id + ")'><span class='el-icon-delete'></span> 删除</button>";
                             html += "</div>";
                             return html;
                         }
@@ -196,27 +197,11 @@
             //$("div.col-sm-6").eq(0).append(buttonHtml); //追加到length后面
         });
 
-        ////使用live绑定数据，因为checkAll还没有加载好
-        //$("#checkAll").on("click", function () {
-        //    if (this.checked) {
-        //        $(this).attr('checked', 'checked')
-        //        $("input[name='ckb-jobid']").each(function () {
-        //            this.checked = true;
-        //        });
-        //    } else {
-        //        $(this).removeAttr('checked')
-        //        $("input[name='ckb-jobid']").each(function () {
-        //            this.checked = false;
-
-        //        });
-        //    }
-        //});
         //全选
         $(".checkall").click(function () {
             var check = $(this).prop("checked");
             $(".checkchild").prop("checked", check);
         });
-
 
 
         //新增
@@ -241,33 +226,27 @@
                 }
             });
             if (selectLoans.length > 0) {
-                $.ajax({
-                    url: urlS + "Shans?ids=" + selectLoans,
-                    type: "Delete",
-                    dataType: "json",
-                    success: function (data, status) {
-                        window.location.reload();
-                    }
-                });
+                if (confirm('是否确认删除选中数据？')) {
+                 $.ajax({
+                        url: urlS + "Shans?ids=" + selectLoans,
+                        type: "Delete",
+                        dataType: "json",
+                        success: function (data, status) {
+                            window.location.reload();            
+                        }
+                    });
+                }
             } else {
                 alert('至少选择一项数据！');
             }
         });
 
-        //行查看按钮
+        //行详情按钮,弹出模态窗
         function btn_row_seach(id) {
-            if ($('.dataTables-modal').hasClass('dataTable')) {
 
-                var oldTable = $('.dataTables-modal').dataTable();
-
-                oldTable.fnClearTable(); //清空一下table
-
-                oldTable.fnDestroy(); //还原初始化了的dataTable
-
-                $('#data-table').empty();
-
-            }
-            $('.dataTables-modal').dataTable({                
+            //if ($('.dataTables-modal').hasClass('dataTable')) {
+            //}
+            $('.dataTables-modal').dataTable({
                 "searching": false,// 是否允许检索
                 "processing": true,
                 "serverSide": true,
@@ -294,25 +273,41 @@
             });
             //弹出模态窗
             $("#myModal").modal({
-
+                backdrop: 'static',
+                //点击背景空白处不被关闭；
+                keyboard: false
+                //触发键盘esc事件时不关闭。
             });
         }
+        //关闭模态窗
+        $('#myModal').on('hide.bs.modal', function () {
+            var oldTable = $('.dataTables-modal').dataTable();
+
+            oldTable.fnClearTable(); //清空一下table
+
+            oldTable.fnDestroy(); //还原初始化了的dataTable
+
+            $('#data-table').empty();
+        });
+
+
         //行编辑按钮
         function btn_row_edit(id) {
-            $("#hf_editid").val(id);
+            //$("#hf_editid").val(id);
 
-            $.get(urlS, {
-                "id": id
-            }, function (data, status) {
-                $("#cname").val(data.User_Name);
-                $("#cphone").val(data.Phone);
-                $("#cemail").val(data.Email);
-                $("#csex").val(data.Sex);
-                $("#cbirthday").val(data.BirthDay.replace("T", " "));
-                $("#ccomment").val(data.Comments);
-                $("#btn_save").show();
-                $("#myModal").modal('show');
-            });
+            //$.get(urlS, {
+            //    "id": id
+            //}, function (data, status) {
+            //    $("#cname").val(data.User_Name);
+            //    $("#cphone").val(data.Phone);
+            //    $("#cemail").val(data.Email);
+            //    $("#csex").val(data.Sex);
+            //    $("#cbirthday").val(data.BirthDay.replace("T", " "));
+            //    $("#ccomment").val(data.Comments);
+            //    $("#btn_save").show();
+            //    $("#myModal").modal('show');
+            //});
+
         }
 
         //行删除按钮

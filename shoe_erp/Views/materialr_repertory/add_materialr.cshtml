@@ -1,0 +1,310 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>新增材料信息</title>
+    @*elementui*@
+    <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
+    <style>
+        #app {
+            width: 100%;
+            /* box-shadow: 1px 1px 5px 1px rgb(212 212 212);*/
+        }
+
+        table {
+            margin: 0 auto;
+            color: grey;
+        }
+
+            table tr td {
+                height: 60px;
+            }
+
+            table tr .lefttd {
+                padding-right: 60px;
+            }
+    </style>
+</head>
+<body>
+    @*<a style="color: rgb(38 149 255); font-size: 20px; text-decoration: none;padding-left:10px;padding-top:10px;"
+           href="/materialr_repertory/select_materialr">
+            <i class="el-icon-back" style="font-size:25px;"></i>&nbsp;返回
+        </a>*@
+    <div id="app" v-loading.fullscreen.lock="fullscreenLoading">
+        @*//产品信息*@
+        <div class="center" style="margin:0 auto;border-bottom:1px solid rgb(231 231 231);padding:10px;">
+            <table>
+                <tr>
+                    <td>材料名称：</td>
+                    <td class="lefttd">
+                        <el-input placeholder="请输入内容" v-model="materialr_details_name"></el-input>
+                    </td>
+
+                    <td>材料价格：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="materialr_details_price"></el-input>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>材料规格：</td>
+                    <td class="lefttd">
+                        <el-input placeholder="请输入内容" v-model="pro_guige"></el-input>
+                    </td>
+                    <td>供应商：</td>
+                    <td class="lefttd">
+                        <el-input placeholder="请输入内容" v-model="material_supplier"></el-input>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td>库存数量：</td>
+                    <td class="lefttd">
+                        <el-input-number v-model="materialr_num" :min="1" :max="10000" label="描述文字"></el-input-number>
+                    </td>
+                    <td>材料类型：</td>
+                    <td>
+                        <el-select v-model="materialr_type_name" placeholder="请选择" filterable allow-create default-first-option>
+                            <el-option v-for="item in options" :value="item">
+                            </el-option>
+                        </el-select>
+                        &nbsp;&nbsp;&nbsp;
+                        <el-button type="primary" icon="el-icon-plus" onclick="tanchu()">材料类型</el-button>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td class="btn">
+                        <el-button type="primary" onclick="addinfo()">确定</el-button>
+                    </td>
+                    <td></td>
+                    <td class="btn">
+                        <el-button type="danger" plain onclick="chongzhi()">重置</el-button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        @*添加材料类型弹窗*@
+        <el-dialog :visible.sync="visible" title="新增材料类型" width="35%" style="background-color:rgba(255, 255, 255,0.3)">
+            <table class="table1">
+                <tr>
+                    <td>材料类型名：</td>
+                    <td class="lefttd">
+                        <el-input placeholder="请输入内容" v-model="materialr_type_name"></el-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>请选择所属产品类型：</td>
+                    <td>
+                        <el-select v-model="product_type_name" placeholder="请选择" filterable allow-create default-first-option>
+                            <el-option v-for="item in options_pro" :value="item">
+                            </el-option>
+                        </el-select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <el-button type="primary" style="margin-left:30px;" onclick="addqueding()">确定</el-button>
+                    </td>
+                    <td style="text-align:center;">
+                        <el-button type="danger" onclick="addcancel()">取消</el-button>
+                    </td>
+                </tr>
+            </table>
+        </el-dialog>
+    </div>
+    <!-- Page-Level Scripts -->
+    <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/ElementUI/element-ui.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script>
+        //获取材料类型,展示在下拉框
+        $.ajax({
+            type: "Get",
+            url: "https://localhost:44360/api/Materialr_repertory/Materialr_Type",
+            dataType: "json",
+            success: function (data) {
+                var info = eval(data);
+                for (var i = 0; i < eval(data).length; i++) {
+                    vm.options.push(info[i].materialr_type_name);
+                }
+            }
+        })
+        function tanchu() {
+            vm.visible = true;
+            //获取产品类型,展示在下拉框
+            $.ajax({
+                type: "Get",
+                url: "https://localhost:44360/api/Materialr_repertory/Product_Type",
+                dataType: "json",
+                success: function (data) {
+
+                    var info = eval(data);
+                    for (var i = 0; i < eval(data).length; i++) {
+                        vm.options_pro.push(info[i].product_type_name);
+                    }
+                }
+            })
+        }
+
+
+        //新增材料类型确定按钮
+        function addqueding() {
+            //首先判断是否为空,
+            if (vm.materialr_type_name != '' && vm.product_type_id !='') {
+                $.ajax({
+                    type: "Get",
+                    url: "https://localhost:44360/api/Materialr_repertory/add_materialr_type?materialr_type_name=" + vm.materialr_type_name + "&&product_type_name=" + vm.product_type_name,
+                    dataType: "json",
+                    success: function (data) {
+                        //更新材料类型，下拉框数据
+                        var info = eval(data);
+                        for (var i = 0; i < eval(data).length; i++) {
+                            vm.options.push(info[i].materialr_type_name);
+                        }
+                        window.alert("新增成功！");
+                    }
+                })
+                //清空数组和数据
+                vm.options = [];
+                vm.materialr_type_name = '';
+            } else {
+                window.alert("请填写完整数据！")
+            }
+
+            //隐藏弹框
+            addcancel();
+        }
+
+        //新增材料类型取消按钮
+        function addcancel() {
+            vm.visible = false;
+        }
+
+
+        var vm = new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    //材料类型
+                    options: [],
+                    //材料信息变量名===
+                    materialr_details_name: "",
+                    materialr_details_price: "",
+                    material_supplier: "",
+                    materialr_type_name: "",
+                    materialr_num: "",
+                    pro_guige: "",
+                    //产品类型数组
+                    options_pro: [],
+                    product_type_name: "",
+                    //材料类型名
+                    materialr_type_name: "",
+                    //=================
+                    visible: false,
+                    fullscreenLoading: false,
+                    person: "",
+                    time: '',
+                    dialogwidth: '60%',
+                    pickerOptions: {
+                        disabledDate(time) {
+                            return time.getTime() > Date.now();
+                        },
+                    }
+                }
+            },
+            methods: {
+                handleChange(value) {
+                    console.log(value);
+                }
+            }
+        });
+        //获取传过来的ID
+        var id = window.localStorage.getItem('id');
+        //掉接口进行数据查询
+        $.ajax({
+            type: "Get",
+            url: "https://localhost:44360/api/pro_repertory/pro_product_detail?id=" + id,
+            dataType: "json",
+            success: function (data) {
+                vm.pro_pro_id = id;
+                vm.name = eval(data)[0].product_name;
+                vm.type = eval(data)[0].product_type;
+                vm.num = eval(data)[0].product_details_num;
+                vm.price = eval(data)[0].product_price;
+            }
+        })
+
+         //新增计划确定按钮
+        function addinfo() {
+            if (
+                vm.materialr_details_name != "" &&
+                vm.materialr_details_price != "" &&
+                vm.material_supplier != "" &&
+                vm.materialr_type_name != "" &&
+                vm.materialr_num != "" &&
+                vm.pro_guige != ""
+            ) {
+                vm.fullscreenLoading = true;
+                //转为JSON字符串
+                var json1 = {
+                    "materialr_details_name": vm.materialr_details_name,
+                    "materialr_details_price": vm.materialr_details_price,
+                    "material_supplier": vm.material_supplier,
+                    "materialr_type_name": vm.materialr_type_name,
+                    "materialr_num": vm.materialr_num,
+                    "pro_guige": vm.pro_guige
+                };
+                var json2 = JSON.stringify(json1);
+                console.log(json2);
+                //新增材料信息
+                $.ajax({
+                    url: "https://localhost:44360/api/Materialr_repertory/add_materialr?json=" + json2,
+                    type: "post",
+                    dataType: "json",
+                    contentType: 'application/json;charset=utf-8',
+                    success: function (data) {
+                        console.log("进来了");
+                    }
+                })
+                //效果展示
+                setTimeout(() => {
+                    vm.fullscreenLoading = false;
+                    const h = vm.$createElement;
+                    vm.$notify({
+                        title: '新增计划',
+                        message: h('i', { style: 'color: teal' }, '新增计划成功')
+                    });
+                    setTimeout(() => {
+                        //跳转到计划查询页面
+                        window.location.href = "@Url.Content("~/Materialr_repertory/select_materialr/")";
+                    }, 1000);
+                }, 1000);
+            } else {
+                window.alert("请输入完整信息！");
+            }
+
+        }
+
+        //重置文本框数据
+        function chongzhi() {
+            vm.materialr_details_name = "";
+            vm.materialr_details_price = "";
+            vm.material_supplier = "";
+            vm.materialr_type_name = "";
+            vm.materialr_num = "";
+            vm.pro_guige = "";
+        }
+    </script>
+</body>
+</html>

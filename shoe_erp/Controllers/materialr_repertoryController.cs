@@ -30,8 +30,13 @@ namespace shoe_erp.Controllers
             return View();
         }
         //二级页面================================================================
-        //产品库存数量
+        //产品库存
         public ActionResult select_materialr()
+        {
+            return View();
+        }
+        //新增材料信息
+        public ActionResult add_materialr()
         {
             return View();
         }
