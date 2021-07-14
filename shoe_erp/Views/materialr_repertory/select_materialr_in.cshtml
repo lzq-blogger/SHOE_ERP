@@ -19,9 +19,94 @@
     <link href="/Content/select/css/animate.css" rel="stylesheet" />
     <link href="/Content/select/css/style.css?v=4.1.0" rel="stylesheet" />
     <script src="/Content/select/js/bootstrap.min.js"></script>
+    @*elementui*@
+    <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
+    <style>
+        table tr .shao {
+            width: 120px;
+        }
+
+        table tr td, table tr th {
+            text-align: center;
+        }
+
+        table thead tr {
+            background-color: rgb(52,123,183);
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <div id="selectshop">
+    @*详情*@
+    @*<div id="edit_app">
+            <el-dialog :visible.sync="visible" title="产品登记信息" width="67%" style="background-color: rgba(255,255,255,0.3)">
+                <template>
+                    <el-table border="1" :data="tableData.filter(data => !search || data.product_name.toLowerCase().includes(search.toLowerCase()))"
+                              style="width: 900px;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+                        <el-table-column label="产品名" width="140px" align="center"
+                                         prop="product_name">
+                        </el-table-column>
+                        <el-table-column label="产品类型" width="120px"
+                                         prop="product_type">
+                        </el-table-column>
+                        <el-table-column label="单价" width="120px"
+                                         prop="product_price">
+                        </el-table-column>
+                        <el-table-column label="生产数量" width="120px"
+                                         prop="product_details_num">
+                        </el-table-column>
+                        <el-table-column label="单位"
+                                         prop="unit">
+                        </el-table-column>
+                        <el-table-column label="产品规格"
+                                         prop="pro_guige">
+                        </el-table-column>
+                    </el-table>
+                </template>
+            </el-dialog>
+        </div>*@
+    <!--模态窗-->
+    <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                    </button>
+                    @*<i class="fa fa-laptop modal-icon"></i>*@
+                    <h4 class="modal-title">采购订单详情</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped table-bordered table-hover dataTables-modal">
+                        <thead>
+                            <tr>
+                                <th scope="col">采购订单ID</th>
+                                <th scope="col">材料名</th>
+                                <th scope="col">材料类型</th>
+                                <th scope="col">材料价格（单位：元）</th>
+                                <th scope="col">预计采购数量</th>
+                                <th scope="col">供应商</th>
+                            </tr>
+                        </thead>
+                        <!--<tbody>
+                         </tbody>-->
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    @*<button type="button" class="btn btn-primary" id="btn_save">保存</button>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="selectshop" v-loading.fullscreen.lock="fullscreenLoading">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
+            <h4>材料入库详情</h4>
+            <div id="app">
+                <el-button type="danger" icon="el-icon-delete-solid">删除</el-button>
+            </div>
+        </div>
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-sm-12">
@@ -30,13 +115,19 @@
                             <table class="table table-striped table-bordered table-hover dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th scope="col">入库订单ID</th>
-                                        <th scope="col">采购计划ID</th>
-                                        <th scope="col">入库数量</th>
-                                        <th scope="col">操作人</th>                                      
-                                        <th scope="col">原料质检状态</th>                                      
+                                        <th scope="col" class="shao">
+                                            <input type="radio" name="xuan" value="Yxuan" />全选&nbsp;&nbsp;
+                                            <input type="radio" name="xuan" value="Nxuan" />全不选
+                                        </th>
+                                        <th scope="col">质检单号</th>
+                                        <th scope="col">材料名</th>
+                                        <th scope="col">材料采购订单号</th>
+                                        <th scope="col">质检时间</th>
+                                        <th scope="col">经手人</th>
+                                        <th scope="col">质检结果</th>
+                                        <th scope="col">操作</th>
                                     </tr>
-                                </thead>                              
+                                </thead>
                             </table>
                         </div>
                     </div>
@@ -53,28 +144,154 @@
     <script src="/Content/select/js/plugins/dataTables/dataTables.bootstrap.js"></script>
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
-    <!-- 分页 Scripts -->
+    <!-- Page-Level Scripts -->
+    <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
+        //加载一秒后加载状态消失
+        setTimeout(() => {
+            vms.fullscreenLoading = false;
+        }, 1000);
+        //挂载一下
+        var vms = new Vue({
+            el: "#selectshop",
+            data: {
+                fullscreenLoading: true
+            }
+        })
+        var vm2 = new Vue({
+            el: "#edit_app",
+            data() {
+                return {
+                    tableData: [],
+                    search: '',
+                    visible: false,
+                }
+            }
+        })
+
+        var se_url = "https://localhost:44360/"
+        var urlS = se_url + "api/Buy_Manage/"
+
+        //详情
         $(document).ready(function () {
+            //$('.dataTables-example').dataTable();
             $('.dataTables-example').dataTable({
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/Materialr_epertory/POSTAllDataRK",
+                    url: "https://localhost:44360/api/Materialr_repertory/select_in_materialr",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
                 //columns是绑定表格数据源
                 columns: [
-                    { data: "in_materialr_id" },
-                    { data: "materialr_plan_id" },
-                    { data: "materialr_num" },
+                    { data: null },
+                    { data: "quality_testing_id" },
+                    { data: "materialr_details_name" },
+                    { data: "materialrs_order_id" },
+                    { data: "quality_testing_time" },
                     { data: "operator_per" },
-                    { data: "status" },
-                ]
+                    { data: "result" },
+                    { data: null }
+                ],
+                "aoColumnDefs": [{
+                    "targets": -1, //操作按钮目标列
+                    //"orderable": false,
+                    //"data": null,
+                    "render": function (data, type, row) {
+                        var id = row.materialrs_order_id;
+                        var html = "<div class='btn-group'>";
+                        html += "<button class='btn btn-warning btn-sm' onclick='add_repeartory(" + id + ")'><span class='el-icon-edit'></span>入库</button>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_seach(" + id + ")'><span class='el-icon-search'></span> 详情</button>";
+                        html += "</div>";
+                        return html;
+                    }
+                }, {
+                    "targets": 0,
+                    "render": function () {
+                        var html = "<div class='btn-group' id='app1'>";
+                        html += "<input type='checkbox' value=''  style='width:15px;height:15px;'/>";
+                        html += "</div>";
+                        return html;
+                    }
+                }]
             });
         });
+        var vm1 = new Vue({
+            el: "#app",
+            data: {
+
+            }
+        });
+        //入库跳转
+        function add_repeartory(id) {
+            location.href = "add_in_product";
+            //跨界面传值
+            window.localStorage.setItem('id', id);
+        }
+
+
+        //行详情按钮,弹出模态窗
+        function btn_row_seach(id) {
+
+            $('.dataTables-modal').dataTable({
+                "searching": false,// 是否允许检索
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    type: "POST",
+                    url: urlS + "Select_Caigou_Detail",
+                    dataType: "json",
+                    // 传给服务器的数据，可以添加我们自己的查询参数
+                    data: function (param) {
+                        param.detail_ids = id;
+                        return param;
+                    },
+                    //"dataSrc": "data"
+                },
+                //columns是绑定表格数据源
+                "columns": [
+                    { data: "materials_order_id" },
+                    { data: "materialr_details_name" },
+                    { data: "materialr_type_name" },
+                    { data: "materialr_details_price" },
+                    { data: "materialr_details_num" },
+                    { data: "material_supplier" },
+                ]
+            });
+            //弹出模态窗
+            $("#myModal").modal({
+                backdrop: 'static',
+                //点击背景空白处不被关闭；
+                keyboard: false
+                //触发键盘esc事件时不关闭。
+            });
+        }
+        //关闭模态窗
+        $('#myModal').on('hide.bs.modal', function () {
+            var oldTable = $('.dataTables-modal').dataTable();
+
+            oldTable.fnClearTable(); //清空一下table
+
+            oldTable.fnDestroy(); //还原初始化了的dataTable
+
+            $('#data-table').empty();
+        });
+
+        ////详情
+        //function xinagqtanchuan(id) {
+        //    vm2.visible = true;
+        //    $.ajax({
+        //        type: "Get",
+        //        url: "https://localhost:44360/api/product/select_pro_plan_details?id=" + id + "&status=" + "不好",
+        //        dataType: "json",
+        //        success: function (data) {
+        //            vm2.tableData = eval(data);
+        //        }
+        //    })
+        //}
     </script>
 
 </body>
