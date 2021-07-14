@@ -19,9 +19,46 @@
     <link href="/Content/select/css/animate.css" rel="stylesheet" />
     <link href="/Content/select/css/style.css?v=4.1.0" rel="stylesheet" />
     <script src="/Content/select/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
+    <style>
+        table tr .shao {
+            width: 120px;
+        }
+
+        .table1 tr {
+            height: 65px;
+        }
+
+            .table1 tr .tdtext {
+                padding-left: 20px;
+            }
+
+        table tr .shao {
+            width: 80px;
+        }
+
+        table tr .duo {
+            width: 200px;
+        }
+
+        table tr td, table tr th {
+            text-align: center;
+        }
+
+        table thead tr {
+            background-color: rgb(52,123,183);
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div id="selectshop">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
+            <h4>财务支出表</h4>
+            <div id="app">
+                <el-button type="danger" icon="el-icon-delete-solid">删除</el-button>
+            </div>
+        </div>
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-sm-12">
@@ -30,36 +67,18 @@
                             <table class="table table-striped table-bordered table-hover dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th scope="col">商品ID</th>
-                                        <th scope="col">商品名</th>
-                                        <th scope="col">商品品牌</th>
-                                        <th scope="col">商品价格</th>
-                                        <th scope="col">商品库存</th>
-                                        <th scope="col">商品售出</th>
-                                        <th scope="col">机身储存</th>
-                                        <th scope="col">运行内存</th>
-                                        <th scope="col">机身CPU</th>
-                                        <th scope="col">商品上架时间</th>
+                                        <th scope="col">
+                                            <input type="radio" name="xuan" value="Yxuan" />全选
+                                        </th>
+                                        <th scope="col">财务支出编号</th>
+                                        <th scope="col">订单编号</th>
+                                        <th scope="col">材料类型</th>
+                                        <th scope="col">材料名称</th>
+                                        <th scope="col">材料规格</th>
+                                        <th scope="col">总金额（单位：元）</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <asp:Repeater ID="shoprepeater" runat="server">
-                                        <ItemTemplate>
-                                            <tr>
-                                                <td class="table_td" id="shopid">1</td>
-                                                <td class="table_td" style="width:300px;" id="shopname">1</td>
-                                                <td class="table_td" id="shoptype">1</td>
-                                                <td class="table_td" id="shopprice">1</td>
-                                                <td class="table_td" id="shopnum">1</td>
-                                                <td class="table_td" id="shopsalesnum">1</td>
-                                                <td class="table_td" id="shopram">1</td>
-                                                <td class="table_td" id="shoprom">1</td>
-                                                <td class="table_td" id="shopcpu">1</td>
-                                                <td class="table_td" id="shopcpu">1</td>
-                                            </tr>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                </tbody>
+
                             </table>
                         </div>
                     </div>
@@ -76,38 +95,50 @@
     <script src="/Content/select/js/plugins/dataTables/dataTables.bootstrap.js"></script>
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
-    <!-- Page-Level Scripts -->
+    <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/ElementUI/element-ui.js"></script>
+    <!-- 分页 Scripts -->
     <script>
         $(document).ready(function () {
-            $('.dataTables-example').dataTable();
-            /*  */
-            var oTable = $('#editable').dataTable();
-            /*  */
-            oTable.$('td').editable('../example_ajax.php', {
-                "callback": function (sValue, y) {
-                    var aPos = oTable.fnGetPosition(this);
-                    oTable.fnUpdate(sValue, aPos[0], aPos[1]);
+            $('.dataTables-example').dataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    type: "POST",
+                    url: "https://localhost:44360/api/Money/Money_out",
+                    "dataType": "json",
+                    //"dataSrc": "data"
                 },
-                "submitdata": function (value, settings) {
-                    return {
-                        "row_id": this.parentNode.getAttribute('id'),
-                        "column": oTable.fnGetPosition(this)[2]
-                    };
-                },
-                "width": "90%",
-                "height": "100%"
+                //columns是绑定表格数据源
+                columns: [
+                    { data: null },
+                    { data: "out_in_id" },
+                    { data: "materialrs_order_id" },
+                    { data: "materialr_type_name" },
+                    { data: "materialr_details_name" },
+                    { data: "pro_guige" },
+                    { data: "zong" }
+                ],
+                "aoColumnDefs": [ {
+                    "targets": 0,
+                    "render": function () {
+                        var html = "<div class='btn-group' id='app1'>";
+                        html += "<input type='checkbox' value='' />";
+                        html += "</div>";
+                        return html;
+                    }
+                }]
+
             });
         });
-        function fnClickAddRow() {
-            $('#editable').dataTable().fnAddData([
-                "Custom row",
-                "New row",
-                "New row",
-                "New row",
-                "New row"]);
+        var vm1 = new Vue({
+            el: "#app",
+            data: {
 
-        }
+            }
+        });
     </script>
 
 </body>
 </html>
+
