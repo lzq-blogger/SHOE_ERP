@@ -143,7 +143,7 @@
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
-        //获取未处理的订单号
+        //获取已处理的订单号
         $.ajax({
             type: "Get",
             url: "https://localhost:44360/api/product/weichuli_order?status=1",
@@ -229,9 +229,10 @@
             //转为JSON字符串
             var json1 = {
                 "proid": vm.proid,
-                "operator_per": vm2.person,
+                "operator_per": vm2.person2,
                 "time2": vm2.time2,
                 "price": vm2.price3,
+                "person_handling": vm.person1
             };
             var json2 = JSON.stringify(json1);
             console.log(json2);

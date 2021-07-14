@@ -113,6 +113,7 @@
                                         <th scope="col">操作人</th>
                                         <th scope="col">登记时间</th>
                                         <th scope="col">质检状态</th>
+                                        <th scope="col">登记状态</th>
                                         <th scope="col">操作</th>
                                     </tr>
                                 </thead>
@@ -168,7 +169,8 @@
                     { data: "operator_per" },
                     { data: "product_time" },
                     { data: "status" },
-                    { data: null }
+                    { data:"status1" },
+                    { data: null },
                 ],
                 "aoColumnDefs": [{
                     "targets": -1, //操作按钮目标列
@@ -177,7 +179,7 @@
                     "render": function (data, type, row) {
                         var id = row.product_plan_details_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(" + id + ")'>详情<tton>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(" + id + ")'><span class='el-icon-search'></span>详情<tton>";
                         html += "</div>";
                         return html;
                     }

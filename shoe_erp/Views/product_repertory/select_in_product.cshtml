@@ -163,8 +163,8 @@
                     "render": function (data, type, row) {
                         var id = row.pro_production_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-warning btn-sm' onclick='add_repeartory(" + id + ")'>入库</button>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(" + id + ")'>详情</button>";
+                        html += "<button class='btn btn-warning btn-sm' onclick='add_repeartory(" + id + ")'><span class='el-icon-edit'></span>入库</button>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(" + id + ")'><span class='el-icon-search'></span> 详情</button>";
                         html += "</div>";
                         return html;
                     }

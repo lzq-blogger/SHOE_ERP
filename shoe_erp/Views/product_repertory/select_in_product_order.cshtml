@@ -123,8 +123,7 @@
                     "render": function (data, type, row) {
                         var id = row.materialr_plan_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'>详情<tton>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除<tton>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='el-icon-search'></span> 详情<tton>";
                         html += "</div>";
                         return html;
                     }
