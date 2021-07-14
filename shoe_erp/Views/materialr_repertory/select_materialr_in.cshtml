@@ -202,9 +202,10 @@
                     //"data": null,
                     "render": function (data, type, row) {
                         var id = row.materialrs_order_id;
+                        var status = row.result;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-warning btn-sm' onclick='add_repeartory(" + id + ")'><span class='el-icon-edit'></span>入库</button>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_seach(" + id + ")'><span class='el-icon-search'></span> 详情</button>";
+                        html += "<button class='btn btn-warning btn-sm' onclick='add_repeartory(\"" + id + "\",\"" + status + "\")'><span class='el-icon-edit'></span>入库</button>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_seach(\"" + id + "\")'><span class='el-icon-search'></span> 详情</button>";
                         html += "</div>";
                         return html;
                     }
@@ -226,10 +227,11 @@
             }
         });
         //入库跳转
-        function add_repeartory(id) {
-            location.href = "add_in_product";
+        function add_repeartory(id, status) {           
+            location.href = "add_in_materialr";
             //跨界面传值
             window.localStorage.setItem('id', id);
+            window.localStorage.setItem('status', status);
         }
 
 
@@ -280,18 +282,7 @@
             $('#data-table').empty();
         });
 
-        ////详情
-        //function xinagqtanchuan(id) {
-        //    vm2.visible = true;
-        //    $.ajax({
-        //        type: "Get",
-        //        url: "https://localhost:44360/api/product/select_pro_plan_details?id=" + id + "&status=" + "不好",
-        //        dataType: "json",
-        //        success: function (data) {
-        //            vm2.tableData = eval(data);
-        //        }
-        //    })
-        //}
+        
     </script>
 
 </body>
