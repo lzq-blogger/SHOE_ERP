@@ -376,7 +376,7 @@
         //新增计划确定按钮
         function addinfo() {
             if (vmapp2.person == '' || vmapp2.type == '' || vmapp2.time1 == ''
-                || vmapp2.time2 == '' || vmapp.orderid == '' || vmapp1.tableData.length> 0) {
+                || vmapp2.time2 == '' || vmapp.orderid == '' || vmapp1.tableData.length==0) {
                 const h = vm2.$createElement;
                 vm2.$notify({
                     title: '新增产品',
