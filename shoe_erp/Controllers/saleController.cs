@@ -14,6 +14,11 @@ namespace shoe_erp.Controllers
         {
             return View();
         }
+        //销售订单管理
+        public ActionResult sale_order()
+        {
+            return View();
+        }
         //销售统计
         public ActionResult sale_statistics()
         {

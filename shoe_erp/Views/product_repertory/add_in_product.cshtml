@@ -33,7 +33,7 @@
        href="/product_repertory/select_in_product">
         <i class="el-icon-back" style="font-size:25px;"></i>&nbsp;返回
     </a>
-    <div id="app">
+    <div id="app"  v-loading.fullscreen.lock="fullscreenLoading">
         <div class="top" style="margin: 0 auto; border-bottom: 1px solid rgb(231 231 231); padding-bottom: 10px;">
             <table>
                 <tr>
@@ -53,8 +53,12 @@
                         <el-input placeholder="请输入内容" v-model="name" :disabled="true"></el-input>
                     </td>
                     <td>产品类别：</td>
-                    <td>
+                    <td class="lefttd">
                         <el-input placeholder="请输入内容" v-model="type" :disabled="true"></el-input>
+                    </td>
+                    <td>产品规格：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="guige" :disabled="true"></el-input>
                     </td>
                 </tr>
                 <tr>
@@ -63,8 +67,12 @@
                         <el-input placeholder="请输入内容" v-model="num" :disabled="true"></el-input>
                     </td>
                     <td>产品价格：</td>
-                    <td>
+                    <td class="lefttd">
                         <el-input placeholder="请输入内容" v-model="price" :disabled="true"></el-input>
+                    </td>
+                    <td>产品单位：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="unit" :disabled="true"></el-input>
                     </td>
                 </tr>
             </table>
@@ -72,20 +80,24 @@
         <div class="bottom" style="padding: 10px;">
             <table>
                 <tr>
-                    <td>生产时间：</td>
+                    <td>入库时间：</td>
                     <td class="lefttd">
                         <el-date-picker v-model="time" type="date" placeholder="选择日期"> </el-date-picker>
                     </td>
                     <td>操作人：</td>
                     <td>
-                        <el-input placeholder="请输入内容" v-model="person" clearable></el-input>
+                        <el-input placeholder="请输入内容" v-model="person1" clearable></el-input>
+                    </td>
+                    <td>经手人：</td>
+                    <td>
+                        <el-input placeholder="请输入内容" v-model="person2" clearable></el-input>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2" style="text-align:center;">
-                        <el-button type="primary">确定</el-button>
+                    <td colspan="3" style="text-align:center;">
+                        <el-button type="primary" onclick="addinfo()">确定</el-button>
                     </td>
-                    <td colspan="2">
+                    <td colspan="3">
                         <el-button type="danger">重置</el-button>
                     </td>
                 </tr>
@@ -97,6 +109,10 @@
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script src="~/Scripts/jquery-3.4.1.js"></script>
     <script>
+        //加载一秒后加载状态消失
+        setTimeout(() => {
+            vm.fullscreenLoading = false;
+        }, 500);
         var vm = new Vue({
             el: '#app',
             data: function () {
@@ -107,18 +123,15 @@
                     type: "",
                     num: "",
                     price: "",
+                    unit: "",
+                    guige: "",
                     //=================
                     visible: false,
-                    person: "",
+                    person1: "",
+                    person2: "",
                     time: '',
+                    fullscreenLoading: true,
                     dialogwidth: '60%',
-                    options1: [{
-                        value: '第一生产车间',
-                        label: '第一生产车间'
-                    }, {
-                        value: '第二生产车间',
-                        label: '第二生产车间'
-                    }],
                     pickerOptions: {
                         disabledDate(time) {
                             return time.getTime() > Date.now();
@@ -126,27 +139,63 @@
                     }
                 }
             },
-            methods: {
-                handleChange(value) {
-                    console.log(value);
-                }
-            }
         });
         //获取传过来的ID
         var id = window.localStorage.getItem('id');
-        //掉接口进行数据查询
+        //查询生产详情单号相关的产品信息
         $.ajax({
             type: "Get",
-            url: "https://localhost:44360/api/pro_repertory/pro_product_detail?id=" + id,
+            url: "https://localhost:44360/api/product/select_pro_plan_details?id=" + id + "&status=好",
             dataType: "json",
             success: function (data) {
-                vm.pro_pro_id = id;
+                vm.pro_pro_id =id;
                 vm.name = eval(data)[0].product_name;
+                vm.price = eval(data)[0].product_price;
                 vm.type = eval(data)[0].product_type;
                 vm.num = eval(data)[0].product_details_num;
-                vm.price = eval(data)[0].product_price;
+                vm.guige = eval(data)[0].pro_guige;
+                vm.unit = eval(data)[0].unit;
             }
         })
+         //新增产品入库表确定按钮
+        function addinfo() {
+            vm.fullscreenLoading = true;
+            //转为JSON字符串
+            var json1 = {
+                "pro_pro_id": vm.pro_pro_id,
+                "person1": vm.person1,
+                "person2": vm.person2,
+                "time": vm.time,
+                "name": vm.name,
+                "guige": vm.guige,
+                "num":vm.num
+            };
+            var json2 = JSON.stringify(json1);
+            //新增数据
+            $.ajax({
+                url: "https://localhost:44360/api/pro_repertory/add_in_repertory?json="+json2,
+                type: "post",
+                dataType: "json",
+                contentType: 'application/json;charset=utf-8',
+                success: function (data) {
+                    console.log("进来了");
+                }
+            })
+            //效果展示
+            setTimeout(() => {
+                vm.fullscreenLoading = false;
+                const h = vm.$createElement;
+                vm.$notify({
+                    title: '产品入库',
+                    message: h('i', { style: 'color: teal' }, '产品入库成功')
+                });
+                setTimeout(() => {
+                    //跳转到计划查询页面
+                    window.location.href = "@Url.Content("~/product_repertory/select_in_product/")";
+                }, 1000);
+            }, 1000);
+
+        }
     </script>
 </body>
 </html>

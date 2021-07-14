@@ -31,12 +31,13 @@
         }
 
         table thead tr {
-            background-color: rgb(239,240,244);
+            background-color: rgb(52,123,183);
+            color: white;
         }
     </style>
 </head>
 <body>
-    <div id="selectshop">
+    <div id="selectshop"  v-loading.fullscreen.lock="fullscreenLoading">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
             <h4>产品入库登记表</h4>
             <div id="app">
@@ -83,6 +84,17 @@
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
+        //加载一秒后加载状态消失
+        setTimeout(() => {
+            vms.fullscreenLoading = false;
+        }, 1000);
+        //挂载一下
+        var vms = new Vue({
+            el: "#selectshop",
+            data: {
+                fullscreenLoading: true
+            }
+        })
         $(document).ready(function () {
             //$('.dataTables-example').dataTable();
             $('.dataTables-example').dataTable({
@@ -111,8 +123,7 @@
                     "render": function (data, type, row) {
                         var id = row.materialr_plan_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'>详情<tton>";
-                        html += "<button class='btn btn-danger btn-sm' onclick='btn_row_del(" + id + ")'>删除<tton>";
+                        html += "<button class='btn btn-primary btn-sm' onclick='btn_row_edit(" + id + ")'><span class='el-icon-search'></span> 详情<tton>";
                         html += "</div>";
                         return html;
                     }

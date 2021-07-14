@@ -241,7 +241,7 @@
                     guige:"",
                     dialogwidth: '60%',
                     options: [],  //材料名字
-                    options2: []  //材料名字
+                    options2: []  //材料规格
                 }
             },
             watch: {
@@ -257,6 +257,7 @@
                         dataType: "json",
                         data: { materialr_details_name: newName },
                         success: function (data) {
+                            console.log(data+"材料规格");
                             var info = eval(data);
                             for (var i = 0; i < info.length; i++) {
                                 vm2.options2.push(info[i].pro_guige);
@@ -384,7 +385,7 @@
                 "operator_per": vmapp2.person,
                 "get_department": vmapp2.chejian,
                 "get_time": vmapp2.time1,
-                "status": "未处理",
+                "status": "未提货",
                 "infoList": []
             };
             for (var i = 0; i < vmapp1.tableData.length; i++) {
