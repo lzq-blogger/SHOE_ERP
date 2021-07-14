@@ -375,49 +375,58 @@
         }
         //新增计划确定按钮
         function addinfo() {
-            vmapp2.fullscreenLoading = true;
-            //转为JSON字符串
-            var json1 = {
-                "order_id": vmapp.orderid,
-                "operator_per": vmapp2.person,
-                "product_time": vmapp2.time1,
-                "product_end_time": vmapp2.time2,
-                "status": "未处理",
-                "infoList": []
-            };
-            for (var i = 0; i < vmapp1.tableData.length; i++) {
-                var info = {"product_id":"", "product_name": "", "product_details_num": "","pro_status":"未登记"}
-                info.product_id = vmapp1.tableData[i].product_id;
-                info.product_name = vmapp1.tableData[i].product_name;
-                info.product_details_num = vmapp1.tableData[i].product_details_num;
-                json1.infoList.push(info);
-                info = { "product_id": "", "product_name": "", "product_details_num": "", "pro_status": "未登记"}
-            }
-            var json2 = JSON.stringify(json1);
-            console.log(json2);
-            //新增数据
-            $.ajax({
-                url: "https://localhost:44360/api/product/add_plan?json="+json2,
-                type: "post",
-                dataType: "json",
-                contentType: 'application/json;charset=utf-8',
-                success: function (data) {
-                    console.log("进来了");
-                }
-            })
-            //效果展示
-            setTimeout(() => {
-                vmapp2.fullscreenLoading = false;
-                const h = vmapp2.$createElement;
-                vmapp2.$notify({
-                    title: '新增计划',
-                    message: h('i', { style: 'color: teal' }, '新增计划成功')
+            if (vmapp2.person == '' || vmapp2.type == '' || vmapp2.time1 == ''
+                || vmapp2.time2 == '' || vmapp.orderid == '' || vmapp1.tableData.length> 0) {
+                const h = vm2.$createElement;
+                vm2.$notify({
+                    title: '新增产品',
+                    message: h('i', { style: 'color: red' }, '新增产品失败，请填写完整数据')
                 });
+            } else {
+                vmapp2.fullscreenLoading = true;
+                //转为JSON字符串
+                var json1 = {
+                    "order_id": vmapp.orderid,
+                    "operator_per": vmapp2.person,
+                    "product_time": vmapp2.time1,
+                    "product_end_time": vmapp2.time2,
+                    "status": "未处理",
+                    "infoList": []
+                };
+                for (var i = 0; i < vmapp1.tableData.length; i++) {
+                    var info = {"product_id":"", "product_name": "", "product_details_num": "","pro_status":"未登记"}
+                    info.product_id = vmapp1.tableData[i].product_id;
+                    info.product_name = vmapp1.tableData[i].product_name;
+                    info.product_details_num = vmapp1.tableData[i].product_details_num;
+                    json1.infoList.push(info);
+                    info = { "product_id": "", "product_name": "", "product_details_num": "", "pro_status": "未登记"}
+                }
+                var json2 = JSON.stringify(json1);
+                console.log(json2);
+                //新增数据
+                $.ajax({
+                    url: "https://localhost:44360/api/product/add_plan?json="+json2,
+                    type: "post",
+                    dataType: "json",
+                    contentType: 'application/json;charset=utf-8',
+                    success: function (data) {
+                        console.log("进来了");
+                    }
+                })
+                //效果展示
                 setTimeout(() => {
-                    //跳转到计划查询页面
-                    window.location.href = "@Url.Content("~/product/select_product_plan/")";
+                    vmapp2.fullscreenLoading = false;
+                    const h = vmapp2.$createElement;
+                    vmapp2.$notify({
+                        title: '新增计划',
+                        message: h('i', { style: 'color: teal' }, '新增计划成功')
+                    });
+                    setTimeout(() => {
+                        //跳转到计划查询页面
+                        window.location.href = "@Url.Content("~/product/select_product_plan/")";
+                    }, 1000);
                 }, 1000);
-            }, 1000);
+            }
         }
     </script>
 </body>

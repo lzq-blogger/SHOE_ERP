@@ -142,6 +142,7 @@
         });
         //获取传过来的ID
         var id = window.localStorage.getItem('id');
+        var status = window.localStorage.getItem('status');
         //查询生产详情单号相关的产品信息
         $.ajax({
             type: "Get",
@@ -159,42 +160,60 @@
         })
          //新增产品入库表确定按钮
         function addinfo() {
-            vm.fullscreenLoading = true;
-            //转为JSON字符串
-            var json1 = {
-                "pro_pro_id": vm.pro_pro_id,
-                "person1": vm.person1,
-                "person2": vm.person2,
-                "time": vm.time,
-                "name": vm.name,
-                "guige": vm.guige,
-                "num":vm.num
-            };
-            var json2 = JSON.stringify(json1);
-            //新增数据
-            $.ajax({
-                url: "https://localhost:44360/api/pro_repertory/add_in_repertory?json="+json2,
-                type: "post",
-                dataType: "json",
-                contentType: 'application/json;charset=utf-8',
-                success: function (data) {
-                    console.log("进来了");
-                }
-            })
-            //效果展示
-            setTimeout(() => {
-                vm.fullscreenLoading = false;
+            var id = window.localStorage.getItem('id');
+            var status = window.localStorage.getItem('status');
+            console.log(status);
+            if (status == '不合格') {
                 const h = vm.$createElement;
                 vm.$notify({
                     title: '产品入库',
-                    message: h('i', { style: 'color: teal' }, '产品入库成功')
+                    message: h('i', { style: 'color: red' }, '产品入库失败，该产品质检不合格')
                 });
-                setTimeout(() => {
-                    //跳转到计划查询页面
-                    window.location.href = "@Url.Content("~/product_repertory/select_in_product/")";
-                }, 1000);
-            }, 1000);
-
+            } else {
+                //判断非空
+                if (vm.person1 == '' || vm.person2 == '', vm.time=='') {
+                    const h = vm.$createElement;
+                    vm.$notify({
+                        title: '产品入库',
+                        message: h('i', { style: 'color: red' }, '产品入库失败，请填写完整数据')
+                    });
+                } else {
+                    vm.fullscreenLoading = true;
+                    //转为JSON字符串
+                    var json1 = {
+                        "pro_pro_id": vm.pro_pro_id,
+                        "person1": vm.person1,
+                        "person2": vm.person2,
+                        "time": vm.time,
+                        "name": vm.name,
+                        "guige": vm.guige,
+                        "num": vm.num
+                    };
+                    var json2 = JSON.stringify(json1);
+                    //新增数据
+                    $.ajax({
+                        url: "https://localhost:44360/api/pro_repertory/add_in_repertory?json=" + json2,
+                        type: "post",
+                        dataType: "json",
+                        contentType: 'application/json;charset=utf-8',
+                        success: function (data) {
+                            //效果展示
+                            setTimeout(() => {
+                                vm.fullscreenLoading = false;
+                                const h = vm.$createElement;
+                                vm.$notify({
+                                    title: '产品入库',
+                                    message: h('i', { style: 'color: teal' }, '产品入库成功')
+                                });
+                                setTimeout(() => {
+                                    //跳转到计划查询页面
+                                    window.location.href = "@Url.Content("~/product_repertory/select_in_product/")";
+                                }, 1000);
+                            }, 1000);
+                        }
+                    })
+                }
+            }
         }
     </script>
 </body>
