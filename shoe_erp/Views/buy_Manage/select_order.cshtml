@@ -119,6 +119,10 @@
         </div>
 
     </div>
+
+    <!--请求地址-->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
+
     <!-- 全局js -->
     <script src="/Content/select/js/bootstrap.min.js"></script>
     <script src="/Content/select/js/jquery.min.js?v=2.1.4"></script>
@@ -131,15 +135,13 @@
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- 分页 Scripts -->
     <script>
-        var se_url = "https://localhost:44360/"
-        var urlS = se_url + "api/Buy_Manage/"
         $(document).ready(function () {
             $('.dataTables-example').dataTable({
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: se_url + "Buy_Manages/PostAllData_caigou_order",
+                    url: Head_Url + "/Buy_Manages/PostAllData_caigou_order",
                     dataType: "json",
                     //"dataSrc": "data"
                 },
@@ -177,7 +179,7 @@
                         //"data": null,
                         "render": function (data, type, row) {
                             var id = row.materials_order_id;
-                            var html = "<div class='btn-group'>"; 
+                            var html = "<div class='btn-group'>";
                             html += "<button class='btn btn-primary btn-sm'onclick = 'btn_row_seach(\"" + id + "\")'><span class='el-icon-search'></span> 详情</button>";
                             //html += "<button class='btn btn-warning btn-sm' onclick='btn_row_edit(" + id + ")'><span class='el-icon-edit'></span> 编辑</button>";
                             //html += "<a class='btn btn-warning btn-sm' href='/buy_Manage/add_plan?id="+id+"'><span class='el-icon-edit'></span> 编辑</a>";
@@ -210,7 +212,7 @@
             if (selectLoans.length > 0) {
                 if (confirm('是否确认删除选中数据？')) {
                     $.ajax({
-                        url: urlS + "Shans?ids=" + selectLoans,
+                        url: Head_Url_Api + "/Buy_Manage/Shans?ids=" + selectLoans,
                         type: "Delete",
                         dataType: "json",
                         success: function (data, status) {
@@ -232,7 +234,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: urlS + "Select_Caigou_Detail",
+                    url: Head_Url_Api + "/Buy_Manage/Select_Caigou_Detail",
                     dataType: "json",
                     // 传给服务器的数据，可以添加我们自己的查询参数
                     data: function (param) {
@@ -274,7 +276,7 @@
         //行删除按钮
         function btn_row_del(id) {
             $.ajax({
-                url: urlS + "Shan?id=" + id,
+                url: Head_Url_Api + "/Buy_Manage/Shan?id=" + id,
                 type: "Delete",
                 dataType: "json",
                 success: function (data, status) {

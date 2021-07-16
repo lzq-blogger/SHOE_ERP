@@ -135,6 +135,10 @@
             </div>
         </div>
     </div>
+
+    <!--请求地址-->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
+
     <!-- 全局js -->
     <script src="/Content/select/js/jquery.min.js?v=2.1.4"></script>
     <script src="/Content/select/js/bootstrap.min.js?v=3.3.6"></script>
@@ -170,8 +174,6 @@
             }
         })
 
-        var se_url = "https://localhost:44360/"
-        var urlS = se_url + "api/Buy_Manage/"
 
         //详情
         $(document).ready(function () {
@@ -181,7 +183,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/Materialr_repertory/select_in_materialr",
+                    url: Head_Url_Api+"/Materialr_repertory/select_in_materialr",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
@@ -227,7 +229,7 @@
             }
         });
         //入库跳转
-        function add_repeartory(id, status) {           
+        function add_repeartory(id, status) {
             location.href = "add_in_materialr";
             //跨界面传值
             window.localStorage.setItem('id', id);
@@ -244,7 +246,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: urlS + "Select_Caigou_Detail",
+                    url: Head_Url_Api + "/Buy_Manage/Select_Caigou_Detail",
                     dataType: "json",
                     // 传给服务器的数据，可以添加我们自己的查询参数
                     data: function (param) {
@@ -282,7 +284,7 @@
             $('#data-table').empty();
         });
 
-        
+
     </script>
 
 </body>

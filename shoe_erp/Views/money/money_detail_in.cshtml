@@ -86,6 +86,10 @@
             </div>
         </div>
     </div>
+
+    <!--请求地址-->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
+
     <!-- 全局js -->
     <script src="/Content/select/js/jquery.min.js?v=2.1.4"></script>
     <script src="/Content/select/js/bootstrap.min.js?v=3.3.6"></script>
@@ -105,7 +109,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/Money/Money_in",
+                    url: Head_Url_Api +"/Money/Money_in",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
@@ -114,7 +118,7 @@
                     { data: null },
                     { data: "out_in_id" },
                     { data: "out_in_money_id" },
-                    
+
                     { data: "product_name" },
                     { data: "product_type" },
                     { data: "zong" }

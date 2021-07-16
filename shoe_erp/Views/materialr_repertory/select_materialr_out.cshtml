@@ -72,6 +72,10 @@
             </div>
         </div>
     </div>
+
+    <!--请求地址-->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
+
     <!-- 全局js -->
     <script src="/Content/select/js/jquery.min.js?v=2.1.4"></script>
     <script src="/Content/select/js/bootstrap.min.js?v=3.3.6"></script>
@@ -104,7 +108,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/Materialr_repertory/select_out_material_details",
+                    url: Head_Url_Api+"/Materialr_repertory/select_out_material_details",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },

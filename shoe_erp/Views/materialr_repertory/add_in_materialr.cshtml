@@ -122,6 +122,10 @@
             </tr>
         </table>
     </div>
+
+    <!--请求地址-->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
+
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <!-- import Vue before Element -->
     <script src="~/Scripts/vue.js"></script>
@@ -135,7 +139,7 @@
         //根据采购订单id，获取采购计划号
         $.ajax({
             type: "Get",
-            url: "https://localhost:44360/api/Materialr_repertory/orderid?ids="+id,
+            url: Head_Url_Api+"/Materialr_repertory/orderid?ids="+id,
             dataType: "json",
             success: function (data) {
                 var info = eval(data);
@@ -159,7 +163,7 @@
                     $.ajax({
                         type: "Get",
                         contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                        url: "https://localhost:44360/api/Buy_Manage/Select_jihua_details?materialr_plan_id=" + newId,
+                        url: Head_Url_Api +"/Buy_Manage/Select_jihua_details?materialr_plan_id=" + newId,
                         dataType: "json",
                         //data: { materialr_plan_id: materialr_plan_id  },
                         success: function (data) {
@@ -230,7 +234,7 @@
             $.ajax({
                 type: "Get",
                 contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "https://localhost:44360/api/Buy_Manage/Select_jihua_details?materialr_plan_id=" + materialr_plan_id,
+                url: Head_Url_Api +"/Buy_Manage/Select_jihua_details?materialr_plan_id=" + materialr_plan_id,
                 dataType: "json",
                 //data: { materialr_plan_id: materialr_plan_id  },
                 success: function (data) {
@@ -296,7 +300,7 @@
                     var json2 = JSON.stringify(json1);
                     //新增数据
                     $.ajax({
-                        url: "https://localhost:44360/api/Materialr_repertory/add_materialr_epertory?json=" + json2,
+                        url: Head_Url_Api +"/Materialr_repertory/add_materialr_epertory?json=" + json2,
                         type: "post",
                         dataType: "json",
                         contentType: 'application/json;charset=utf-8',

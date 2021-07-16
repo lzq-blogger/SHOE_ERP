@@ -121,6 +121,8 @@
         </div>
 
     </div>
+    <!--请求地址-->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <!-- 全局js -->
     <script src="/Content/select/js/bootstrap.min.js"></script>
     <script src="/Content/select/js/jquery.min.js?v=2.1.4"></script>
@@ -133,15 +135,13 @@
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- 分页 Scripts -->
     <script>
-        var se_url = "http://www.gdzweb.cn:8082/"
-        var urlS = se_url + "api/Buy_Manage/"
         $(document).ready(function () {
             $('.dataTables-example').dataTable({
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: se_url + "Buy_Manages/PostAllData_jihua",
+                    url: Head_Url + "/Buy_Manages/PostAllData_jihua",
                     dataType: "json",
                     //"dataSrc": "data"
                 },
@@ -225,8 +225,8 @@
             });
             if (selectLoans.length > 0) {
                 if (confirm('是否确认删除选中数据？')) {
-                 $.ajax({
-                        url: urlS + "Shans?ids=" + selectLoans,
+                    $.ajax({
+                        url: Head_Url_Api + "/Buy_Manage/Shans?ids=" + selectLoans,
                         type: "Delete",
                         dataType: "json",
                         success: function (data, status) {
@@ -250,7 +250,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: urlS + "Select_jihua_detail",
+                    url: Head_Url_Api + "/Buy_Manage/Select_jihua_detail",
                     dataType: "json",
                     // 传给服务器的数据，可以添加我们自己的查询参数
                     data: function (param) {
@@ -311,7 +311,7 @@
         //行删除按钮
         function btn_row_del(id) {
             $.ajax({
-                url: urlS + "Shan?id=" + id,
+                url: Head_Url_Api + "/Buy_Manage/Shan?id=" + id,
                 type: "Delete",
                 dataType: "json",
                 success: function (data, status) {

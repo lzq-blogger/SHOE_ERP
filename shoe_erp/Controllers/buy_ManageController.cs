@@ -14,17 +14,17 @@ namespace shoe_erp.Controllers
             return View();
         }
         // GET: buy_Material
-        //购买原料界面1
+        //购买材料界面1
         public ActionResult buy_plan()
         {
             return View();
         }
-        //购买原料订单2
+        //购买材料订单2
         public ActionResult buy_order()
         {
             return View();
         }
-        //购买原料统计3
+        //购买材料统计3
         public ActionResult buy_statistical()
         {   
             return View();
@@ -40,7 +40,7 @@ namespace shoe_erp.Controllers
         {
             return View();
         }
-        //查看原料信息界面
+        //查看材料信息界面
         public ActionResult select_materialr()
         {
             return View();

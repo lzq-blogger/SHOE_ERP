@@ -180,20 +180,25 @@
             </tr>
         </table>
     </div>
+
+
+    <!--请求地址-->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
+
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <!-- import Vue before Element -->
     <script src="~/Scripts/vue.js"></script>
     <!-- import JavaScript -->
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
-     
+
         function tanchu() {
             vm2.visible = true;
             vm2.name = ""; vm2.num = ""; vm2.guige = "";
             //获取材料名称
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/Buy_Manage/Materials",
+                url: Head_Url_Api+"/Buy_Manage/Materials",
                 dataType: "json",
                 success: function (data) {
                     var info = eval(data);
@@ -227,7 +232,7 @@
                     $.ajax({
                         type: "post",
                         contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                        url: "https://localhost:44360/api/Buy_Manage/pro_guige?materialr_details_name=" + newName,
+                        url: Head_Url_Api +"/Buy_Manage/pro_guige?materialr_details_name=" + newName,
                         dataType: "json",
                         data: { materialr_details_name: newName },
                         success: function (data) {
@@ -323,7 +328,7 @@
             $.ajax({
                 type: "Post",
                 contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "https://localhost:44360/api/Buy_Manage/mat_name_info",
+                url: Head_Url_Api +"/Buy_Manage/mat_name_info",
                 dataType: "json",
                 data: { materialr_details_name: name1, pro_guige: guige},
                 success: function (data) {
@@ -353,7 +358,7 @@
                 vmapp2.person1!="" &&
                 vmapp2.person2!="" &&
                 vmapp2.time1!="" &&
-                vmapp1.tableData!=[] 
+                vmapp1.tableData!=[]
                 ) {
                         vmapp2.fullscreenLoading = true;
                     //转为JSON字符串
@@ -376,7 +381,7 @@
                     console.log(json2);
                     //新增数据
                     $.ajax({
-                        url: "https://localhost:44360/api/Buy_Manage/add_plan?json="+json2,
+                        url: Head_Url_Api +"/Buy_Manage/add_plan?json="+json2,
                         type: "post",
                         dataType: "json",
                         contentType: 'application/json;charset=utf-8',

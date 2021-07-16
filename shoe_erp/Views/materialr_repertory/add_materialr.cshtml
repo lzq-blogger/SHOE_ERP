@@ -123,6 +123,10 @@
             </table>
         </el-dialog>
     </div>
+
+    <!--请求地址-->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
+
     <!-- Page-Level Scripts -->
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
@@ -131,7 +135,7 @@
         //获取材料类型,展示在下拉框
         $.ajax({
             type: "Get",
-            url: "https://localhost:44360/api/Materialr_repertory/Materialr_Type",
+            url: Head_Url_Api+"/Materialr_repertory/Materialr_Type",
             dataType: "json",
             success: function (data) {
                 var info = eval(data);
@@ -145,7 +149,7 @@
             //获取产品类型,展示在下拉框
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/Materialr_repertory/Product_Type",
+                url: Head_Url_Api +"/Materialr_repertory/Product_Type",
                 dataType: "json",
                 success: function (data) {
 
@@ -164,7 +168,7 @@
             if (vm.materialr_type_name != '' && vm.product_type_id !='') {
                 $.ajax({
                     type: "Get",
-                    url: "https://localhost:44360/api/Materialr_repertory/add_materialr_type?materialr_type_name=" + vm.materialr_type_name + "&&product_type_name=" + vm.product_type_name,
+                    url: Head_Url_Api +"/Materialr_repertory/add_materialr_type?materialr_type_name=" + vm.materialr_type_name + "&&product_type_name=" + vm.product_type_name,
                     dataType: "json",
                     success: function (data) {
                         //更新材料类型，下拉框数据
@@ -234,7 +238,7 @@
         //掉接口进行数据查询
         $.ajax({
             type: "Get",
-            url: "https://localhost:44360/api/pro_repertory/pro_product_detail?id=" + id,
+            url: Head_Url_Api +"/pro_repertory/pro_product_detail?id=" + id,
             dataType: "json",
             success: function (data) {
                 vm.pro_pro_id = id;
@@ -269,7 +273,7 @@
                 console.log(json2);
                 //新增材料信息
                 $.ajax({
-                    url: "https://localhost:44360/api/Materialr_repertory/add_materialr?json=" + json2,
+                    url: Head_Url_Api +"/Materialr_repertory/add_materialr?json=" + json2,
                     type: "post",
                     dataType: "json",
                     contentType: 'application/json;charset=utf-8',
