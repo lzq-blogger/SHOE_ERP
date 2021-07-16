@@ -10,6 +10,7 @@
     <!-- import CSS -->
 
     <link href="~/Content/ElementUI/element-ui.css" rel="stylesheet" />
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <style>
         html body {
             height: 100%;
@@ -131,7 +132,7 @@
         //获取未处理的采购计划号
         $.ajax({
             type: "Get",
-            url: "https://localhost:44360/api/Buy_Manage/weichuli_order",
+            url: Head_Url_Api+"/Buy_Manage/weichuli_order",
             dataType: "json",
             success: function (data) {
                 var info = eval(data);
@@ -155,7 +156,7 @@
                     $.ajax({
                         type: "Get",
                         contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                        url: "https://localhost:44360/api/Buy_Manage/Select_jihua_details?materialr_plan_id=" + newId,
+                        url: Head_Url_Api+"/Buy_Manage/Select_jihua_details?materialr_plan_id=" + newId,
                         dataType: "json",
                         //data: { materialr_plan_id: materialr_plan_id  },
                         success: function (data) {
@@ -163,7 +164,7 @@
                             //清空数组
                             vmapp1.tableData = [];
                             for (var i = 0; i < info.length; i++) {
-                                vmapp1.info.materialr_details_id = info[i].materials_plan__details_id;
+                                vmapp1.info.materialr_details_id = info[i].materialr_details_id;
                                 vmapp1.info.materialr_details_name = info[i].materialr_details_name;
                                 vmapp1.info.materialr_details_num = info[i].materialr_details_num;
                                 vmapp1.info.materialr_details_price = info[i].materialr_details_price;
@@ -223,38 +224,38 @@
         }
 
 
-        //请求获取采购计划下的详情数据
-        function select_detail() {
-            //根据获取的采购计划id，进行tableData数据的更新
-            var materialr_plan_id = vmapp.orderid;
-            $.ajax({
-                type: "Get",
-                contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "https://localhost:44360/api/Buy_Manage/Select_jihua_details?materialr_plan_id=" + materialr_plan_id,
-                dataType: "json",
-                //data: { materialr_plan_id: materialr_plan_id  },
-                success: function (data) {
-                    var info = eval(data);
-                    for (var i = 0; i < info.length; i++) {
-                        vmapp1.info.product_id = info[i].product_id;
-                        vmapp1.info.product_num = info[i].product_num;
-                        vmapp1.info.product_name = info[i].product_name;
-                        vmapp1.info.product_details_num = vm2.num;
-                        vmapp1.info.price = info[i].product_price;
-                        vmapp1.info.type = info[i].product_type;
-                        vmapp1.info.unit = info[i].unit;
-                        vmapp1.info.product_guige = vm2.guige;
-                        //加到数组中
-                        vmapp1.tableData.push(vmapp1.info);
-                        //重新赋值
-                        vmapp1.info = {
-                            product_id: "", product_num: "", product_name: "", product_details_num: "", price: "",
-                            type: "", unit: "", product_guige: ""
-                        }
-                    }
-                }
-            })
-        }
+        ////请求获取采购计划下的详情数据
+        //function select_detail() {
+        //    //根据获取的采购计划id，进行tableData数据的更新
+        //    var materialr_plan_id = vmapp.orderid;
+        //    $.ajax({
+        //        type: "Get",
+        //        contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+        //        url: "https://localhost:44360/api/Buy_Manage/Select_jihua_details?materialr_plan_id=" + materialr_plan_id,
+        //        dataType: "json",
+        //        //data: { materialr_plan_id: materialr_plan_id  },
+        //        success: function (data) {
+        //            var info = eval(data);
+        //            for (var i = 0; i < info.length; i++) {
+        //                vmapp1.info.product_id = info[i].product_id;
+        //                vmapp1.info.product_num = info[i].product_num;
+        //                vmapp1.info.product_name = info[i].product_name;
+        //                vmapp1.info.product_details_num = vm2.num;
+        //                vmapp1.info.price = info[i].product_price;
+        //                vmapp1.info.type = info[i].product_type;
+        //                vmapp1.info.unit = info[i].unit;
+        //                vmapp1.info.product_guige = vm2.guige;
+        //                //加到数组中
+        //                vmapp1.tableData.push(vmapp1.info);
+        //                //重新赋值
+        //                vmapp1.info = {
+        //                    product_id: "", product_num: "", product_name: "", product_details_num: "", price: "",
+        //                    type: "", unit: "", product_guige: ""
+        //                }
+        //            }
+        //        }
+        //    })
+        //}
 
         //新增计划确定按钮
         function addinfo() {
@@ -285,8 +286,8 @@
                     var json2 = JSON.stringify(json1);
                     console.log(json2);
                     //新增数据
-                    $.ajax({
-                        url: "https://localhost:44360/api/Buy_Manage/add_Order_plan?json="+json2,
+                $.ajax({
+                        url: Head_Url_Api+"/Buy_Manage/add_Order_plan?json="+json2,
                         type: "post",
                         dataType: "json",
                         contentType: 'application/json;charset=utf-8',

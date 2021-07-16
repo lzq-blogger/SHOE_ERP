@@ -11,6 +11,7 @@
     <title>智联鞋业后台登录系统</title>
     <link href="~/Content/login/css/style.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
 </head>
 <body>
     <script>
@@ -52,7 +53,7 @@
                 var xlh = JSON.stringify({ account: account, pwd: pwd });
                 $.ajax({
                     type: "POST",
-                    url: "https://localhost:44360/api/Login/LoginUp",
+                    url: Head_Url_Api+"/Login/LoginUp",
                     //contentType: 'application/x-www-form-urlencoded;charset=utf-8',
                     //contentType: 'application/x-www-form-urlencoded',
                     //data: { adminName: $("#adminName").val(), adminPwd: $("#adminPwd").val() },

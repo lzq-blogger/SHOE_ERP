@@ -1163,6 +1163,7 @@
     <Content Include="Scripts\easypiechart.js" />
     <Content Include="Scripts\echarts.js" />
     <Content Include="Scripts\ElementUI\element-ui.js" />
+    <Content Include="Scripts\HTTPURL\HTTPURL.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

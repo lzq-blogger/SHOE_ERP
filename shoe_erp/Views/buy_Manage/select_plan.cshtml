@@ -53,7 +53,7 @@
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
             <h4>采购计划</h4>
             <div id="app">
-                <a id='btn_add' class="btn btn-info" tabindex="-1" role="button" aria-disabled="true" href='/buy_Manage/add_plan'><span class='el-icon-plus'></span> 新增</a>
+                <a id='btn_add' class="btn btn-primary" tabindex="-1" role="button" aria-disabled="true" href='/buy_Manage/add_plan'><span class='el-icon-plus'></span> 新增</a>
 
                 <a class='btn btn-danger' id='btnAll'><span class='el-icon-delete-solid'>批量删除</span></a>
             </div>
@@ -133,7 +133,7 @@
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- 分页 Scripts -->
     <script>
-        var se_url = "https://localhost:44360/"
+        var se_url = "http://www.gdzweb.cn:8082/"
         var urlS = se_url + "api/Buy_Manage/"
         $(document).ready(function () {
             $('.dataTables-example').dataTable({

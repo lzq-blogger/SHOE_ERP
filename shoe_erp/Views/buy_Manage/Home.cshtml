@@ -200,7 +200,7 @@
         var vm = new Vue({
             el: "#xx",
             data: {
-                order_count: "11",
+                order_count: "16",
             }
         })
         //查询单数
@@ -259,8 +259,8 @@
                     type: 'value',
                     name: '订单数',
                     min: 0,
-                    max: 25,
-                    interval: 5,
+                    max: 10,
+                    interval: 2,
                     axisLabel: {
                         formatter: '{value}'
                     }
@@ -289,7 +289,7 @@
                     name: '订单数',
                     type: 'line',
                     yAxisIndex: 1,
-                    data: [3, 4, 2, 0, 2, 0, 0, 0, 6, 0, 0, 1],
+                    data: [3, 2, 2, 0, 6, 0, 0, 0, 2, 0, 0, 1],
                     color: '#3d85c6'
                 }
             ]
