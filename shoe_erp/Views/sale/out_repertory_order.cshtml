@@ -186,11 +186,6 @@
                         dataType: "json",
                         success: function (data) {
                             vm1.tableData = eval(data);
-                            _this.customer = eval(data)[0].customer_name;
-                            _this.person1 = eval(data)[0].person_handling;
-                            _this.time1 = eval(data)[0].order_endtime;
-                            _this.price1 = eval(data)[0].order_unpaid;
-                            _this.price2 = eval(data)[0].order_paid;
                         }
                     });
                 }
