@@ -76,10 +76,10 @@
                     <el-table-column label="单位"
                                      prop="unit">
                     </el-table-column>
-                    <el-table-column label="产品编号"  width="200px"
+                    <el-table-column label="产品编号" width="200px"
                                      prop="product_num">
-                    </el-table-column>                    
-                        @*<template slot-scope="scope">
+                    </el-table-column>
+                    @*<template slot-scope="scope">
                             <el-button size="mini"
                                        type="danger"
                                        v-on:click="handleEdit(scope.row)">修改</el-button>
@@ -144,6 +144,7 @@
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- Page-Level Scripts -->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <!-- Page-Level Scripts -->
@@ -166,7 +167,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/customer/Ord",
+                    url: Head_Url_Api + "/customer/Ord",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
@@ -220,14 +221,14 @@
                     visible: false,
                     num: 1,
                 }
-            } 
+            }
         })
         //详情
         function xinagqtanchuan(id) {
             vm2.visible = true;
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/customer/order_details?id=" + id,
+                url: Head_Url_Api +"/customer/order_details?id=" + id,
                 dataType: "json",
                 success: function (data) {
                     vm2.tableData = eval(data);

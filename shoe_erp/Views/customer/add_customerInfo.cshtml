@@ -15,7 +15,7 @@
     <div style="margin:0 auto;border-bottom:1px solid rgb(231 231 231);">
         <p style="margin-left:20px"><strong>客户资料</strong></p>
     </div>
-    <div id="app"  v-loading.fullscreen.lock="fullscreenLoading">
+    <div id="app" v-loading.fullscreen.lock="fullscreenLoading">
         <div class="center" style="border-bottom:1px solid rgb(231 231 231);padding:10px;text-align:center;">
             <table cellpadding="20" cellspacing="10" style="margin-left:60px;margin:0 auto;">
                 <tr>
@@ -72,6 +72,7 @@
         </div>
     </div>
     <!-- Page-Level Scripts -->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
@@ -123,7 +124,7 @@
                 var json2 = JSON.stringify(json1);
                 //新增数据
                 $.ajax({
-                    url: "https://localhost:44360/api/customer/addcustomer?json=" + json2,
+                    url: Head_Url_Api +"/customer/addcustomer?json=" + json2,
                     type: "post",
                     dataType: "json",
                     contentType: 'application/json;charset=utf-8',

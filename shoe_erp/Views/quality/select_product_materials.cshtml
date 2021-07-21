@@ -113,8 +113,8 @@
                                      prop="materialr_details_price">
                     </el-table-column>
                     @*<el-table-column label="状态"
-                                     prop="unit">
-                    </el-table-column>*@
+                                         prop="unit">
+                        </el-table-column>*@
                     <el-table-column label="材料规格"
                                      prop="pro_guige">
                     </el-table-column>
@@ -175,6 +175,7 @@
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- Page-Level Scripts -->
     <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <!-- Page-Level Scripts -->
     <script>
@@ -196,7 +197,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/quality/YlRk",
+                    url: Head_Url_Api +"/quality/YlRk",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
@@ -250,7 +251,7 @@
             vm2.visible = true;
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/quality/order_details?id=" + id,
+                url: Head_Url_Api +"/quality/order_details?id=" + id,
                 dataType: "json",
                 success: function (data) {
                     vm2.tableData = eval(data);
@@ -281,7 +282,7 @@
                 });
             } else {
                 vm.fullscreenLoading = true;
-            
+
             //转为JSON字符串
             var json1 = {
                 "materials_order_id": vm3.proid,
@@ -292,7 +293,7 @@
             var json2 = JSON.stringify(json1);
         //新增数据
             $.ajax({
-                url: "https://localhost:44360/api/quality/addselect_product_materials?json="+json2,
+                url: Head_Url_Api +"/quality/addselect_product_materials?json="+json2,
                 type: "post",
                 dataType: "json",
                 contentType: 'application/json;charset=utf-8',

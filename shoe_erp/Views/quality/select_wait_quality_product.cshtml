@@ -121,6 +121,7 @@
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- Page-Level Scripts -->
     <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <!-- Page-Level Scripts -->
 
@@ -143,7 +144,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/quality/CpZj",
+                    url: Head_Url_Api +"/quality/CpZj",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
@@ -204,7 +205,7 @@
             vm2.visible = true;
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/quality/plan_pro_detile?id=" + id,
+                url: Head_Url_Api +"/quality/plan_pro_detile?id=" + id,
                 dataType: "json",
                 success: function (data) {
                     vm2.tableData = eval(data);

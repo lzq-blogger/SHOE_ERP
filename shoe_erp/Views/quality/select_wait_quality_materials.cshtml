@@ -134,6 +134,7 @@
     <!-- Page-Level Scripts -->
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <!-- Page-Level Scripts -->
     <script>
         //加载一秒后加载状态消失
@@ -154,7 +155,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/quality/YlZj",
+                    url: Head_Url_Api +"/quality/YlZj",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
@@ -213,7 +214,7 @@
             vm2.visible = true;
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/quality/order_details?id=" + id,
+                url: Head_Url_Api +"/quality/order_details?id=" + id,
                 dataType: "json",
                 success: function (data) {
                     vm2.tableData = eval(data);
