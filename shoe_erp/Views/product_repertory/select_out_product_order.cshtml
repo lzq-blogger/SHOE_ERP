@@ -65,7 +65,7 @@
             </template>
         </el-dialog>
     </div>
-    <div id="selectshop"  v-loading.fullscreen.lock="fullscreenLoading">
+    <div id="selectshop" v-loading.fullscreen.lock="fullscreenLoading">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
             <h4>产品出库登记表</h4>
             <div id="app">
@@ -109,6 +109,7 @@
     <!-- Page-Level Scripts -->
     <!-- Page-Level Scripts -->
     <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
         //加载一秒后加载状态消失
@@ -129,7 +130,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/pro_repertory/select_out_product",
+                    url: Head_Url_Api + "/pro_repertory/select_out_product",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
@@ -185,7 +186,7 @@
             vm2.visible = true;
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/pro_repertory/select_out_product_details?id=" + id,
+                url: Head_Url_Api + "/pro_repertory/select_out_product_details?id=" + id,
                 dataType: "json",
                 success: function (data) {
                     vm2.tableData = eval(data);

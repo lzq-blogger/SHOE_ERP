@@ -134,6 +134,7 @@
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- Page-Level Scripts -->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <!-- Page-Level Scripts -->
@@ -156,7 +157,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/product/select_pro_product",
+                    url: Head_Url_Api +"/product/select_pro_product",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
@@ -268,7 +269,7 @@
             vm2.visible = true;
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/product/select_pro_plan_details?id=" + id + "&status=" + "不好",
+                url: Head_Url_Api +"/product/select_pro_plan_details?id=" + id + "&status=" + "不好",
                 dataType: "json",
                 success: function (data) {
                     vm2.tableData = eval(data);

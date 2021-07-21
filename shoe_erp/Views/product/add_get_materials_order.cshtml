@@ -204,7 +204,7 @@
         //获取未处理的生产计划号
         $.ajax({
             type: "Get",
-            url: "https://localhost:44360/api/product/weichuli_planid",
+            url: Head_Url_Api +"/product/weichuli_planid",
             dataType: "json",
             success: function (data) {
                 var info = eval(data);
@@ -220,7 +220,7 @@
             //获取原料名称
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/product/materials_name",
+                url: Head_Url_Api +"/product/materials_name",
                 dataType: "json",
                 success: function (data) {
                     var info = eval(data);
@@ -253,7 +253,7 @@
                     $.ajax({
                         type: "post",
                         contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                        url: "https://localhost:44360/api/product/materials_guige?materialr_details_name=" + newName,
+                        url: Head_Url_Api +"/product/materials_guige?materialr_details_name=" + newName,
                         dataType: "json",
                         data: { materialr_details_name: newName },
                         success: function (data) {
@@ -348,7 +348,7 @@
             $.ajax({
                 type: "Post",
                 contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "https://localhost:44360/api/product/materials_name_info?materialr_details_name=" +
+                url: Head_Url_Api +"/product/materials_name_info?materialr_details_name=" +
                     name1 + "&pro_guige=" + guige,
                 dataType: "json",
                 data: { materialr_details_name: name1, pro_guige: guige },
@@ -408,7 +408,7 @@
                 console.log(json2);
                 //新增数据
                 $.ajax({
-                    url: "https://localhost:44360/api/product/add_get_materials?json=" + json2,
+                    url: Head_Url_Api +"/product/add_get_materials?json=" + json2,
                     type: "post",
                     dataType: "json",
                     contentType: 'application/json;charset=utf-8',

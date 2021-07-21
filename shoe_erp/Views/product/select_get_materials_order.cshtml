@@ -102,7 +102,7 @@
         </el-dialog>
     </div>
     @*查询领料单*@
-    <div id="selectshop"  v-loading.fullscreen.lock="fullscreenLoading">
+    <div id="selectshop" v-loading.fullscreen.lock="fullscreenLoading">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px;
        border-bottom: 1px solid rgb(234 234 234)">
             <h4>领料单表</h4>
@@ -152,6 +152,8 @@
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- Page-Level Scripts -->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
+
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <!-- Page-Level Scripts -->
@@ -174,7 +176,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/product/select_get_materials",
+                    url: Head_Url_Api + "/product/select_get_materials",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
@@ -257,7 +259,7 @@
             vm2.visible = true;
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/product/select_get_materials_detail?id=" + id,
+                url: Head_Url_Api +"/product/select_get_materials_detail?id=" + id,
                 dataType: "json",
                 success: function (data) {
                     vm2.tableData = eval(data);

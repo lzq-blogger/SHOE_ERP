@@ -169,6 +169,7 @@
     </div>
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <!-- import Vue before Element -->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script src="~/Scripts/vue.js"></script>
     <!-- import JavaScript -->
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
@@ -223,7 +224,7 @@
         //查询所有销售订单号
         $.ajax({
             type: "Get",
-            url: "https://localhost:44360/api/product/weichuli_order?status=2",
+            url: Head_Url_Api +"/product/weichuli_order?status=2",
             dataType: "json",
             success: function (data) {
                 var info = eval(data);
@@ -256,7 +257,7 @@
             //查询真数据
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/sale/sale_order?id=" + vm1.orderid,
+                url: Head_Url_Api +"/sale/sale_order?id=" + vm1.orderid,
                 dataType: "json",
                 success: function (data) {
                     var info = eval(data);

@@ -165,7 +165,7 @@
                     //查询生产详情单号相关的产品信息
                     $.ajax({
                         type: "Get",
-                        url: "https://localhost:44360/api/product/select_pro_plan_details?id=" + _this.pro_id +"&status=不好",
+                        url: Head_Url_Api +"/product/select_pro_plan_details?id=" + _this.pro_id +"&status=不好",
                         dataType: "json",
                         success: function (data) {
                             _this.name = eval(data)[0].product_name;
@@ -183,7 +183,7 @@
         //查询未处理的生产详情单号
         $.ajax({
             type: "Get",
-            url: "https://localhost:44360/api/product/select_pro_plan_details_id",
+            url: Head_Url_Api +"/product/select_pro_plan_details_id",
             dataType: "json",
             success: function (data) {
                 for (var i = 0; i < eval(data).length; i++) {
@@ -213,7 +213,7 @@
                 var json2 = JSON.stringify(json1);
                 //新增数据
                 $.ajax({
-                    url: "https://localhost:44360/api/product/add_pro_product?json=" + json2,
+                    url: Head_Url_Api +"/product/add_pro_product?json=" + json2,
                     type: "post",
                     dataType: "json",
                     contentType: 'application/json;charset=utf-8',
