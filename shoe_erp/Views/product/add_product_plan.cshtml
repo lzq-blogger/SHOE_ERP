@@ -8,7 +8,6 @@
 <head>
     <meta charset="UTF-8">
     <!-- import CSS -->
-
     <link href="~/Content/ElementUI/element-ui.css" rel="stylesheet" />
     <style>
         html body {
@@ -44,7 +43,7 @@
         <i class="el-icon-back" style="font-size:25px;"></i>&nbsp;返回
     </a>
     @*新增计划详情*@
-    <div id="addmate">
+    @*<div id="addmate">
         <el-dialog :visible.sync="visible" title="新增原料" width="35%" style="background-color:rgba(255, 255, 255,0.3)">
             <table class="table1">
                 <tr>
@@ -81,7 +80,7 @@
                 </tr>
             </table>
         </el-dialog>
-    </div>
+    </div>*@
     @*计划单*@
     <div id="app">
         <table style="margin:0 auto;margin-top:20px;" class="table1">
@@ -93,9 +92,9 @@
                         </el-option>
                     </el-select>
                 </td>
-                <td>
+                @*<td>
                     <el-button type="primary" icon="el-icon-plus" onclick="tanchu()">产品</el-button>
-                </td>
+                </td>*@
             </tr>
         </table>
     </div>
@@ -127,19 +126,19 @@
                                  prop="product_name">
                 </el-table-column>
                 <el-table-column label="产品数量"  width="80px"
-                                 prop="product_details_num">
+                                 prop="quantity">
                 </el-table-column>
                 <el-table-column label="产品价格" width="100px"
-                                 prop="price">
+                                 prop="product_price">
                 </el-table-column>
                 <el-table-column label="产品类型" 
-                                 prop="type">
+                                 prop="product_type">
                 </el-table-column>
                 <el-table-column label="产品单位" width="80px"  
                                  prop="unit">
                 </el-table-column>
                 <el-table-column label="鞋子规格" width="200px"  
-                                 prop="product_guige">
+                                 prop="pro_guige">
                 </el-table-column>
                 <el-table-column align="right">
                     <template slot="header" slot-scope="scope">
@@ -193,6 +192,7 @@
         </table>
     </div>
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <!-- import Vue before Element -->
     <script src="~/Scripts/vue.js"></script>
     <!-- import JavaScript -->
@@ -201,7 +201,7 @@
         //获取未处理的订单号
         $.ajax({
             type: "Get",
-            url: "https://localhost:44360/api/product/weichuli_order?status=0",
+            url: Head_Url_Api +"/product/weichuli_order?status=0",
             dataType: "json",
             success: function (data) {
                 var info = eval(data);
@@ -216,7 +216,7 @@
             //获取产品名称
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/product/pro_plan_name",
+                url: Head_Url_Api +"/product/pro_plan_name",
                 dataType: "json",
                 success: function (data) {
                     var info = eval(data);
@@ -227,42 +227,42 @@
             })
         }
         //弹窗
-        var vm2 = new Vue({
-            el: '#addmate',
-            data: function () {
-                return {
-                    visible: false,
-                    name: "",
-                    num: "",
-                    guige: "",
-                    selectitem: "",
-                    dialogwidth: '60%',
-                    options: [],
-                    options2: [],
-                }
-            },
-            watch: {
-                name(newName) {
-                    //归零，重新赋值
-                    vm2.options2 = [];
-                    vm2.guige = "";
-                    //获取产品规格
-                    $.ajax({
-                        type: "post",
-                        contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                        url: "https://localhost:44360/api/product/pro_guige?product_name=" + newName,
-                        dataType: "json",
-                        data: { product_name: newName },
-                        success: function (data) {
-                            var info = eval(data);
-                            for (var i = 0; i < info.length; i++) {
-                                vm2.options2.push(info[i].pro_guige);
-                            }
-                        }
-                    })
-                }
-            }
-        });
+        //var vm2 = new Vue({
+        //    el: '#addmate',
+        //    data: function () {
+        //        return {
+        //            visible: false,
+        //            name: "",
+        //            num: "",
+        //            guige: "",
+        //            selectitem: "",
+        //            dialogwidth: '60%',
+        //            options: [],
+        //            options2: [],
+        //        }
+        //    },
+        //    watch: {
+        //        name(newName) {
+        //            //归零，重新赋值
+        //            vm2.options2 = [];
+        //            vm2.guige = "";
+        //            //获取产品规格
+        //            $.ajax({
+        //                type: "post",
+        //                contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+        //                url: "https://localhost:44360/api/product/pro_guige?product_name=" + newName,
+        //                dataType: "json",
+        //                data: { product_name: newName },
+        //                success: function (data) {
+        //                    var info = eval(data);
+        //                    for (var i = 0; i < info.length; i++) {
+        //                        vm2.options2.push(info[i].pro_guige);
+        //                    }
+        //                }
+        //            })
+        //        }
+        //    }
+        //});
         //表单app
         var vmapp = new Vue({
             el: '#app',
@@ -272,6 +272,20 @@
                     orderid: ''
                 }
             },
+            watch: {
+                orderid: function () {
+                    var _this = this;
+                    //请求数据进行订单详情渲染(根据订单ID)
+                    $.ajax({
+                        type: "Get",
+                        url: Head_Url_Api + "/sale/customer_order_detail?id=" + _this.orderid,
+                        dataType: "json",
+                        success: function (data) {
+                            vmapp1.tableData = eval(data);
+                        }
+                    });
+                }
+            }
         });
         //表格app1
         var vmapp1 = new Vue({
@@ -294,7 +308,7 @@
                 handleEdit(index) {
                     this.visible = true;
                     this.index = index;
-                    this.num = this.tableData[index].product_details_num;
+                    this.num = this.tableData[index].quantity;
                 },
                 handleDelete(index) {
                     console.log(index);
@@ -308,7 +322,7 @@
                 //确定修改
                 confirm() {
                     this.visible = false;
-                    this.tableData[this.index].product_details_num = this.num;
+                    this.tableData[this.index].quantity = this.num;
                 }
             },
         });
@@ -346,7 +360,7 @@
             $.ajax({
                 type: "Post",
                 contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "https://localhost:44360/api/product/pro_name_info?product_name="+name1+"&pro_guige="+guige,
+                url: Head_Url_Api +"/product/pro_name_info?product_name="+name1+"&pro_guige="+guige,
                 dataType: "json",
                 data: { product_name: name1, pro_guige: guige},
                 success: function (data) {
@@ -405,7 +419,7 @@
                 console.log(json2);
                 //新增数据
                 $.ajax({
-                    url: "https://localhost:44360/api/product/add_plan?json="+json2,
+                    url: Head_Url_Api +"/product/add_plan?json="+json2,
                     type: "post",
                     dataType: "json",
                     contentType: 'application/json;charset=utf-8',

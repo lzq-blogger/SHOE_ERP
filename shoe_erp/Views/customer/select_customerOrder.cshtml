@@ -76,10 +76,10 @@
                     <el-table-column label="单位"
                                      prop="unit">
                     </el-table-column>
-                    <el-table-column label="产品编号"  width="200px"
+                    <el-table-column label="产品编号" width="200px"
                                      prop="product_num">
-                    </el-table-column>                    
-                        @*<template slot-scope="scope">
+                    </el-table-column>
+                    @*<template slot-scope="scope">
                             <el-button size="mini"
                                        type="danger"
                                        v-on:click="handleEdit(scope.row)">修改</el-button>
@@ -144,6 +144,7 @@
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- Page-Level Scripts -->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <!-- Page-Level Scripts -->
@@ -159,6 +160,7 @@
                 fullscreenLoading: true
             }
         })
+        console.log(Head_Url_Api+"可以");
         $(document).ready(function () {
             //$('.dataTables-example').dataTable();
             $('.dataTables-example').dataTable({
@@ -166,7 +168,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/customer/Ord",
+                    url: Head_Url_Api + "/customer/Ord",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
@@ -175,7 +177,7 @@
                     { data: null },
                     { data: "orderr_id" },
                     { data: "customer_name" },
-                    { data: "order_starttime" },
+                    { data: "order_starttime"},
                     { data: "order_endtime" },
                     { data: "operator_per" },
                     { data: "order_paid" },
@@ -202,6 +204,24 @@
                         html += "</div>";
                         return html;
                     }
+                    },
+                    //颜色
+                {
+                    "targets": 8,   //第几列
+                    "createdCell": function (td, cellData, rowData, row, col) {
+                        if (cellData == '未处理') {
+                            $(td).css('color', 'red')
+                            $(td).css('font-weight', 'bold')
+                        }
+                        else if (cellData == '处理中') {
+                            $(td).css('color', 'green')
+                            $(td).css('font-weight', 'bold')
+                        }
+                        else{
+                            $(td).css('color', 'rgb(53,124,183)')
+                            $(td).css('font-weight', 'bold')
+                        }
+                    }
                 }]
             });
         });
@@ -220,14 +240,14 @@
                     visible: false,
                     num: 1,
                 }
-            } 
+            }
         })
         //详情
         function xinagqtanchuan(id) {
             vm2.visible = true;
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/customer/order_details?id=" + id,
+                url: Head_Url_Api +"/customer/order_details?id=" + id,
                 dataType: "json",
                 success: function (data) {
                     vm2.tableData = eval(data);

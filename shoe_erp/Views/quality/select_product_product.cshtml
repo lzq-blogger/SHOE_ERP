@@ -112,7 +112,7 @@
                     <el-table-column label="生产日期" width="250px"
                                      prop="product_time">
                     </el-table-column>
-                    <el-table-column label="产品规格" 
+                    <el-table-column label="产品规格"
                                      prop="pro_guige">
                     </el-table-column>
                 </el-table>
@@ -163,6 +163,7 @@
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- Page-Level Scripts -->
     <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <!-- Page-Level Scripts -->
     <script>
@@ -179,7 +180,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/quality/CpSc",
+                    url: Head_Url_Api +"/quality/CpSc",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
@@ -239,7 +240,7 @@
             vm2.visible = true;
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/quality/plan_pro_detile?id=" + id,
+                url: Head_Url_Api +"/quality/plan_pro_detile?id=" + id,
                 dataType: "json",
                 success: function (data) {
                     vm2.tableData = eval(data);
@@ -281,7 +282,7 @@
             var json2 = JSON.stringify(json1);
             //新增数据
             $.ajax({
-                url: "https://localhost:44360/api/quality/addproduct_quality_testing?json="+json2,
+                url: Head_Url_Api +"/quality/addproduct_quality_testing?json="+json2,
                 type: "post",
                 dataType: "json",
                 contentType: 'application/json;charset=utf-8',

@@ -109,6 +109,7 @@
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- Page-Level Scripts -->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
@@ -140,7 +141,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/pro_repertory/select_in_product",
+                    url: Head_Url_Api + "/pro_repertory/select_in_product",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
@@ -182,11 +183,11 @@
         var vm1 = new Vue({
             el: "#app",
             data: {
-                status:"",
+                status: "",
             }
         });
         //入库跳转
-        function add_repeartory(id,status) {
+        function add_repeartory(id, status) {
             location.href = "add_in_product";
             //跨界面传值
             window.localStorage.setItem('id', id);
@@ -197,7 +198,7 @@
             vm2.visible = true;
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/product/select_pro_plan_details?id=" + id + "&status=" + "不好",
+                url: Head_Url_Api +"/product/select_pro_plan_details?id=" + id + "&status=" + "不好",
                 dataType: "json",
                 success: function (data) {
                     vm2.tableData = eval(data);

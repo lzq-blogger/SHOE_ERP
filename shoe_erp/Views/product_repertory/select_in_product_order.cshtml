@@ -37,7 +37,7 @@
     </style>
 </head>
 <body>
-    <div id="selectshop"  v-loading.fullscreen.lock="fullscreenLoading">
+    <div id="selectshop" v-loading.fullscreen.lock="fullscreenLoading">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
             <h4>产品入库登记表</h4>
             <div id="app">
@@ -80,6 +80,7 @@
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- Page-Level Scripts -->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
@@ -101,7 +102,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/pro_repertory/select_in_product_order",
+                    url: Head_Url_Api +"/pro_repertory/select_in_product_order",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },

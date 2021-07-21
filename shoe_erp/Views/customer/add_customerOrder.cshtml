@@ -144,7 +144,7 @@
         </template>
     </div>
     @*领料单*@
-    <div id="app2" style="border:1px solid rgb(228, 228, 228);"  v-loading.fullscreen.lock="fullscreenLoading">
+    <div id="app2" style="border:1px solid rgb(228, 228, 228);" v-loading.fullscreen.lock="fullscreenLoading">
         <table class="table1">
             <tr>
                 <td class="texttd">客户名称：</td>
@@ -209,11 +209,12 @@
     <script src="~/Scripts/vue.js"></script>
     <!-- import JavaScript -->
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script>
         //查询客户名称
         $.ajax({
             type: "Get",
-            url: "https://localhost:44360/api/customer/add_name",
+            url: Head_Url_Api +"/customer/add_name",
             dataType: "json",
             success: function (data) {
                 var info = eval(data);
@@ -228,7 +229,7 @@
             //获取产品名称
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/product/pro_plan_name",
+                url: Head_Url_Api +"/product/pro_plan_name",
                 dataType: "json",
                 success: function (data) {
                     var info = eval(data);
@@ -262,7 +263,7 @@
                     $.ajax({
                         type: "post",
                         contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                        url: "https://localhost:44360/api/customer/pro_guige?product_name=" + newName,
+                        url: Head_Url_Api +"/customer/pro_guige?product_name=" + newName,
                         dataType: "json",
                         data: { product_name: newName },
                         success: function (data) {
@@ -362,7 +363,7 @@
             $.ajax({
                 type: "Post",
                 contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "https://localhost:44360/api/product/pro_name_info?product_name=" + name1 + "&pro_guige=" + guige,
+                url: Head_Url_Api +"/product/pro_name_info?product_name=" + name1 + "&pro_guige=" + guige,
                 dataType: "json",
                 data: { product_name: name1, pro_guige: guige },
                 success: function (data) {
@@ -427,7 +428,7 @@
                 console.log(json2);
                 //新增数据
                 $.ajax({
-                    url: "https://localhost:44360/api/customer/add_customer_order?json="+json2,
+                    url: Head_Url_Api +"/customer/add_customer_order?json="+json2,
                     type: "post",
                     dataType: "json",
                     contentType: 'application/json;charset=utf-8',

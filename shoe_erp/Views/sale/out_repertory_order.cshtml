@@ -101,13 +101,13 @@
                                  prop="unit">
                 </el-table-column>
                 @*<el-table-column align="right">
-                    <template slot="header" slot-scope="scope">
-                        <el-input v-model="search" placeholder="输入关键字搜索"></el-input>
-                    </template>
-                    <template slot-scope="scope">
-                        <el-button type="primary" style="background-color: rgb(52,123,183);">出库</el-button>
-                    </template>
-                </el-table-column>*@
+                        <template slot="header" slot-scope="scope">
+                            <el-input v-model="search" placeholder="输入关键字搜索"></el-input>
+                        </template>
+                        <template slot-scope="scope">
+                            <el-button type="primary" style="background-color: rgb(52,123,183);">出库</el-button>
+                        </template>
+                    </el-table-column>*@
             </el-table>
         </template>
     </div>
@@ -140,13 +140,14 @@
     </div>
     <!-- Page-Level Scripts -->
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
         //获取已处理的订单号
         $.ajax({
             type: "Get",
-            url: "https://localhost:44360/api/product/weichuli_order?status=1",
+            url: Head_Url_Api +"/product/weichuli_order?status=1",
             dataType: "json",
             success: function (data) {
                 var info = eval(data);
@@ -181,15 +182,10 @@
                     //请求数据进行订单详情渲染(根据订单ID)
                     $.ajax({
                         type: "Get",
-                        url: "https://localhost:44360/api/sale/customer_order_detail?id=" + _this.proid,
+                        url: Head_Url_Api +"/sale/customer_order_detail?id=" + _this.proid,
                         dataType: "json",
                         success: function (data) {
                             vm1.tableData = eval(data);
-                            _this.customer = eval(data)[0].customer_name;
-                            _this.person1 = eval(data)[0].person_handling;
-                            _this.time1 = eval(data)[0].order_endtime;
-                            _this.price1 = eval(data)[0].order_unpaid;
-                            _this.price2 = eval(data)[0].order_paid;
                         }
                     });
                 }
@@ -238,7 +234,7 @@
             console.log(json2);
             //新增数据
             $.ajax({
-                url: "https://localhost:44360/api/sale/add_out_repertory?json="+json2,
+                url: Head_Url_Api +"/sale/add_out_repertory?json="+json2,
                 type: "post",
                 dataType: "json",
                 contentType: 'application/json;charset=utf-8',

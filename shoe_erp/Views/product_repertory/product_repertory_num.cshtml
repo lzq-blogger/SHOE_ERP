@@ -47,7 +47,7 @@
         </el-dialog>
     </div>
     @*信息*@
-    <div id="selectshop"  v-loading.fullscreen.lock="fullscreenLoading">
+    <div id="selectshop" v-loading.fullscreen.lock="fullscreenLoading">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
             <h4>产品库存表</h4>
             <div id="app">
@@ -90,6 +90,7 @@
     <script src="/Content/select/js/plugins/dataTables/dataTables.bootstrap.js"></script>
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <!-- Page-Level Scripts -->
@@ -112,7 +113,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/pro_repertory/select_product",
+                    url: Head_Url_Api + "/pro_repertory/select_product",
                     "dataType": "json"
                 },
                 //columns是绑定表格数据源
@@ -123,7 +124,7 @@
                     { data: "product_type" },
                     { data: "product_price" },
                     { data: "pro_repertory_num" },
-                    { data:"pro_guige"},
+                    { data: "pro_guige" },
                     { data: null }
                 ],
                 "aoColumnDefs": [{
@@ -165,7 +166,7 @@
         });
         function handleEdit(id) {
             vm2.visible = true;
-        }   //编辑  
+        }   //编辑
         function handleDelete(id) {    //删除
 
         }   //删除

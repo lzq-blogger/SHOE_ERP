@@ -84,7 +84,7 @@
             <tr>
                 <td>请选择计划单号：</td>
                 <td>
-                    <el-select v-model="planid" placeholder="请选择"  filterable allow-create default-first-option>
+                    <el-select v-model="planid" placeholder="请选择" filterable allow-create default-first-option>
                         <el-option v-for="item in options" :value="item">
                         </el-option>
                     </el-select>
@@ -150,7 +150,7 @@
         </template>
     </div>
     @*领料单*@
-    <div id="app2" style="border:1px solid rgb(228, 228, 228);"  v-loading.fullscreen.lock="fullscreenLoading">
+    <div id="app2" style="border:1px solid rgb(228, 228, 228);" v-loading.fullscreen.lock="fullscreenLoading">
         <table style="margin:0 auto;margin-top:20px;" class="table1">
             <tr>
                 <td>领取车间：</td>
@@ -179,7 +179,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2" style="text-align:center"> 
+                <td colspan="2" style="text-align:center">
                     <el-button type="primary" onclick="addinfo()">确定</el-button>
                 </td>
                 <td colspan="2" style="text-align:center">
@@ -198,13 +198,14 @@
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <!-- import JavaScript -->
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
         //获取未处理的生产计划号
         $.ajax({
             type: "Get",
-            url: "https://localhost:44360/api/product/weichuli_planid",
+            url: Head_Url_Api +"/product/weichuli_planid",
             dataType: "json",
             success: function (data) {
                 var info = eval(data);
@@ -220,7 +221,7 @@
             //获取原料名称
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/product/materials_name",
+                url: Head_Url_Api +"/product/materials_name",
                 dataType: "json",
                 success: function (data) {
                     var info = eval(data);
@@ -253,7 +254,7 @@
                     $.ajax({
                         type: "post",
                         contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                        url: "https://localhost:44360/api/product/materials_guige?materialr_details_name=" + newName,
+                        url: Head_Url_Api +"/product/materials_guige?materialr_details_name=" + newName,
                         dataType: "json",
                         data: { materialr_details_name: newName },
                         success: function (data) {
@@ -348,7 +349,7 @@
             $.ajax({
                 type: "Post",
                 contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "https://localhost:44360/api/product/materials_name_info?materialr_details_name=" +
+                url: Head_Url_Api +"/product/materials_name_info?materialr_details_name=" +
                     name1 + "&pro_guige=" + guige,
                 dataType: "json",
                 data: { materialr_details_name: name1, pro_guige: guige },
@@ -408,7 +409,7 @@
                 console.log(json2);
                 //新增数据
                 $.ajax({
-                    url: "https://localhost:44360/api/product/add_get_materials?json=" + json2,
+                    url: Head_Url_Api +"/product/add_get_materials?json=" + json2,
                     type: "post",
                     dataType: "json",
                     contentType: 'application/json;charset=utf-8',

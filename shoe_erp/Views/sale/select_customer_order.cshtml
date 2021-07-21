@@ -51,8 +51,8 @@
                 <el-table border="1" :data="tableData.filter(data => !search || data.product_name.toLowerCase().includes(search.toLowerCase()))"
                           style="width: 800px;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
                     @*<el-table-column label="产品ID" width="120px"
-                                     prop="order_details_id">
-                    </el-table-column>*@
+                                         prop="order_details_id">
+                        </el-table-column>*@
                     <el-table-column label="产品名" width="120px"
                                      prop="product_name">
                     </el-table-column>
@@ -72,7 +72,7 @@
             </template>
         </el-dialog>
     </div>
-    @*//查询所有*@ 
+    @*//查询所有*@
     <div id="selectshop" v-loading.fullscreen.lock="fullscreenLoading">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgb(234 234 234)">
             <h4>客户订单处理表</h4>
@@ -125,6 +125,7 @@
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- Page-Level Scripts -->
     <!-- Page-Level Scripts -->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
@@ -146,7 +147,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/sale/customer_order",
+                    url: Head_Url_Api +"/sale/customer_order",
                     "dataType": "json"
                 },
                 //columns是绑定表格数据源
@@ -206,14 +207,14 @@
             vm2.visible = true;
             $.ajax({
                 type: "Get",
-                url: "https://localhost:44360/api/customer/order_details?id=" + id,
+                url: Head_Url_Api +"/customer/order_details?id=" + id,
                 dataType: "json",
                 success: function (data) {
                     vm2.tableData = eval(data);
                 }
             })
         }
-       
+
     </script>
 
 </body>

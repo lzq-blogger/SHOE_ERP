@@ -164,6 +164,7 @@
     <!-- 自定义js -->
     <script src="/Content/select/js/content.js?v=1.0.0"></script>
     <!-- Page-Level Scripts -->
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <!-- Page-Level Scripts -->
@@ -185,7 +186,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: "https://localhost:44360/api/customer/Cut",
+                    url: Head_Url_Api +"/customer/Cut",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
@@ -254,7 +255,7 @@
             $.ajax({
                 type: "post",
                 contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "https://localhost:44360/api/customer/Updatecustomer?customer_id=" + id ,
+                url: Head_Url_Api +"/customer/Updatecustomer?customer_id=" + id ,
                 dataType: "json",
                 data: {customer_id:id},
                 success: function (data) {
@@ -293,7 +294,7 @@
             $.ajax({
                 type: "post",
                 contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-                url: "https://localhost:44360/api/customer/UpCustomer?json=" + json2,
+                url: Head_Url_Api +"/customer/UpCustomer?json=" + json2,
                 dataType: "json",
                 data: { json: json2 },
                 success: function (data) {
