@@ -14,8 +14,18 @@ namespace shoe_erp.Controllers
         {
             return View();
         }
+        //待质检产品质检单
+        public ActionResult wait_quality_product_order()
+        {
+            return View();
+        }
         //待质检材料
         public ActionResult wait_quality_materials()
+        {
+            return View();
+        }
+        //待质检材料质检单
+        public ActionResult wait_quality_materials_order()
         {
             return View();
         }
