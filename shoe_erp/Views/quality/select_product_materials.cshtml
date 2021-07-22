@@ -254,6 +254,7 @@
                 url: Head_Url_Api +"/quality/order_details?id=" + id,
                 dataType: "json",
                 success: function (data) {
+                    vm2.tableData = [];
                     vm2.tableData = eval(data);
                 }
             })
