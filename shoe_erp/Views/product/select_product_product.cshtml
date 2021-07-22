@@ -180,7 +180,7 @@
                     "render": function (data, type, row) {
                         var id = row.product_plan_details_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(" + id + ")'><span class='el-icon-search'></span>详情<tton>";
+                        html += "<button class='btn btn-primary btn' onclick='xinagqtanchuan(" + id + ")'><span class='el-icon-search'></span>详情<tton>";
                         html += "</div>";
                         return html;
                     }
@@ -192,7 +192,33 @@
                         html += "</div>";
                         return html;
                     }
-                }]
+                    },
+                    {
+                        "targets": 6,   //第几列
+                        "createdCell": function (td, cellData, rowData, row, col) {
+                            if (cellData == '未质检') {
+                                $(td).css('color', 'red')
+                                $(td).css('font-weight', 'bold')
+                            }
+                            else {
+                                $(td).css('color', 'rgb(53,124,183)')
+                                $(td).css('font-weight', 'bold')
+                            }
+                        }
+                    },
+                    {
+                        "targets": 7,   //第几列
+                        "createdCell": function (td, cellData, rowData, row, col) {
+                            if (cellData == '未登记') {
+                                $(td).css('color', 'red')
+                                $(td).css('font-weight', 'bold')
+                            }
+                            else {
+                                $(td).css('color', 'rgb(53,124,183)')
+                                $(td).css('font-weight', 'bold')
+                            }
+                        }
+                    }]
             });
         });
         var vm1 = new Vue({

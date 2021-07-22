@@ -59,7 +59,7 @@
     </div>
     @*详情*@
     <div id="edit_app">
-        <el-dialog :visible.sync="visible" title="生产计划详情" width="75%" style="background-color: rgba(255,255,255,0.3)">
+        <el-dialog :visible.sync="visible" title="生产计划详情" width="70%" style="background-color: rgba(255,255,255,0.3)">
             <template>
                 <el-table border="1" :data="tableData.filter(data => !search || data.product_name.toLowerCase().includes(search.toLowerCase()))"
                           style="width: 100%;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
@@ -83,19 +83,6 @@
                     </el-table-column>
                     <el-table-column label="材料规格"
                                      prop="pro_guige">
-                    </el-table-column>
-                    <el-table-column align="center">
-                        <template slot="header" slot-scope="scope">
-                            <el-input v-model="search" placeholder="输入关键字搜索"></el-input>
-                        </template>
-                        <template slot-scope="scope">
-                            <el-button size="mini"
-                                       type="danger"
-                                       v-on:click="handleEdit(scope.row)">修改</el-button>
-                            <el-button size="mini"
-                                       type="danger"
-                                       v-on:click="handleDelete(scope.row)">删除</el-button>
-                        </template>
                     </el-table-column>
                 </el-table>
             </template>
@@ -198,8 +185,8 @@
                     "render": function (data, type, row) {
                         var id = row.w_materials_id;
                         var html = "<div class='btn-group'>";
-                        html += "<button class='btn btn-primary btn-sm' onclick='xinagqtanchuan(" + id + ")'><span class='el-icon-search'></span>详情</button>";
-                        html += "<button class='btn btn-warning btn-sm' onclick='bianji(" + id + ")'><span class='el-icon-edit'></span>编辑</button>";
+                        html += "<button class='btn btn-primary btn' onclick='xinagqtanchuan(" + id + ")'><span class='el-icon-search'></span>详情</button>";
+                        html += "<button class='btn btn-warning btn' onclick='bianji(" + id + ")'><span class='el-icon-edit'></span>编辑</button>";
                         html += "</div>";
                         return html;
                     }
@@ -211,7 +198,20 @@
                         html += "</div>";
                         return html;
                     }
-                }]
+                    },
+                    {
+                        "targets": 5,   //第几列
+                        "createdCell": function (td, cellData, rowData, row, col) {
+                            if (cellData == '未提货') {
+                                $(td).css('color', 'red')
+                                $(td).css('font-weight', 'bold')
+                            }
+                            else {
+                                $(td).css('color', 'rgb(53,124,183)')
+                                $(td).css('font-weight', 'bold')
+                            }
+                        }
+                    }]
             });
         });
         var vm = new Vue({

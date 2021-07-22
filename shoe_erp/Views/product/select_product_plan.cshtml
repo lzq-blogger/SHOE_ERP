@@ -49,20 +49,9 @@
     <link rel="stylesheet" href="~/Content/ElementUI/element-ui.css" />
 </head>
 <body>
-    @*修改*@
-    <div id="update_app">
-        <el-dialog :visible.sync="visible" title="生产计划详情" width="40%" style="background-color: rgba(255,255,255,0.3)">
-            <div style="text-align:center;">
-                <el-select v-model="status" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                </el-select>
-                <el-button type="primary" style="background-color: rgb(52,123,183);"> 保存 </el-button>
-            </div>
-        </el-dialog>
-    </div>
     @*详情*@
     <div id="edit_app">
-        <el-dialog :visible.sync="visible" title="生产计划详情" width="75%" style="background-color: rgba(255,255,255,0.3)">
+        <el-dialog :visible.sync="visible" title="生产计划详情" width="70%" style="background-color: rgba(255,255,255,0.3)">
             <template>
                 <el-table border="1" :data="tableData.filter(data => !search || data.product_name.toLowerCase().includes(search.toLowerCase()))"
                           style="width: 1000px;" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
@@ -87,19 +76,7 @@
                     <el-table-column label="鞋子规格"
                                      prop="pro_guige">
                     </el-table-column>
-                    <el-table-column align="center" width="200px">
-                        <template slot="header" slot-scope="scope">
-                            <el-input v-model="search" placeholder="输入关键字搜索"></el-input>
-                        </template>
-                        <template slot-scope="scope">
-                            <el-button size="mini"
-                                       type="danger"
-                                       v-on:click="handleEdit(scope.row)">修改</el-button>
-                            <el-button size="mini"
-                                       type="danger"
-                                       v-on:click="handleDelete(scope.row)">删除</el-button>
-                        </template>
-                    </el-table-column>
+                   
                 </el-table>
             </template>
         </el-dialog>
@@ -218,7 +195,24 @@
                         html += "</div>";
                         return html;
                     }
-                }]
+                    },
+                    {
+                        "targets": 6,   //第几列
+                        "createdCell": function (td, cellData, rowData, row, col) {
+                            if (cellData=='未处理') {
+                                $(td).css('color', 'red')
+                                $(td).css('font-weight', 'bold')
+                            }
+                            else if (cellData == '处理中') {
+                                $(td).css('color', 'green')
+                                $(td).css('font-weight', 'bold')
+                            }
+                            else {
+                                $(td).css('color', 'rgb(53,124,183)')
+                                $(td).css('font-weight', 'bold')
+                            }
+                        }
+                    }]
             });
         });
         var vm1 = new Vue({
@@ -246,13 +240,6 @@
                     console.log(row);
                 }
             },
-        });
-        var vm3 = new Vue({
-            el: "#update_app",
-            data: {
-                status: '未处理',
-                visible: false
-            }
         });
         function xinagqtanchuan(id) {
             vm2.visible = true;
