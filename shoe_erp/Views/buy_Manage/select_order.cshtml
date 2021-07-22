@@ -187,7 +187,22 @@
                             html += "</div>";
                             return html;
                         }
-                    }]
+                    },
+                    //颜色
+                    {
+                        "targets": -2,   //第几列
+                        "createdCell": function (td, cellData, rowData, row, col) {
+                            if (cellData == '未质检') {
+                                $(td).css('color', 'red')
+                                $(td).css('font-weight', 'bold')
+                            }
+                            else {
+                                $(td).css('color', 'rgb(53,124,183)')
+                                $(td).css('font-weight', 'bold')
+                            }
+                        }
+                    }
+                ]
             });
 
             //var buttonHtml = " &nbsp;&nbsp;<a id='btn_add' class='btn btn-info btn-sm' href='/buy_Manage/add_plan'><span class='el-icon-plus'></span> 新增</a> &nbsp;&nbsp;";

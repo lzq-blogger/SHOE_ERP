@@ -183,7 +183,7 @@
                 "serverSide": true,
                 "ajax": {
                     type: "POST",
-                    url: Head_Url_Api+"/Materialr_repertory/select_in_materialr",
+                    url: Head_Url_Api + "/Materialr_repertory/select_in_materialr",
                     "dataType": "json",
                     //"dataSrc": "data"
                 },
@@ -193,7 +193,17 @@
                     { data: "quality_testing_id" },
                     { data: "materialr_details_name" },
                     { data: "materialrs_order_id" },
-                    { data: "quality_testing_time" },
+                    //日期格式化
+                    {
+                        data: "quality_testing_time",
+                        render: function (data, type, row, meta) {
+                            if (data) {   // data不为空进行转换
+                                return (new Date(data)).Format("yyyy-MM-dd");
+                            } else {
+                                return data = ''; //data为空时不转换
+                            }
+                        }
+                    },
                     { data: "operator_per" },
                     { data: "result" },
                     { data: null }
@@ -219,7 +229,27 @@
                         html += "</div>";
                         return html;
                     }
-                }]
+                },
+                //颜色
+                {
+                    "targets": -2,   //第几列
+                    "createdCell": function (td, cellData, rowData, row, col) {
+                        if (cellData == '不合格') {
+                            $(td).css('color', 'red')
+                            $(td).css('font-weight', 'bold')
+                        }
+                        else {
+                            $(td).css('color', 'rgb(53,124,183)')
+                            $(td).css('font-weight', 'bold')
+                        }
+                    }
+                }
+                    //,
+                    ////格式
+                    //{
+
+                    //}
+                ]
             });
         });
         var vm1 = new Vue({
@@ -284,6 +314,35 @@
             $('#data-table').empty();
         });
 
+
+        //日期格式化
+        Date.prototype.Format = function (fmt) { //author: meizz
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+
+                "d+": this.getDate(), //日
+
+                "h+": this.getHours(), //小时
+
+                "m+": this.getMinutes(), //分
+
+                "s+": this.getSeconds(), //秒
+
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+
+                "S": this.getMilliseconds() //毫秒
+
+            };
+            if (/(y+)/.test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            }
+            for (var k in o) {
+                if (new RegExp("(" + k + ")").test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                }
+            }
+            return fmt;
+        };
 
     </script>
 
