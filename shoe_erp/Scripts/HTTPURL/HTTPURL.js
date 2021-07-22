@@ -1,5 +1,5 @@
-﻿var Url = "http://www.gdzweb.cn";
-var Head_Url = "http://www.gdzweb.cn:8082";
+﻿var Url = "https://localhost:44360";
+var Head_Url = "https://localhost:44360";
 /*https://localhost:44360/api*/
 /*http://www.gdzweb.cn:8082/api*/
 /*http://106.52.105.93:8081/api*/
