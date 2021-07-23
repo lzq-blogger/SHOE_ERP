@@ -101,7 +101,7 @@
                     今年销量
                 </div>
                 <div class="shuju">
-                    9 单
+                    {{order_count_year}} 单
                 </div>
                 <div style="background-color: rgb(255 227 141); color: rgb(255 175 9); font-size: 10px;
                                 font-weight: bold; width: 60px; text-align: center; margin-left: 20px; ">
@@ -196,20 +196,30 @@
     <!-- import Vue before Element -->
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script>
         var vm = new Vue({
             el: "#xx",
             data: {
-                order_count: "16",
+                order_count: "0",
+                order_count_year:"0"
             }
         })
-        //查询单数
+        //查询总单数
         $.ajax({
-            url: 'https://localhost:44368/api/product/ss',
+            url: Head_Url_Api + "/product/ss",
+            type: 'GET',
+            success: function (data) {
+                vm.order_count = data;
+            }
+        });
+        //查询几年订单数
+        $.ajax({
+            url: Head_Url_Api + "/product/sss",
             type: 'GET',
             success: function (data) {
                 console.log("有数据" + data);
-                vm.order_count = data;
+                vm.order_count_year = data;
             }
         });
         //订单数
