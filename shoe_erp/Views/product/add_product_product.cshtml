@@ -123,6 +123,7 @@
     <!-- Page-Level Scripts -->
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/HTTPURL/HTTPURL.js"></script>
     <script src="~/Scripts/ElementUI/element-ui.js"></script>
     <script>
         var vm = new Vue({
@@ -208,7 +209,7 @@
                     "pro_production_dep": vm.bumen,
                     "operator_per": vm.person,
                     "product_time": vm.time,
-                    "status": "未质检",
+                    "status": vm.status,
                 };
                 var json2 = JSON.stringify(json1);
                 //新增数据
